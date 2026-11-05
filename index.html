@@ -18,7 +18,9 @@
 .sky .k { width: 64px; animation: fly 6s ease-in-out infinite; transform-origin: 50% 100%; }
 .sky svg.string { position: absolute; left: 30px; top: 70px; width: 120px; height: 160px; }
 @keyframes fly { 50% { transform: translate(-4px, 6px) rotate(-6deg); } }
-.hero .copy { position: relative; z-index: 1; padding-right: 72px; }
+.hero .copy { position: relative; z-index: 1; }
+.hero .copy > .tag, .hero h1, .hero .lead { margin-right: 64px; }
+@media (min-width: 900px) { .hero .copy > .tag, .hero h1, .hero .lead { margin-right: 0; } }
 .find { display: grid; gap: 12px; }
 .find .btn { width: 100%; }
 .trust { display: grid; gap: 8px; font-weight: 700; color: var(--ink-2); font-size: 15px; }
