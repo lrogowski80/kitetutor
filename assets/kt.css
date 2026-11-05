@@ -260,3 +260,9 @@ textarea.input { padding: 12px 14px; min-height: 96px; resize: vertical; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Uzupełnienia po przeglądzie ekranów */
+.panel.list { overflow: hidden; }
+section[id], [id].card { scroll-margin-top: 76px; }
+.sticker.got.silver { background: #EDEFF5; }
+.tag.n { background: #EFEDF5; color: var(--ink-2); }
