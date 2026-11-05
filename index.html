@@ -2,131 +2,179 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KiteTutor – strona główna</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KiteTutor – korepetycje online z lekcją wideo i raportem dla rodzica</title>
+<meta name="description" content="Zweryfikowani korepetytorzy, lekcja wideo w przeglądarce, notatki i raport postępów po każdych zajęciach. Matematyka, języki, egzaminy.">
+<meta name="theme-color" content="#5B3BE8">
+<link rel="icon" href="assets/kitka.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kt.css">
 <style>
-body{margin:0;background:#F6F3FF;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
-a{color:#4A2DD0}a:hover{color:#1C1640}
-*{box-sizing:border-box}
-h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
-.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
-.top{background:#FFFFFF;border-bottom:1px solid #E9E3FF}
-.topin{display:flex;align-items:center;gap:16px;min-height:68px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#1C1640;font-family:Fredoka,sans-serif;font-weight:700;font-size:24px}
-.nav{display:flex;gap:4px;flex-wrap:wrap}
-.nav a{padding:10px 14px;border-radius:12px;text-decoration:none;color:#1C1640;font-weight:700;font-size:15px}
-.nav a:hover{background:#F3EFFF;color:#1C1640}
-.card{background:#FFFFFF;border-radius:20px;padding:24px;border:1px solid #ECE7FF}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:14px;background:#5B3BE8;color:#FFFFFF;font-weight:800;text-decoration:none;border:0;font-size:16px;font-family:inherit;cursor:pointer}
-.btn:hover{background:#4A2DD0;color:#FFFFFF}
-.btn2{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:14px;background:#EFE9FF;color:#4A2DD0;font-weight:800;text-decoration:none;font-size:16px}
-.btn2:hover{background:#E2D9FF;color:#4A2DD0}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
-.muted{color:#5E5878}
-.cols{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.field{display:flex;flex-direction:column;gap:6px;flex:1 1 200px}
-.field label{font-weight:800;font-size:13px;color:#4B4566}
-.field select,.field input{min-height:48px;border-radius:12px;border:1.5px solid #DCD3FF;padding:0 14px;font-family:inherit;font-size:16px;color:#1C1640;background:#FFFFFF}
-</style>
-<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
-<script>
-function page() { return {
- state: {},
- setState(o) { Object.assign(this.state, o); },
- get v() {
-return {};
+.hero { position: relative; overflow: hidden; background: linear-gradient(180deg, #EAE3FF 0%, var(--surface) 70%); }
+.hero .wrap { position: relative; display: grid; gap: 28px; padding-top: 28px; padding-bottom: 40px; }
+.hero h1 { max-width: 12em; }
+.sky { position: absolute; right: -24px; top: 6px; width: 132px; pointer-events: none; }
+.sky .k { width: 64px; animation: fly 6s ease-in-out infinite; transform-origin: 50% 100%; }
+.sky svg.string { position: absolute; left: 30px; top: 70px; width: 120px; height: 160px; }
+@keyframes fly { 50% { transform: translate(-4px, 6px) rotate(-6deg); } }
+.hero .copy { position: relative; z-index: 1; padding-right: 72px; }
+.find { display: grid; gap: 12px; }
+.find .btn { width: 100%; }
+.trust { display: grid; gap: 8px; font-weight: 700; color: var(--ink-2); font-size: 15px; }
+.trust li { display: flex; gap: 10px; align-items: center; }
+.trust svg { width: 20px; height: 20px; color: var(--mint); flex: none; }
+ul.plain { list-style: none; margin: 0; padding: 0; }
+.peek { position: relative; }
+.peek { max-width: 560px; justify-self: center; width: 100%; }
+.peek .screen { background: var(--night); border-radius: var(--r-l); padding: 10px; box-shadow: 0 20px 50px rgba(23,18,58,.25); }
+.peek .tiles { display: grid; grid-template-columns: 1.6fr 1fr; gap: 8px; }
+.peek .tile { border-radius: 16px; aspect-ratio: 4/3; position: relative; overflow: hidden; display: grid; place-items: end center; }
+.peek .tile .nm { position: absolute; left: 8px; bottom: 8px; background: rgba(23,18,58,.7); color: #fff; font: 800 12px var(--f-body); padding: 4px 8px; border-radius: 8px; }
+.peek .meta { display: flex; justify-content: space-between; align-items: center; color: #fff; padding: 10px 6px 4px; gap: 8px; }
+.peek .toast { position: absolute; right: 10px; bottom: -22px; background: #fff; border-radius: 16px; padding: 10px 14px 10px 10px; display: flex; gap: 10px; align-items: center; box-shadow: var(--shadow); border: 2px solid var(--ink); }
+.peek .toast img { width: 40px; height: 40px; }
+@media (min-width: 900px) {
+  .hero .wrap { grid-template-columns: 1.05fr .95fr; align-items: center; padding-top: 64px; padding-bottom: 96px; gap: 56px; }
+  .hero .copy { padding-right: 0; }
+  .find { grid-template-columns: 1fr 1fr; }
+  .find .btn { grid-column: 1 / -1; }
+  .sky { right: 46%; top: 24px; width: 160px; }
+  .sky .k { width: 76px; }
 }
-}; }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+.steps { counter-reset: s; }
+.step { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+.step .n { width: 44px; height: 44px; border-radius: 14px; background: var(--violet); color: #fff; font: 700 20px var(--f-head); display: grid; place-items: center; }
+.ekipa { background: var(--sun); position: relative; overflow: hidden; }
+.ekipa .crew { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.ekipa .m { background: #fff; border: 2.5px solid var(--ink); border-radius: 20px; box-shadow: 4px 4px 0 var(--ink); padding: 12px 6px 10px; text-align: center; }
+.ekipa .m img { width: 70%; height: 56px; object-fit: contain; }
+.ekipa .m b { display: block; font: 600 16px var(--f-head); margin-top: 4px; }
+.ekipa .m span { font-size: 12px; font-weight: 700; color: var(--ink-2); }
+.ekipa .m:nth-child(odd) { transform: rotate(-2deg); }
+.ekipa .m:nth-child(even) { transform: rotate(2deg); }
+@media (min-width: 900px) { .ekipa .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; } .ekipa .m img { height: 84px; } }
+.who a { text-decoration: none; color: inherit; display: block; height: 100%; }
+.who a:hover { color: inherit; }
+.who .card { height: 100%; transition: transform .15s; }
+@media (max-width: 639px) { .who .card { display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; row-gap: 2px; } .who .card .av { grid-row: span 2; } .who .card > * + * { margin-top: 0; } }
+.who a:hover .card { transform: translateY(-2px); }
+.safe { background: var(--night); color: #fff; border-radius: var(--r-l); padding: 28px 20px; }
+.safe .muted { color: #C9C2EE; }
+.safe li { display: flex; gap: 12px; align-items: flex-start; }
+.safe li svg { width: 22px; height: 22px; color: var(--sun); flex: none; margin-top: 2px; }
+@media (min-width: 900px) { .safe { padding: 48px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; } }
+.cta { text-align: center; }
+</style>
 </head>
-<body x-data="page()">
-<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
-<div style="min-height: 2200px">
-<header class="top"><div class="wrap topin">
-<a class="logo" href="index.html"><svg width="30" height="36" viewBox="36 14 128 162" aria-hidden="true"><polygon points="100,20 160,95 100,170 40,95" fill="#6C4CF1"></polygon><polygon points="100,20 40,95 100,95" fill="#FF5A5F"></polygon><polygon points="100,95 160,95 100,170" fill="#FF5A5F"></polygon><polygon points="100,20 160,95 100,170 40,95" fill="none" stroke="#1C1640" stroke-width="9" stroke-linejoin="round"></polygon><circle cx="83" cy="92" r="11" fill="#FFFFFF"></circle><circle cx="117" cy="92" r="11" fill="#FFFFFF"></circle><circle cx="85" cy="93" r="5.5" fill="#1C1640"></circle><circle cx="119" cy="93" r="5.5" fill="#1C1640"></circle></svg><span><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></span></a>
-<nav class="nav" aria-label="Główna"><a href="szukaj.html">Znajdź korepetytora</a><a href="#jak">Jak to działa</a><a href="#ekipa">Ekipa i album</a><a href="start.html">Dla korepetytorów</a></nav>
-<div style="margin-left: auto; display: flex; gap: 8px; align-items: center"><span class="chip">PL · zł</span><a class="btn2" href="uczen.html" style="min-height: 44px">Zaloguj się</a><a class="btn" href="start.html" style="min-height: 44px">Załóż konto</a></div>
-</div></header>
+<body x-data="{subject:'Matematyka', level:'Liceum i matura'}">
+<div data-kt="header"></div>
 
-<section class="wrap" style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center; padding-top: 56px; padding-bottom: 48px">
-<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
-<span class="chip" style="align-self: flex-start">Korepetycje online · 1 na 1 · na żywo</span>
-<h1 style="font-size: 60px; line-height: 1.05; letter-spacing: -1px">Korepetycje, po których wszystko <span style="color: #5B3BE8">staje się jasne</span></h1>
-<p class="muted" style="font-size: 20px; line-height: 1.5; margin: 0; max-width: 560px">Matematyka, języki, przygotowanie do egzaminów. Zweryfikowani korepetytorzy, lekcja wideo w przeglądarce i raport postępów po każdych zajęciach.</p>
-<form class="card" action="szukaj.html" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; padding: 18px">
-<div class="field"><label for="m-sub">Przedmiot</label><select id="m-sub"><option>Matematyka</option><option>Angielski</option><option>Fizyka</option><option>Chemia</option></select></div>
-<div class="field"><label for="m-lvl">Poziom</label><select id="m-lvl"><option>Szkoła podstawowa, klasa 7–8</option><option>Liceum i matura</option><option>Studia</option><option>Dorośli</option></select></div>
-<a class="btn" href="szukaj.html" style="flex: 0 0 auto">Szukaj korepetytora</a>
-</form>
-<div style="display: flex; flex-wrap: wrap; gap: 18px" class="muted">
-<span style="display: flex; gap: 8px; align-items: center; font-weight: 700"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BA36F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Zweryfikowana tożsamość i kwalifikacje</span>
-<span style="display: flex; gap: 8px; align-items: center; font-weight: 700"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BA36F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Płatność bezpieczna, wypłata po lekcji</span>
-<span style="display: flex; gap: 8px; align-items: center; font-weight: 700"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BA36F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Rodzic widzi postępy dziecka</span>
-</div>
-</div>
-<div style="flex: 1 1 420px; min-width: 0; position: relative; display: flex; justify-content: center">
-<div class="card" style="width: 100%; max-width: 520px; padding: 0; overflow: hidden">
-<div style="background: #1C1640; padding: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
-<div style="aspect-ratio: 4 / 3; border-radius: 14px; background: #3B3268; display: flex; align-items: flex-end; justify-content: center; position: relative; overflow: hidden"><svg width="70%" viewBox="0 0 200 160" aria-hidden="true"><circle cx="100" cy="62" r="34" fill="#F2C29B"></circle><path d="M66 50 Q100 10 134 50 Q130 30 100 26 Q70 30 66 50Z" fill="#3A2318"></path><path d="M30 160 Q30 104 100 104 Q170 104 170 160Z" fill="#5B3BE8"></path></svg><span style="position: absolute; left: 10px; bottom: 10px; background: rgba(0,0,0,0.55); color: #FFFFFF; font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 8px">Pani Marta · matematyka</span></div>
-<div style="aspect-ratio: 4 / 3; border-radius: 14px; background: #2E5E6E; display: flex; align-items: flex-end; justify-content: center; position: relative; overflow: hidden"><svg width="70%" viewBox="0 0 200 160" aria-hidden="true"><circle cx="100" cy="64" r="32" fill="#C98E62"></circle><path d="M68 56 Q72 26 100 26 Q128 26 132 56 Q120 40 100 42 Q80 40 68 56Z" fill="#1E1410"></path><path d="M34 160 Q34 106 100 106 Q166 106 166 160Z" fill="#2EE6A6"></path></svg><span style="position: absolute; left: 10px; bottom: 10px; background: rgba(0,0,0,0.55); color: #FFFFFF; font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 8px">Ty</span></div>
-</div>
-<div style="padding: 16px 18px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
-<span class="chip" style="background: #E6FBF3; color: #11775A">Lekcja trwa · 32:14</span>
-<span class="muted" style="font-weight: 700">Funkcja kwadratowa – zadania maturalne</span>
-</div>
-</div>
-<div class="card" style="position: absolute; right: -8px; bottom: -28px; display: flex; gap: 12px; align-items: center; padding: 12px 16px">
-<svg width="44" height="52" viewBox="36 14 128 162" aria-hidden="true"><polygon points="100,20 160,95 100,170 40,95" fill="#FFC93C"></polygon><polygon points="100,20 40,95 100,95" fill="#FF5A5F"></polygon><polygon points="100,95 160,95 100,170" fill="#FF5A5F"></polygon><polygon points="100,20 160,95 100,170 40,95" fill="none" stroke="#1C1640" stroke-width="9" stroke-linejoin="round"></polygon><circle cx="83" cy="92" r="11" fill="#FFFFFF"></circle><circle cx="117" cy="92" r="11" fill="#FFFFFF"></circle><circle cx="85" cy="93" r="5.5" fill="#1C1640"></circle><circle cx="119" cy="93" r="5.5" fill="#1C1640"></circle></svg>
-<div><div style="font-weight: 800">Nowa naklejka!</div><div class="muted" style="font-size: 14px">Kapi – strona 8 z 12</div></div>
-</div>
-</div>
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="sky" aria-hidden="true">
+      <svg class="string" viewBox="0 0 120 160" fill="none"><path d="M4 4 C 40 40, 10 90, 70 156" stroke="#1C1640" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round"/></svg>
+      <img class="k" src="assets/kitka.svg" alt="">
+    </div>
+    <div class="copy stack" style="--gap:18px">
+      <span class="tag">Lekcje wideo jeden na jeden</span>
+      <h1 class="h1">Korepetycje, po których wszystko staje się jasne</h1>
+      <p class="lead">Matematyka, języki i egzaminy z zweryfikowanym korepetytorem. Lekcja w przeglądarce, notatki po zajęciach i raport dla rodzica.</p>
+      <form class="card find" action="szukaj.html" style="margin-top:8px">
+        <div class="field"><label for="f-s">Czego chcesz się uczyć?</label>
+          <select id="f-s" class="select" name="przedmiot" x-model="subject"><option>Matematyka</option><option>Angielski</option><option>Fizyka</option><option>Chemia</option><option>Niemiecki</option><option>Biologia</option></select></div>
+        <div class="field"><label for="f-l">Poziom</label>
+          <select id="f-l" class="select" name="poziom" x-model="level"><option>Szkoła podstawowa</option><option>Liceum i matura</option><option>Studia</option><option>Dorośli</option></select></div>
+        <button class="btn" type="submit"><i data-i="search"></i>Pokaż korepetytorów</button>
+      </form>
+      <ul class="plain trust">
+        <li><i data-i="shield"></i>Sprawdzamy tożsamość i kwalifikacje</li>
+        <li><i data-i="wallet"></i>Korepetytor dostaje pieniądze po lekcji</li>
+        <li><i data-i="chart"></i>Rodzic widzi postępy dziecka</li>
+      </ul>
+    </div>
+
+    <div class="peek" aria-label="Podgląd pokoju lekcyjnego">
+      <div class="screen">
+        <div class="tiles">
+          <div class="tile" style="background:#3A2F7A"><svg viewBox="0 0 200 160" width="78%" aria-hidden="true"><circle cx="100" cy="62" r="34" fill="#F2C29B"/><path d="M66 50 Q100 10 134 50 Q130 30 100 26 Q70 30 66 50z" fill="#5A3A2A"/><path d="M40 160 Q100 96 160 160z" fill="#6C4CF1"/></svg><span class="nm">Marta K., matematyka</span></div>
+          <div class="tile" style="background:#2C5F66"><svg viewBox="0 0 200 160" width="78%" aria-hidden="true"><circle cx="100" cy="64" r="32" fill="#C98E62"/><path d="M68 56 Q72 26 100 26 Q128 26 132 56 Q120 40 100 40 Q80 40 68 56z" fill="#1C1640"/><path d="M44 160 Q100 98 156 160z" fill="#2EE6A6"/></svg><span class="nm">Ty</span></div>
+        </div>
+        <div class="meta"><span class="tag coral live" style="background:rgba(232,66,74,.2);color:#FFB3B6">32:14</span><span class="small strong" style="opacity:.9">Funkcja kwadratowa</span></div>
+      </div>
+      <div class="toast"><img src="assets/kapi.svg" alt=""><div><p class="strong small">Nowa naklejka</p><p class="tiny muted">Kapi, strona 8 z 12</p></div></div>
+    </div>
+  </div>
 </section>
 
-<section id="jak" class="wrap" style="padding-top: 48px; padding-bottom: 48px">
-<h2 style="font-size: 38px; margin-bottom: 24px">Jak to działa</h2>
-<div class="cols">
-<div class="card"><span class="chip">Krok 1</span><h3 style="font-size: 22px; margin: 14px 0 8px">Wybierz korepetytora</h3><p class="muted" style="margin: 0; line-height: 1.5">Filtruj po przedmiocie, poziomie, języku zajęć, cenie i terminach. Każdy profil ma wideo, opinie i weryfikację.</p></div>
-<div class="card"><span class="chip">Krok 2</span><h3 style="font-size: 22px; margin: 14px 0 8px">Ucz się na wideo w przeglądarce</h3><p class="muted" style="margin: 0; line-height: 1.5">Kamera, dźwięk, tablica, czat i materiały w jednym pokoju. Bez instalowania aplikacji.</p></div>
-<div class="card"><span class="chip">Krok 3</span><h3 style="font-size: 22px; margin: 14px 0 8px">Zobacz postęp i zbieraj naklejki</h3><p class="muted" style="margin: 0; line-height: 1.5">Po lekcji dostajesz notatki i zadania, rodzic raport, a za naukę naklejki do albumu Ekipy KiteTutor.</p></div>
-</div>
+<section class="sec" id="jak">
+  <div class="wrap">
+    <h2 class="h2" style="margin-bottom:24px">Jak to działa</h2>
+    <div class="grid g3 steps">
+      <div class="step"><span class="n">1</span><div class="stack" style="--gap:6px"><h3 class="h3">Wybierz korepetytora</h3><p class="muted">Filtruj po przedmiocie, poziomie, cenie i wolnych terminach. Każdy profil ma wideo i opinie po lekcjach.</p></div></div>
+      <div class="step"><span class="n">2</span><div class="stack" style="--gap:6px"><h3 class="h3">Ucz się w przeglądarce</h3><p class="muted">Kamera, dźwięk, wspólna tablica, czat i materiały w jednym pokoju. Nic nie trzeba instalować.</p></div></div>
+      <div class="step"><span class="n">3</span><div class="stack" style="--gap:6px"><h3 class="h3">Zobacz, co już umiesz</h3><p class="muted">Po lekcji dostajesz notatki i zadania, a rodzic krótki raport. Za regularną naukę wpadają naklejki do albumu.</p></div></div>
+    </div>
+  </div>
 </section>
 
-<section id="ekipa" style="background: #FFFFFF; border-top: 1px solid #ECE7FF; border-bottom: 1px solid #ECE7FF">
-<div class="wrap" style="display: flex; flex-wrap: wrap; gap: 32px; align-items: center; padding-top: 56px; padding-bottom: 56px">
-<div style="flex: 1 1 400px; display: flex; flex-direction: column; gap: 14px">
-<span class="chip" style="align-self: flex-start; background: #FFF3D1; color: #8A5A00">Ekipa KiteTutor</span>
-<h2 style="font-size: 38px">Nauka, którą chce się kolekcjonować</h2>
-<p class="muted" style="font-size: 18px; line-height: 1.5; margin: 0">Każdy przedmiot ma swojego opiekuna z Ekipy. Za lekcje, zadania i regularność uczeń zbiera naklejki, a pełne strony albumu dają zniżki i darmowe lekcje. Naklejek nie da się kupić – tylko wypracować.</p>
-<a class="btn2" href="album.html" style="align-self: flex-start">Zobacz album</a>
-</div>
-<div style="flex: 1 1 520px; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 14px">
-<div class="card" style="text-align: center; padding: 16px; background: #EFE9FF; border: 0"><svg width="72" height="80" viewBox="36 14 128 162" aria-hidden="true"><polygon points="100,20 160,95 100,170 40,95" fill="#6C4CF1"></polygon><polygon points="100,20 40,95 100,95" fill="#FF5A5F"></polygon><polygon points="100,95 160,95 100,170" fill="#FF5A5F"></polygon><polygon points="100,20 160,95 100,170 40,95" fill="none" stroke="#1C1640" stroke-width="7" stroke-linejoin="round"></polygon><circle cx="83" cy="92" r="11" fill="#FFFFFF"></circle><circle cx="117" cy="92" r="11" fill="#FFFFFF"></circle><circle cx="85" cy="93" r="5.5" fill="#1C1640"></circle><circle cx="119" cy="93" r="5.5" fill="#1C1640"></circle><path d="M88 114 Q100 124 112 114" fill="none" stroke="#1C1640" stroke-width="5" stroke-linecap="round"></path></svg><div style="font-weight: 800; margin-top: 6px">Kitka</div><div class="muted" style="font-size: 13px">liderka</div></div>
-<div class="card" style="text-align: center; padding: 16px; background: #FFEBD6; border: 0"><svg width="80" height="80" viewBox="34 36 112 104" aria-hidden="true"><circle cx="54" cy="66" r="9" fill="#6E4A2F" stroke="#1C1640" stroke-width="3"></circle><circle cx="122" cy="66" r="9" fill="#6E4A2F" stroke="#1C1640" stroke-width="3"></circle><rect x="38" y="62" width="100" height="76" rx="34" fill="#B07A4F" stroke="#1C1640" stroke-width="4"></rect><rect x="68" y="98" width="62" height="34" rx="16" fill="#C99167" stroke="#1C1640" stroke-width="3"></rect><path d="M58 90 Q65 85 72 90" fill="none" stroke="#1C1640" stroke-width="4" stroke-linecap="round"></path><path d="M104 88 Q111 83 118 88" fill="none" stroke="#1C1640" stroke-width="4" stroke-linecap="round"></path><circle cx="88" cy="52" r="12" fill="#FF9F1C" stroke="#1C1640" stroke-width="3"></circle></svg><div style="font-weight: 800; margin-top: 6px">Kapi</div><div class="muted" style="font-size: 13px">matematyka</div></div>
-<div class="card" style="text-align: center; padding: 16px; background: #FFE3EF; border: 0"><svg width="90" height="80" viewBox="14 44 172 92" aria-hidden="true"><g fill="#FF5DA2" stroke="#1C1640" stroke-width="3"><ellipse cx="40" cy="66" rx="16" ry="7" transform="rotate(-35 40 66)"></ellipse><ellipse cx="32" cy="88" rx="17" ry="7"></ellipse><ellipse cx="160" cy="66" rx="16" ry="7" transform="rotate(35 160 66)"></ellipse><ellipse cx="168" cy="88" rx="17" ry="7"></ellipse></g><ellipse cx="100" cy="90" rx="58" ry="44" fill="#FFA3C7" stroke="#1C1640" stroke-width="4"></ellipse><circle cx="78" cy="86" r="7" fill="#1C1640"></circle><circle cx="122" cy="86" r="7" fill="#1C1640"></circle><path d="M80 104 Q100 120 120 104" fill="none" stroke="#1C1640" stroke-width="5" stroke-linecap="round"></path></svg><div style="font-weight: 800; margin-top: 6px">Lotka</div><div class="muted" style="font-size: 13px">biologia</div></div>
-<div class="card" style="text-align: center; padding: 16px; background: #FFE6D9; border: 0"><svg width="80" height="80" viewBox="38 22 124 124" aria-hidden="true"><polygon points="50,58 66,26 84,56" fill="#D9541E" stroke="#1C1640" stroke-width="4" stroke-linejoin="round"></polygon><polygon points="116,56 134,26 150,58" fill="#D9541E" stroke="#1C1640" stroke-width="4" stroke-linejoin="round"></polygon><ellipse cx="100" cy="92" rx="58" ry="48" fill="#E8662A" stroke="#1C1640" stroke-width="4"></ellipse><ellipse cx="100" cy="112" rx="30" ry="22" fill="#FFF4E8"></ellipse><circle cx="78" cy="92" r="7.5" fill="#1C1640"></circle><circle cx="122" cy="92" r="7.5" fill="#1C1640"></circle><ellipse cx="100" cy="104" rx="7" ry="4.5" fill="#1C1640"></ellipse></svg><div style="font-weight: 800; margin-top: 6px">Rudi</div><div class="muted" style="font-size: 13px">historia</div></div>
-</div>
-</div>
+<section class="ekipa sec">
+  <div class="wrap">
+    <div class="stack" style="--gap:16px;margin-bottom:28px">
+      <h2 class="h2">Poznaj Ekipę KiteTutor</h2>
+      <p class="lead" style="color:var(--ink)">Każdy przedmiot ma swojego opiekuna. Za lekcje, zadania i regularność uczeń zbiera naklejki do albumu. Naklejek nie da się kupić ani wylosować – tylko wypracować.</p>
+      <div><a class="btn" href="album.html" style="background:var(--ink)">Zobacz album</a></div>
+    </div>
+    <div class="crew">
+      <div class="m"><img src="assets/kitka.svg" alt=""><b>Kitka</b><span>liderka</span></div>
+      <div class="m"><img src="assets/kapi.svg" alt=""><b>Kapi</b><span>matematyka</span></div>
+      <div class="m"><img src="assets/lotka.svg" alt=""><b>Lotka</b><span>biologia</span></div>
+      <div class="m"><img src="assets/rudi.svg" alt=""><b>Rudi</b><span>historia</span></div>
+    </div>
+  </div>
 </section>
 
-<section class="wrap" style="padding-top: 56px; padding-bottom: 56px">
-<h2 style="font-size: 38px; margin-bottom: 24px">Dla kogo jest KiteTutor</h2>
-<div class="cols">
-<a class="card" href="start.html" style="text-decoration: none; color: #1C1640; display: flex; flex-direction: column; gap: 10px"><span class="chip">Uczeń</span><h3 style="font-size: 22px">Uczę się i chcę lepszych ocen</h3><p class="muted" style="margin: 0; line-height: 1.5">Materiały, notatki, zadania i postęp w jednym miejscu. Do 18 lat konto zakłada rodzic.</p></a>
-<a class="card" href="start.html" style="text-decoration: none; color: #1C1640; display: flex; flex-direction: column; gap: 10px"><span class="chip">Rodzic</span><h3 style="font-size: 22px">Chcę widzieć postępy dziecka</h3><p class="muted" style="margin: 0; line-height: 1.5">Raport po każdej lekcji, płatności i faktury, zgody i kontrola rezerwacji.</p></a>
-<a class="card" href="start.html" style="text-decoration: none; color: #1C1640; display: flex; flex-direction: column; gap: 10px"><span class="chip">Dorosły</span><h3 style="font-size: 22px">Uczę się dla siebie</h3><p class="muted" style="margin: 0; line-height: 1.5">Języki, egzaminy, rozwój zawodowy. Widok opiekuna jest opcjonalny.</p></a>
-<a class="card" href="korepetytor.html" style="text-decoration: none; color: #1C1640; display: flex; flex-direction: column; gap: 10px"><span class="chip">Korepetytor</span><h3 style="font-size: 22px">Uczę i chcę mieć uczniów</h3><p class="muted" style="margin: 0; line-height: 1.5">Kalendarz, materiały, wypłaty i uczciwa prowizja. Lekcja próbna też jest płatna.</p></a>
-</div>
+<section class="sec">
+  <div class="wrap">
+    <h2 class="h2" style="margin-bottom:24px">Dla kogo jest KiteTutor</h2>
+    <div class="grid g4 who">
+      <a href="uczen.html"><div class="card stack" style="--gap:8px"><span class="av" style="background:var(--coral)"><i data-i="book" data-s="22"></i></span><h3 class="h3">Uczę się do szkoły</h3><p class="muted small">Materiały, notatki, zadania i postęp w jednym miejscu. Do 18 lat konto zakłada rodzic.</p></div></a>
+      <a href="rodzic.html"><div class="card stack" style="--gap:8px"><span class="av" style="background:var(--mint)"><i data-i="chart" data-s="22"></i></span><h3 class="h3">Jestem rodzicem</h3><p class="muted small">Raport po lekcji, płatności i faktury, zgody i kontrola rezerwacji.</p></div></a>
+      <a href="uczen.html"><div class="card stack" style="--gap:8px"><span class="av" style="background:var(--ink)"><i data-i="globe" data-s="22"></i></span><h3 class="h3">Uczę się dla siebie</h3><p class="muted small">Języki, egzaminy, rozwój zawodowy. Bez panelu rodzica.</p></div></a>
+      <a href="korepetytor.html"><div class="card stack" style="--gap:8px"><span class="av"><i data-i="users" data-s="22"></i></span><h3 class="h3">Uczę innych</h3><p class="muted small">Kalendarz, materiały, wypłaty i jasna prowizja. Lekcja próbna też jest płatna.</p></div></a>
+    </div>
+  </div>
 </section>
 
-<footer style="background: #1C1640; color: #E9E3FF">
-<div class="wrap" style="display: flex; flex-wrap: wrap; gap: 32px; padding-top: 40px; padding-bottom: 40px; justify-content: space-between">
-<div style="font-family: Fredoka, sans-serif; font-size: 24px; font-weight: 700; color: #FFFFFF">kitetutor</div>
-<div style="display: flex; gap: 24px; flex-wrap: wrap; font-weight: 700"><a href="szukaj.html" style="color: #E9E3FF">Korepetytorzy</a><a href="start.html" style="color: #E9E3FF">Zostań korepetytorem</a><a href="rodzic.html" style="color: #E9E3FF">Dla rodziców</a><a href="#ekipa" style="color: #E9E3FF">Bezpieczeństwo dzieci</a><a href="#jak" style="color: #E9E3FF">Regulamin i prywatność</a></div>
-<div style="font-size: 14px">Język: Polski · English · Deutsch · Español</div>
-</div>
-</footer>
-</div>
+<section class="sec" id="bezpieczenstwo" style="padding-top:0">
+  <div class="wrap">
+    <div class="safe">
+      <div class="stack" style="--gap:12px;margin-bottom:24px">
+        <h2 class="h2">Bezpieczeństwo dzieci przed wszystkim</h2>
+        <p class="muted">Projektujemy KiteTutor tak, żeby rodzic zawsze wiedział, kto uczy jego dziecko i o czym rozmawiają.</p>
+      </div>
+      <ul class="plain stack" style="--gap:16px">
+        <li><i data-i="shield"></i><span>Korepetytorzy pracujący z dziećmi przechodzą weryfikację tożsamości i sprawdzenie w rejestrach.</span></li>
+        <li><i data-i="lock"></i><span>Dane uczniów poniżej 18 lat nigdy nie są publiczne. Korepetytor kontaktuje się przez konto rodzica.</span></li>
+        <li><i data-i="chat"></i><span>Czat filtruje numery telefonów i adresy, a lekcje odbywają się tylko w pokoju KiteTutor.</span></li>
+        <li><i data-i="flag"></i><span>Każdy może zgłosić niepokojącą sytuację jednym przyciskiem w pokoju lekcyjnym.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec cta" style="padding-top:0">
+  <div class="wrap stack" style="--gap:16px;justify-items:center;display:grid">
+    <h2 class="h2">Pierwsza lekcja może być jutro</h2>
+    <p class="lead" style="margin:0 auto">Wybierz przedmiot i zobacz, kto ma wolne terminy w tym tygodniu.</p>
+    <a class="btn" href="szukaj.html">Znajdź korepetytora</a>
+  </div>
+</section>
+</main>
+
+<div data-kt="footer"></div>
+<script src="assets/kt.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </body>
 </html>

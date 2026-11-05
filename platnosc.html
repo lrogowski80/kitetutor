@@ -2,91 +2,210 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KiteTutor – płatność</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Płatność – KiteTutor (podgląd)</title>
+<meta name="description" content="Podgląd płatności za pakiet lekcji. Wersja demo, żadne pieniądze nie są pobierane.">
+<meta name="theme-color" content="#5B3BE8">
+<link rel="icon" href="assets/kitka.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kt.css">
 <style>
-body{margin:0;background:#F6F3FF;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
-a{color:#4A2DD0}a:hover{color:#1C1640}
-*{box-sizing:border-box}
-h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-.card{background:#FFFFFF;border-radius:20px;padding:22px;border:1px solid #ECE7FF}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border-radius:14px;background:#5B3BE8;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:17px}
-.btn:hover{background:#4A2DD0;color:#FFFFFF}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
-.muted{color:#5E5878}
-.pm{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:14px 16px;border-radius:14px;border:2px solid #ECE7FF;background:#FFFFFF;font-family:inherit;color:#1C1640;cursor:pointer;text-align:left;min-height:44px}
-.pmOn{border-color:#5B3BE8;background:#F6F2FF}
-.in{min-height:48px;border-radius:12px;border:1.5px solid #DCD3FF;padding:0 14px;font-family:inherit;font-size:16px;width:100%}
-.row{display:flex;justify-content:space-between;gap:12px}
-.tog{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#F6F3FF;font-weight:700;cursor:pointer}
-.tog input{width:22px;height:22px;accent-color:#5B3BE8}
-</style>
-<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
-<script>
-function page() { return {
- state: { m: 'blik', coupon: true, invoice: false },
- setState(o) { Object.assign(this.state, o); },
- get v() {
-const M = [
-{ id: 'blik', name: 'BLIK', note: 'Kod z aplikacji banku' },
-{ id: 'card', name: 'Karta', note: 'Visa, Mastercard' },
-{ id: 'wallet', name: 'Apple Pay / Google Pay', note: 'Jednym dotknięciem' },
-{ id: 'transfer', name: 'Szybki przelew', note: 'Twój bank' }
-];
-return {
-methods: M.map((x) => ({ name: x.name, note: x.note, cls: x.id === this.state.m ? 'pm pmOn' : 'pm', pick: () => this.setState({ m: x.id }) })),
-isBlik: this.state.m === 'blik', isCard: this.state.m === 'card' || this.state.m === 'wallet',
-coupon: this.state.coupon, invoice: this.state.invoice,
-toggleCoupon: () => this.setState({ coupon: !this.state.coupon }),
-toggleInvoice: () => this.setState({ invoice: !this.state.invoice }),
-total: this.state.coupon ? '513 zł' : '570 zł'
-};
+.back { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; font-weight: 800; text-decoration: none; margin: 8px 0 0 -6px; padding: 0 8px 0 2px; border-radius: 10px; }
+.ptitle { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 4px 0 16px; }
+.co { display: grid; gap: 16px; padding-bottom: 40px; }
+.co > * { min-width: 0; }
+.demo-note { display: flex; gap: 12px; align-items: flex-start; background: var(--coral-50); color: #7A1A20; border-radius: var(--r-m); padding: 14px 16px; font-size: 15px; }
+.demo-note svg { color: var(--coral); flex: none; margin-top: 2px; }
+.sechd { margin-bottom: 14px; }
+
+/* Podsumowanie */
+.line { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; align-items: baseline; }
+.line .v { font-weight: 800; white-space: nowrap; }
+.line.disc .v { color: #11704F; }
+.sum-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 14px; margin-top: 8px; border-top: 1.5px solid var(--line); }
+.sum-total b { font: 600 30px var(--f-head); }
+.reward { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: var(--sun-50); margin-top: 10px; cursor: pointer; }
+.reward img { width: 40px; height: 40px; flex: none; }
+.reward input { width: 22px; height: 22px; accent-color: var(--violet); flex: none; margin: 0 0 0 auto; }
+.lesson { display: flex; gap: 12px; align-items: center; padding-bottom: 14px; margin-bottom: 6px; border-bottom: 1.5px solid var(--line); }
+
+/* Metody płatności */
+.opt { position: relative; display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 16px; cursor: pointer; background: #fff; }
+.opt + .opt, .opt + .extra + .opt { margin-top: 10px; }
+.opt input { position: absolute; opacity: 0; pointer-events: none; }
+.opt .grow { flex: 1; min-width: 0; line-height: 1.3; }
+.opt .grow small { display: block; color: var(--muted); font-weight: 600; font-size: 14px; }
+.opt .rd { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #CFC6F2; flex: none; display: grid; place-items: center; }
+.opt:hover { border-color: var(--violet-100); }
+.opt:has(input:checked) { border-color: var(--violet); background: var(--violet-50); }
+.opt:has(input:checked) .rd { border-color: var(--violet); }
+.opt:has(input:checked) .rd::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--violet); }
+.opt:has(input:focus-visible) { outline: 3px solid var(--violet); outline-offset: 2px; }
+.mi { width: 48px; height: 36px; border-radius: 9px; background: var(--surface); display: grid; place-items: center; flex: none; color: var(--ink); font: 900 13px var(--f-body); letter-spacing: .02em; }
+.mi.blik { background: #111; color: #fff; }
+.extra { margin: 10px 0 0; padding: 14px; border-radius: 16px; background: var(--surface); }
+.blikin { font: 700 26px var(--f-head); letter-spacing: .35em; text-align: center; padding-left: calc(14px + .35em); }
+.err { color: #B4232B; font-size: 14px; font-weight: 700; }
+.input[aria-invalid="true"] { border-color: var(--coral); }
+
+.payer { display: flex; gap: 12px; align-items: center; }
+.chk { display: flex; gap: 12px; align-items: center; min-height: 48px; cursor: pointer; font-weight: 700; margin-top: 8px; }
+.chk input { width: 22px; height: 22px; accent-color: var(--violet); flex: none; margin: 0; }
+
+/* Rozliczenia */
+.flow { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: f; }
+.flow li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; counter-increment: f; font-size: 15px; }
+.flow li::before { content: counter(f); width: 32px; height: 32px; border-radius: 10px; background: var(--violet-50); color: var(--violet-d); font: 700 15px/32px var(--f-head); text-align: center; }
+.ledger { margin-top: 18px; padding: 14px; border-radius: 16px; background: var(--surface); }
+.ledger .segs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 8px 0; }
+.ledger .segs span { height: 36px; border-radius: 10px; border: 1.5px dashed #BFB4EE; background: #fff; display: grid; place-items: center; font: 700 14px var(--f-head); color: var(--violet-d); }
+.ledger .row { font-size: 14px; }
+
+/* Pasek płatności na telefonie */
+.paybar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -8px 24px rgba(23,18,58,.08); padding: 10px var(--gut) calc(10px + env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; }
+.paybar .t { line-height: 1.15; }
+.paybar .t b { font: 600 22px var(--f-head); white-space: nowrap; }
+.paybar .t span { display: block; font-size: 12.5px; color: var(--muted); font-weight: 700; }
+.paybar .btn { flex: 1; }
+.deskpay { display: none; }
+body { padding-bottom: 84px; }
+
+.modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: end center; }
+.modal .scrim { position: absolute; inset: 0; background: rgba(23,18,58,.5); }
+.modal .dlg { position: relative; background: #fff; width: 100%; max-width: 460px; border-radius: 24px 24px 0 0; padding: 28px 20px calc(20px + env(safe-area-inset-bottom)); text-align: center; display: grid; gap: 12px; justify-items: center; }
+.modal .ok { width: 64px; height: 64px; border-radius: 50%; background: var(--mint); color: #fff; display: grid; place-items: center; }
+.modal .btn { width: 100%; }
+
+@media (min-width: 960px) {
+  body { padding-bottom: 0; }
+  .paybar { display: none; }
+  .deskpay { display: block; }
+  .back { margin-top: 20px; }
+  .co { grid-template-columns: minmax(0, 1fr) 400px; gap: 24px; align-items: start; padding-bottom: 72px; }
+  .co > :not(.summary) { grid-column: 1; }
+  .summary { grid-column: 2; grid-row: 1 / span 5; position: sticky; top: 80px; }
+  .modal { place-items: center; }
+  .modal .dlg { border-radius: 24px; padding: 32px; }
 }
-}; }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+[tabindex="-1"]:focus { outline: none; }
+</style>
 </head>
-<body x-data="page()">
-<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
-<div style="min-height: 1100px; padding-top: 28px; padding-bottom: 48px">
-<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
-<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap"><a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a><span class="chip" style="background: #E6FBF3; color: #11775A">Bezpieczna płatność</span></div>
-<h1 style="font-size: 38px">Płatność</h1>
-<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
-<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
-<section class="card" style="display: flex; flex-direction: column; gap: 12px">
-<h2 style="font-size: 22px">Kto płaci</h2>
-<div style="display: flex; gap: 12px; align-items: center"><span style="width: 44px; height: 44px; border-radius: 50%; background: #11775A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800">AN</span><div><div style="font-weight: 800">Agnieszka N. (rodzic)</div><div class="muted" style="font-size: 14px">Lekcje dla: konto ucznia pod Twoją opieką</div></div></div>
-<label class="tog"><input type="checkbox" :checked="v.invoice" @change="v.toggleInvoice()"><span>Chcę fakturę (np. na firmę)</span></label>
-<template x-if="v.invoice"><div style="display: contents"><div style="display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))"><label class="muted" style="font-weight: 800; font-size: 13px">NIP<input class="in" type="text" placeholder="[NIP]"></label><label class="muted" style="font-weight: 800; font-size: 13px">Nazwa firmy<input class="in" type="text" placeholder="[NAZWA FIRMY]"></label></div></div></template>
-</section>
-<section class="card" style="display: flex; flex-direction: column; gap: 12px">
-<h2 style="font-size: 22px">Metoda płatności</h2>
-<div style="display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr))">
-<template x-for="m in v.methods"><div style="display: contents"><button type="button" :class="m.cls" @click="m.pick()"><span style="font-weight: 800"><span x-text="m.name"></span></span><span class="muted" style="font-size: 13px"><span x-text="m.note"></span></span></button></div></template>
-</div>
-<template x-if="v.isBlik"><div style="display: contents"><label style="font-weight: 800; font-size: 14px; display: flex; flex-direction: column; gap: 6px; max-width: 260px">Kod BLIK z aplikacji banku<input class="in" type="text" inputmode="numeric" placeholder="000 000" style="font-size: 24px; letter-spacing: 6px; text-align: center"></label></div></template>
-<template x-if="v.isCard"><div style="display: contents"><div class="muted" style="padding: 14px; border-radius: 14px; background: #F6F3FF; line-height: 1.5">Dane karty wpisujesz w bezpiecznym oknie operatora płatności. KiteTutor nie przechowuje numeru karty.</div></div></template>
-</section>
-<section class="card" style="display: flex; flex-direction: column; gap: 10px">
-<h2 style="font-size: 22px">Jak działają rozliczenia</h2>
-<ol class="muted" style="margin: 0; padding-left: 22px; line-height: 1.8"><li>Płacisz teraz za pakiet – środki są bezpiecznie zablokowane u operatora płatności.</li><li>Po każdej odbytej lekcji jej część trafia do korepetytorki (minus prowizja KiteTutor).</li><li>Odwołanie do 24 h przed lekcją wraca na saldo pakietu. Niewykorzystane lekcje możesz zwrócić.</li><li>Faktury i historia płatności są w panelu rodzica.</li></ol>
-</section>
+<body x-data="checkout()">
+<div data-kt="header"></div>
+
+<main id="tresc" class="wrap">
+  <a class="back" href="profil.html"><i data-i="left" data-s="20"></i>Wróć do rezerwacji</a>
+  <div class="ptitle"><h1 class="h2">Płatność</h1><span class="tag mint"><i data-i="lock" data-s="15"></i>Bezpieczne połączenie</span></div>
+
+  <form class="co" @submit.prevent="pay()" novalidate autocomplete="off">
+    <p class="demo-note" role="note"><i data-i="flag" data-s="20"></i><span><b>To wersja demo.</b> Nie pobieramy żadnych pieniędzy, a wpisane dane nie są nigdzie wysyłane.</span></p>
+
+    <section class="card summary" aria-labelledby="h-sum">
+      <h2 class="h3 sechd" id="h-sum">Twoje zamówienie</h2>
+      <div class="lesson">
+        <span class="av" aria-hidden="true">MK</span>
+        <div><p class="strong">Marta K., matematyka</p><p class="small muted">Pierwsza lekcja: jutro, 6 listopada, 17:00</p></div>
+      </div>
+      <div class="line"><span>Pakiet 5 lekcji po 60 min</span><span class="v">570,00 zł</span></div>
+      <div class="line disc" x-show="reward"><span>Nagroda z albumu, −10%</span><span class="v">−57,00 zł</span></div>
+      <label class="reward">
+        <img src="assets/kapi.svg" alt="">
+        <span class="small"><b>Pełna strona Kapi</b><br>Użyj nagrody z albumu</span>
+        <input type="checkbox" x-model="reward" aria-label="Użyj nagrody z albumu, 10% zniżki">
+      </label>
+      <div class="sum-total"><span class="strong">Razem</span><b x-text="zl(total)"></b></div>
+      <p class="tiny muted" style="margin-top:4px">Kwota brutto. Wychodzi <span x-text="zl(total / 5)"></span> za lekcję.</p>
+      <div class="deskpay" style="margin-top:18px">
+        <button class="btn block" type="submit"><i data-i="lock"></i><span x-text="'Zapłać ' + zl(total)"></span></button>
+        <p class="tiny muted" style="margin-top:10px;text-align:center">Demo, żadne pieniądze nie zostaną pobrane.</p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-met">
+      <h2 class="h3 sechd" id="h-met">Metoda płatności</h2>
+      <div role="radiogroup" aria-labelledby="h-met">
+        <label class="opt"><input type="radio" name="m" value="blik" x-model="m"><span class="mi blik">BLIK</span><span class="grow"><span class="strong">BLIK</span><small>Kod z aplikacji banku</small></span><span class="rd"></span></label>
+        <div class="extra" x-show="m==='blik'">
+          <div class="field"><label for="blik">Kod BLIK</label>
+            <input id="blik" class="input blikin" type="text" inputmode="numeric" maxlength="6" placeholder="000000" x-model="code" @input="code = code.replace(/\D/g,''); err=''" :aria-invalid="(!!err).toString()" aria-describedby="blik-e">
+            <span class="err" id="blik-e" x-show="err" x-text="err" role="alert"></span></div>
+        </div>
+        <label class="opt"><input type="radio" name="m" value="card" x-model="m"><span class="mi"><i data-i="wallet" data-s="20"></i></span><span class="grow"><span class="strong">Karta</span><small>Visa, Mastercard</small></span><span class="rd"></span></label>
+        <div class="extra small" x-show="m==='card'" x-cloak>Dane karty wpiszesz w bezpiecznym oknie operatora płatności. KiteTutor nie przechowuje numeru karty.</div>
+        <label class="opt"><input type="radio" name="m" value="wallet" x-model="m"><span class="mi"><i data-i="phone" data-s="20"></i></span><span class="grow"><span class="strong">Apple Pay lub Google Pay</span><small>Potwierdzasz w telefonie</small></span><span class="rd"></span></label>
+        <div class="extra small" x-show="m==='wallet'" x-cloak>Po kliknięciu „Zapłać” telefon poprosi o potwierdzenie.</div>
+        <label class="opt"><input type="radio" name="m" value="transfer" x-model="m"><span class="mi"><i data-i="globe" data-s="20"></i></span><span class="grow"><span class="strong">Szybki przelew</span><small>Logujesz się do swojego banku</small></span><span class="rd"></span></label>
+        <div class="extra small" x-show="m==='transfer'" x-cloak>Przekierujemy Cię do banku, a po płatności wrócisz tutaj.</div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-kto">
+      <h2 class="h3 sechd" id="h-kto">Kto płaci</h2>
+      <div class="payer">
+        <span class="av" style="background:var(--mint)" aria-hidden="true">A</span>
+        <div><p class="strong">Anna, rodzic</p><p class="small muted">Lekcje dla konta ucznia pod Twoją opieką</p></div>
+      </div>
+      <label class="chk"><input type="checkbox" x-model="invoice">Chcę fakturę na firmę</label>
+      <div class="grid g2" x-show="invoice" x-cloak style="margin-top:8px">
+        <div class="field"><label for="nip">NIP</label><input id="nip" class="input" type="text" inputmode="numeric" autocomplete="off"></div>
+        <div class="field"><label for="firma">Nazwa firmy</label><input id="firma" class="input" type="text" autocomplete="off"></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-roz">
+      <h2 class="h3 sechd" id="h-roz">Jak działają rozliczenia</h2>
+      <ol class="flow">
+        <li><span>Płacisz teraz za pakiet. Pieniądze czekają u operatora płatności, nie u korepetytorki.</span></li>
+        <li><span>Po każdej odbytej lekcji jej część trafia do korepetytorki, pomniejszona o prowizję KiteTutor.</span></li>
+        <li><span>Lekcja odwołana do 24 h przed terminem wraca na saldo pakietu. Niewykorzystane lekcje możesz zwrócić.</span></li>
+      </ol>
+      <div class="ledger">
+        <div class="row between"><span class="strong">Saldo pakietu</span><span class="strong" x-text="zl(total)"></span></div>
+        <div class="segs" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+        <p class="small muted" x-text="'5 lekcji po ' + zl(total / 5) + ' czeka na rozliczenie po zajęciach.'"></p>
+      </div>
+      <p class="tiny muted" style="margin-top:12px">Faktury i historia płatności są w panelu rodzica. Ceny, prowizja i zniżki w podglądzie są przykładowe.</p>
+    </section>
+
+    <div class="paybar">
+      <div class="t"><b x-text="zl(total)"></b><span>demo, bez opłat</span></div>
+      <button class="btn" type="submit"><i data-i="lock"></i>Zapłać</button>
+    </div>
+  </form>
 </main>
-<aside class="card" style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 12px" aria-label="Podsumowanie">
-<h2 style="font-size: 22px">Podsumowanie</h2>
-<div style="display: flex; gap: 12px; align-items: center"><span style="width: 44px; height: 44px; border-radius: 14px; background: #5B3BE8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800">MK</span><div><div style="font-weight: 800">Marta K. · matematyka</div><div class="muted" style="font-size: 14px">Pierwsza lekcja: jutro, 17:00</div></div></div>
-<div class="row"><span>Pakiet 5 lekcji × 60 min</span><b>570 zł</b></div>
-<label class="tog" style="background: #FFF3D1"><input type="checkbox" :checked="v.coupon" @change="v.toggleCoupon()"><span>Nagroda z albumu: pełna strona Kapi, −10%</span></label>
-<template x-if="v.coupon"><div style="display: contents"><div class="row" style="color: #11775A; font-weight: 800"><span>Zniżka z albumu</span><span>−57 zł</span></div></div></template>
-<div class="row" style="font-size: 22px; font-weight: 800; border-top: 1px solid #ECE7FF; padding-top: 10px"><span>Razem</span><span><span x-text="v.total"></span></span></div>
-<a class="btn" href="uczen.html">Zapłać <span x-text="v.total"></span></a>
-<p class="muted" style="font-size: 13px; margin: 0">Kwoty brutto. Ceny, prowizja i zniżki w podglądzie są przykładowe do ustalenia przez dział finansów.</p>
-</aside>
+
+<div class="modal" x-show="paid" x-cloak x-transition.opacity @keydown.escape.window="paid=false">
+  <div class="scrim" @click="paid=false"></div>
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="h-ok">
+    <span class="ok"><i data-i="check" data-s="32"></i></span>
+    <h2 class="h3" id="h-ok" tabindex="-1" x-ref="ok">Płatność demo zakończona</h2>
+    <p class="muted">Nie pobraliśmy żadnych pieniędzy. W prawdziwej usłudze lekcja pojawiłaby się teraz w kalendarzu, a potwierdzenie w panelu rodzica.</p>
+    <a class="btn" href="rodzic.html">Zobacz panel rodzica</a>
+    <button class="btn ghost" type="button" @click="paid=false">Zamknij</button>
+  </div>
 </div>
-</div>
-</div>
+
+<div data-kt="footer"></div>
+<script>
+function checkout() {
+  return {
+    m: 'blik', code: '', err: '', reward: true, invoice: false, paid: false,
+    get total() { return this.reward ? 513 : 570; },
+    zl(v) { return v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' zł'; },
+    pay() {
+      if (this.m === 'blik' && this.code.length !== 6) {
+        this.err = 'Wpisz 6 cyfr kodu BLIK. W demo może to być dowolny kod.';
+        const el = document.getElementById('blik'); el.focus(); el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        return;
+      }
+      this.paid = true;
+      this.$nextTick(() => this.$refs.ok.focus());
+    }
+  };
+}
+</script>
+<script src="assets/kt.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </body>
 </html>

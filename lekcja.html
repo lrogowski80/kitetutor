@@ -2,85 +2,370 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KiteTutor – pokój lekcyjny</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KiteTutor – pokój lekcyjny (podgląd)</title>
+<meta name="theme-color" content="#17123A">
+<link rel="icon" href="assets/kitka.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kt.css">
 <style>
-body{margin:0;background:#120E2B;color:#FFFFFF;font-family:Nunito,system-ui,sans-serif}
-a{color:#C9BCFF}a:hover{color:#FFFFFF}
-*{box-sizing:border-box}
-h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
-.ctl{width:56px;height:56px;border-radius:18px;border:0;background:#2A2350;color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.ctl:hover{background:#3A3168}
-.ctlOff{background:#FFFFFF;color:#B42318}
-.end{height:56px;padding:0 22px;border-radius:18px;border:0;background:#E5484D;color:#FFFFFF;font-weight:800;font-size:16px;display:flex;align-items:center;text-decoration:none}
-.end:hover{background:#C93B40;color:#FFFFFF}
-.tab{min-height:44px;padding:0 14px;border-radius:12px;border:0;background:transparent;color:#C9BCFF;font-weight:800;font-family:inherit;font-size:15px;cursor:pointer}
-.tabOn{background:#2A2350;color:#FFFFFF}
-.pill{display:inline-flex;gap:6px;align-items:center;padding:6px 12px;border-radius:999px;font-weight:800;font-size:13px}
-</style>
-<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
-<script>
-function page() { return {
- state: { mic: true, cam: true, tab: 'board' },
- setState(o) { Object.assign(this.state, o); },
- get v() {
-const s = this.state;
-const T = [['board', 'Tablica'], ['chat', 'Czat'], ['files', 'Materiały'], ['notes', 'Notatki']];
-return {
-micCls: s.mic ? 'ctl' : 'ctl ctlOff', camCls: s.cam ? 'ctl' : 'ctl ctlOff',
-micOff: !s.mic, camOn: s.cam, camOff: !s.cam,
-micAria: s.mic ? 'Wycisz mikrofon' : 'Włącz mikrofon', camAria: s.cam ? 'Wyłącz kamerę' : 'Włącz kamerę',
-micPressed: s.mic ? 'false' : 'true', camPressed: s.cam ? 'false' : 'true',
-micLabel: s.mic ? '' : ' · wyciszony', selfBg: s.cam ? '#2E5E6E' : '#2A2350',
-toggleMic: () => this.setState({ mic: !s.mic }), toggleCam: () => this.setState({ cam: !s.cam }),
-tabs: T.map((t) => ({ name: t[1], cls: s.tab === t[0] ? 'tab tabOn' : 'tab', pick: () => this.setState({ tab: t[0] }) })),
-tBoard: s.tab === 'board', tChat: s.tab === 'chat', tFiles: s.tab === 'files', tNotes: s.tab === 'notes'
-};
+body.room { background: var(--night); color: #fff; --ctrl: 84px; padding-bottom: calc(var(--ctrl) + env(safe-area-inset-bottom)); }
+.room :focus-visible { outline-color: #B9A8FF; }
+
+/* Górny pasek */
+.rtop { position: sticky; top: 0; z-index: 30; background: rgba(23,18,58,.94); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.08); }
+.rtop .in { display: flex; align-items: center; gap: 8px; height: 60px; padding: 0 8px 0 4px; }
+.back { display: inline-flex; align-items: center; gap: 2px; height: 44px; padding: 0 6px; border-radius: 12px; color: #fff; text-decoration: none; flex: none; }
+.back:hover { background: rgba(255,255,255,.08); color: #fff; }
+.back .k { display: none; }
+.back .k svg { width: 22px; height: 28px; display: block; }
+.back > svg { width: 20px; height: 20px; opacity: .8; }
+.ttl { flex: 1; min-width: 0; }
+.ttl h1 { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ttl p { font-size: 13px; color: #B8B1DD; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rtop .tags { display: flex; gap: 6px; align-items: center; flex: none; }
+.tag.time { background: rgba(232,66,74,.2); color: #FFB3B7; font-variant-numeric: tabular-nums; }
+.tag.conn { background: rgba(31,169,122,.18); color: #8DEBC8; }
+.sig { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.sig i { width: 3px; border-radius: 2px; background: currentColor; }
+.sig i:nth-child(1) { height: 5px; } .sig i:nth-child(2) { height: 8px; } .sig i:nth-child(3) { height: 12px; }
+.conn .txt, .rbtn .txt, .ttl .dsk { display: none; }
+.rbtn { display: inline-flex; align-items: center; gap: 8px; height: 44px; min-width: 44px; justify-content: center; padding: 0 10px; border-radius: 12px; border: 0; background: transparent; color: #fff; cursor: pointer; font-weight: 800; font-size: 14px; }
+.rbtn:hover { background: rgba(255,255,255,.08); }
+.rbtn svg { width: 20px; height: 20px; }
+
+/* Siatka */
+.rgrid { display: grid; gap: 12px; padding: 12px; }
+.stagecol { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.stage { position: relative; border-radius: 20px; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, #3B2F86 0%, var(--night-2) 60%, #1A1446 100%); aspect-ratio: 4 / 3.3; max-height: 56vh; width: 100%; }
+.stage .tutor { position: absolute; inset: 0; display: grid; place-items: center; }
+.stage .tutor { padding-right: 22%; }
+.tutor .face { width: 104px; height: 104px; border-radius: 50%; background: var(--violet); display: grid; place-items: center; font: 600 46px var(--f-head); box-shadow: 0 0 0 6px rgba(141,235,200,.35); animation: talk 1.4s ease-in-out infinite; }
+@keyframes talk { 50% { box-shadow: 0 0 0 12px rgba(141,235,200,.12); } }
+.stage .nm { position: absolute; left: 12px; bottom: 12px; display: inline-flex; gap: 6px; align-items: center; background: rgba(23,18,58,.7); padding: 6px 10px; border-radius: 10px; font-weight: 800; font-size: 14px; }
+.stage .nm svg { width: 16px; height: 16px; color: #8DEBC8; }
+.stage .rec { position: absolute; left: 12px; top: 12px; }
+.stage .share { position: absolute; right: 12px; top: 12px; }
+.self { position: absolute; right: 10px; bottom: 10px; width: 27%; max-width: 180px; aspect-ratio: 3 / 4; border-radius: 14px; overflow: hidden; background: #2E2668; border: 2px solid rgba(255,255,255,.25); display: grid; place-items: center; }
+.self video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); display: block; }
+.self .ph { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 12px; font-weight: 700; color: #C9C2EE; padding: 6px; }
+.self .lbl { position: absolute; left: 6px; bottom: 6px; font-size: 12px; font-weight: 800; background: rgba(23,18,58,.7); padding: 2px 7px; border-radius: 7px; display: inline-flex; align-items: center; gap: 4px; }
+.self .lbl svg { width: 13px; height: 13px; }
+.self .hand { position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border-radius: 50%; background: var(--violet); color: #fff; display: grid; place-items: center; }
+.self .hand svg { width: 18px; height: 18px; }
+.camnote { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 14px; color: #C9C2EE; }
+.camnote .btn { min-height: 44px; }
+.camnote .err { color: #FFB3B7; font-weight: 700; flex-basis: 100%; }
+
+/* Panel boczny */
+.side2 { background: var(--night-2); border-radius: 20px; padding: 12px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.room .seg { background: rgba(255,255,255,.08); display: flex; width: 100%; }
+.room .seg button { flex: 1; color: #CFC8F5; min-height: 40px; }
+.room .seg button.on { background: #fff; color: var(--ink); }
+.pane { min-height: 340px; display: flex; flex-direction: column; gap: 10px; }
+.board { position: relative; background: #fff linear-gradient(#EEEAFB 1px, transparent 1px) 0 0 / 20px 20px, #fff linear-gradient(90deg, #EEEAFB 1px, transparent 1px) 0 0 / 20px 20px; background-color: #fff; border-radius: 14px; flex: 1; min-height: 300px; overflow: hidden; touch-action: none; }
+.board svg.bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.board canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.tools { display: flex; gap: 8px; align-items: center; }
+.sw { width: 36px; height: 36px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; padding: 0; position: relative; }
+.sw::after { content: ""; position: absolute; inset: -6px; }
+.sw { box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.35); }
+.sw[aria-pressed="true"] { border-color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.3); }
+.btn.dk { background: rgba(255,255,255,.1); color: #fff; }
+.btn.dk:hover { background: rgba(255,255,255,.18); }
+.msgs { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; max-height: 360px; padding-right: 2px; }
+.msg { max-width: 85%; padding: 9px 12px; border-radius: 14px; font-size: 15px; line-height: 1.4; }
+.msg.t { background: rgba(255,255,255,.1); border-bottom-left-radius: 4px; align-self: flex-start; }
+.msg.me { background: var(--violet); border-bottom-right-radius: 4px; align-self: flex-end; }
+.msg.sys { align-self: stretch; max-width: none; background: rgba(255,201,60,.12); color: #FFE29A; font-size: 13px; font-weight: 700; display: flex; gap: 8px; align-items: flex-start; }
+.msg.sys svg { width: 16px; height: 16px; flex: none; margin-top: 1px; }
+.msg .who { display: block; font-size: 12px; font-weight: 800; opacity: .7; margin-bottom: 2px; }
+.send { display: flex; gap: 8px; }
+.send .input { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.14); color: #fff; min-height: 48px; }
+.send .input::placeholder { color: #A39CCB; }
+.send .input:focus { box-shadow: 0 0 0 4px rgba(91,59,232,.35); }
+.send .btn { width: 48px; padding: 0; flex: none; }
+.fitem { display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: rgba(255,255,255,.06); color: #fff; text-decoration: none; }
+.fitem:hover { background: rgba(255,255,255,.1); color: #fff; }
+.fitem .ft { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font: 800 12px var(--f-body); flex: none; }
+.notes { flex: 1; min-height: 240px; background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.14); border-radius: 14px; color: #fff; padding: 12px 14px; font: 600 16px/1.5 var(--f-body); resize: none; }
+.notes:focus { outline: none; border-color: #8C74FF; }
+.dim { color: #A39CCB; }
+
+/* Pasek sterowania */
+.ctrl { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; background: rgba(23,18,58,.96); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,.08); padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); display: flex; justify-content: center; gap: 4px; }
+.cb { flex: 1; max-width: 84px; background: none; border: 0; color: #fff; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; font: 800 11.5px var(--f-body); padding: 0; border-radius: 14px; }
+.cb .c { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.12); position: relative; transition: background .15s; }
+.cb .c svg { width: 22px; height: 22px; }
+.cb:hover .c { background: rgba(255,255,255,.2); }
+.cb.off .c { background: #fff; color: var(--coral); }
+.cb.off .c::after { content: ""; position: absolute; width: 28px; height: 2.5px; background: currentColor; transform: rotate(-45deg); border-radius: 2px; }
+.cb.on .c { background: var(--violet); color: #fff; box-shadow: 0 0 0 2px #B9A8FF; }
+.cb.end .c { background: var(--coral); width: 64px; border-radius: 25px; }
+.cb.end:hover .c { background: #CF2F37; }
+.cb:focus-visible { outline: none; }
+.cb:focus-visible .c { outline: 3px solid #B9A8FF; outline-offset: 2px; }
+.cb.scr { display: none; }
+
+/* Okna */
+.dlg { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-end; justify-content: center; }
+.dlg .scrim { position: absolute; inset: 0; background: rgba(10,8,30,.6); }
+.dlg .box { position: relative; background: #fff; color: var(--ink); width: 100%; max-width: 460px; border-radius: 24px 24px 0 0; padding: 20px 16px calc(20px + env(safe-area-inset-bottom)); max-height: 90vh; overflow-y: auto; }
+.opt { display: flex; gap: 12px; align-items: center; min-height: 52px; padding: 10px 14px; border: 1.5px solid var(--line); border-radius: 14px; cursor: pointer; font-weight: 700; }
+.opt:has(input:checked) { border-color: var(--violet); background: var(--violet-50); }
+.opt input { width: 20px; height: 20px; accent-color: var(--violet); flex: none; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(var(--ctrl) + 12px + env(safe-area-inset-bottom)); z-index: 50; background: #fff; color: var(--ink); padding: 10px 16px; border-radius: 12px; font-weight: 800; font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.3); white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis; }
+
+@media (min-width: 600px) {
+  .cb.scr { display: flex; }
+  .back .k { display: block; }
+  .conn .txt, .rbtn .txt, .ttl .dsk { display: inline; }
+  .ttl .mob { display: none; }
+  .rtop .in { padding: 0 16px 0 10px; gap: 12px; }
+  .ttl h1 { font-size: 18px; }
+  .dlg { align-items: center; }
+  .dlg .box { border-radius: 24px; padding: 24px; }
 }
-}; }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+@media (min-width: 960px) {
+  body.room { padding-bottom: 0; height: 100vh; height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+  .ctrl { position: static; gap: 10px; padding: 10px 16px 14px; }
+  .cb.end { margin-left: 18px; }
+  .rgrid { grid-template-columns: minmax(0, 1fr) 400px; min-height: 0; padding: 16px; gap: 16px; }
+  .stagecol { min-height: 0; }
+  .stage { flex: 1; aspect-ratio: auto; max-height: none; min-height: 0; }
+  .stage .tutor { padding-right: 0; }
+  .tutor .face { width: 160px; height: 160px; font-size: 64px; }
+  .self { width: 22%; max-width: 220px; aspect-ratio: 4 / 3; right: 16px; bottom: 16px; }
+  .side2 { min-height: 0; padding: 14px; }
+  .pane { flex: 1; min-height: 0; overflow-y: auto; }
+  .msgs { max-height: none; }
+  .toast { bottom: 110px; }
+}
+</style>
 </head>
-<body x-data="page()">
-<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
-<div style="min-height: 960px; display: flex; flex-direction: column">
-<header style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 14px 20px; border-bottom: 1px solid #2A2350">
-<a href="uczen.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px"><span style="color: #A996FF">kite</span><span style="color: #FF7A7E">tutor</span></a>
-<div style="font-weight: 800">Matematyka · Funkcja kwadratowa – zadania maturalne</div>
-<span class="pill" style="background: #1F4D3E; color: #8FF0C9">● Na żywo 32:14 / 60:00</span>
-<span class="pill" style="background: #2A2350; color: #E2D9FF">Nagrywanie wyłączone</span>
-<span class="pill" style="background: #2A2350; color: #E2D9FF; margin-left: auto">Połączenie: bardzo dobre</span>
+<body class="room" x-data="room()" @keydown.escape="sheet = null">
+
+<header class="rtop">
+  <div class="in">
+    <a class="back" href="uczen.html" aria-label="Wyjdź do pulpitu"><i data-i="left"></i><span class="k" x-html="KT.KITE"></span></a>
+    <div class="ttl"><h1>Matematyka<span class="dsk"> z Martą K.</span></h1><p><span class="mob">Marta K., </span><span class="dsk">Funkcja kwadratowa – zadania maturalne</span><span class="mob">funkcja kwadratowa</span></p></div>
+    <div class="tags">
+      <span class="tag time live" :aria-label="'Czas lekcji ' + clock() + ' z 60 minut'" x-text="clock()">32:14</span>
+      <span class="tag conn" aria-label="Połączenie dobre"><span class="sig" aria-hidden="true"><i></i><i></i><i></i></span><span class="txt">Dobre łącze</span></span>
+    </div>
+    <button type="button" class="rbtn" @click="sheet = 'report'; sent = false" aria-label="Zgłoś problem"><i data-i="flag"></i><span class="txt">Zgłoś problem</span></button>
+  </div>
 </header>
-<div style="flex: 1; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px 20px">
-<main style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
-<div style="position: relative; border-radius: 22px; overflow: hidden; background: #3B3268; aspect-ratio: 16 / 9; display: flex; align-items: flex-end; justify-content: center">
-<svg width="56%" viewBox="0 0 200 150" aria-hidden="true"><circle cx="100" cy="58" r="32" fill="#F2C29B"></circle><path d="M68 48 Q100 10 132 48 Q128 28 100 24 Q72 28 68 48Z" fill="#3A2318"></path><path d="M28 150 Q28 98 100 98 Q172 98 172 150Z" fill="#5B3BE8"></path></svg>
-<span class="pill" style="position: absolute; left: 14px; bottom: 14px; background: rgba(0,0,0,0.6); color: #FFFFFF">Marta K. · mówi</span>
-<span aria-hidden="true" style="position: absolute; left: 14px; top: 14px; display: flex; gap: 3px; align-items: flex-end; height: 22px"><span style="width: 4px; height: 10px; background: #8FF0C9; border-radius: 2px"></span><span style="width: 4px; height: 20px; background: #8FF0C9; border-radius: 2px"></span><span style="width: 4px; height: 14px; background: #8FF0C9; border-radius: 2px"></span><span style="width: 4px; height: 8px; background: #8FF0C9; border-radius: 2px"></span></span>
-<div :style="'position: absolute; right: 14px; bottom: 14px; width: 26%; min-width: 150px; aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; border: 3px solid #120E2B; background: ' + (v.selfBg) + '; display: flex; align-items: flex-end; justify-content: center'">
-<template x-if="v.camOn"><div style="display: contents"><svg width="70%" viewBox="0 0 200 150" aria-hidden="true"><circle cx="100" cy="60" r="30" fill="#C98E62"></circle><path d="M70 54 Q74 24 100 24 Q126 24 130 54 Q118 38 100 40 Q82 38 70 54Z" fill="#1E1410"></path><path d="M36 150 Q36 100 100 100 Q164 100 164 150Z" fill="#2EE6A6"></path></svg></div></template>
-<template x-if="v.camOff"><div style="display: contents"><div style="align-self: center; font-weight: 800; color: #C9BCFF">Kamera wyłączona</div></div></template>
-<span class="pill" style="position: absolute; left: 8px; bottom: 8px; background: rgba(0,0,0,0.6); color: #FFFFFF">Ty<span x-text="v.micLabel"></span></span>
-</div>
-</div>
-<nav aria-label="Sterowanie lekcją" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center">
-<button type="button" :class="v.micCls" @click="v.toggleMic()" :aria-label="v.micAria" :aria-pressed="v.micPressed"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path><path x-show="v.micOff" d="M3 3l18 18"></path></svg></button>
-<button type="button" :class="v.camCls" @click="v.toggleCam()" :aria-label="v.camAria" :aria-pressed="v.camPressed"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="M16 10l5-3v10l-5-3"></path><path x-show="v.camOff" d="M3 3l18 18"></path></svg></button>
-<button type="button" class="ctl" aria-label="Udostępnij ekran"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4M12 13V7M9 10l3-3 3 3"></path></svg></button>
-<button type="button" class="ctl" aria-label="Podnieś rękę"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5a1.5 1.5 0 0 1 3 0v6M11 10V3.5a1.5 1.5 0 0 1 3 0V10M14 10V5a1.5 1.5 0 0 1 3 0v8a7 7 0 0 1-7 7 6 6 0 0 1-5-3l-2-4a1.5 1.5 0 0 1 2.6-1.4L8 14"></path></svg></button>
-<button type="button" class="ctl" aria-label="Ustawienia dźwięku i obrazu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-2.7-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3.6 15H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.1-2.7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9.7 4.6V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1.3z"></path></svg></button>
-<a class="end" href="uczen.html">Zakończ lekcję</a>
-</nav>
+
+<main class="rgrid" id="tresc">
+  <div class="stagecol">
+    <section class="stage" aria-label="Obraz lekcji">
+      <div class="tutor"><span class="face" aria-hidden="true">M</span></div>
+      <span class="tag dark rec"><i data-i="lock" data-s="14"></i>Nagrywanie wyłączone</span>
+      <span class="tag share" x-show="screen" x-cloak>Udostępniasz ekran</span>
+      <span class="nm"><i data-i="mic"></i>Marta K. mówi</span>
+      <div class="self" aria-label="Twój obraz">
+        <video x-ref="v" autoplay muted playsinline x-show="stream && cam" x-cloak></video>
+        <div class="ph" x-show="!(stream && cam)"><span class="av sm" style="background:var(--coral)">O</span><span x-text="cam ? 'Brak podglądu' : 'Kamera wyłączona'"></span></div>
+        <span class="lbl"><span x-show="!mic" x-cloak style="display:inline-flex;color:#FFB3B7"><i data-i="mic"></i></span>Ty</span>
+        <span class="hand" x-show="hand" x-cloak aria-label="Podniesiona ręka"><i data-i="hand"></i></span>
+      </div>
+    </section>
+    <div class="camnote" x-show="!stream">
+      <span>Podgląd demo. Możesz sprawdzić swoją kamerę, obraz zostaje na Twoim urządzeniu.</span>
+      <button type="button" class="btn dk sm" @click="startCam()"><i data-i="cam"></i>Włącz kamerę (podgląd)</button>
+      <span class="err" x-show="camErr" x-text="camErr" role="alert"></span>
+    </div>
+  </div>
+
+  <aside class="side2" aria-label="Narzędzia lekcji">
+    <div class="seg" role="tablist" aria-label="Narzędzia">
+      <template x-for="t in tabs" :key="t[0]">
+        <button type="button" role="tab" :aria-selected="tab === t[0]" :class="tab === t[0] && 'on'" @click="tab = t[0]" x-text="t[1]"></button>
+      </template>
+    </div>
+
+    <div class="pane" x-show="tab === 'board'" role="tabpanel" aria-label="Tablica">
+      <div class="board" x-ref="board">
+        <svg class="bg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <path d="M40 220H360M200 30V280" stroke="#C9C1EC" stroke-width="2"/>
+          <path d="M110 60 Q200 380 290 60" fill="none" stroke="#5B3BE8" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="200" cy="220" r="6" fill="#E8424A"/>
+          <text x="212" y="244" font-family="Nunito, sans-serif" font-weight="800" font-size="15" fill="#E8424A">x = p</text>
+          <text x="24" y="42" font-family="Nunito, sans-serif" font-weight="800" font-size="17" fill="#1C1640">Zad. 8: f(x) = x² − 6x + 9</text>
+          <text x="24" y="66" font-family="Nunito, sans-serif" font-weight="700" font-size="15" fill="#4B4566">Δ = 36 − 36 = 0</text>
+        </svg>
+        <canvas x-ref="cv" aria-label="Wspólna tablica, możesz rysować"></canvas>
+      </div>
+      <div class="tools">
+        <template x-for="c in colors" :key="c">
+          <button type="button" class="sw" :style="'background:' + c" :aria-pressed="pen === c" @click="pen = c" :aria-label="'Kolor ' + names[c]"></button>
+        </template>
+        <button type="button" class="btn dk sm" style="margin-left:auto" @click="clearBoard()">Wyczyść</button>
+      </div>
+      <p class="tiny dim">Rysujecie razem. Tablica zapisuje się w materiałach po lekcji.</p>
+    </div>
+
+    <div class="pane" x-show="tab === 'chat'" x-cloak role="tabpanel" aria-label="Czat">
+      <div class="msgs" x-ref="msgs" aria-live="polite">
+        <div class="msg sys"><i data-i="shield"></i><span>Numery telefonów, e-maile i linki do komunikatorów są ukrywane. Kontakt tylko przez KiteTutor.</span></div>
+        <template x-for="(m, i) in msgs" :key="i">
+          <div class="msg" :class="m.w">
+            <template x-if="m.w === 'sys'"><span x-text="m.t"></span></template>
+            <template x-if="m.w !== 'sys'"><span><span class="who" x-text="m.w === 'me' ? 'Ty' : 'Marta K.'"></span><span x-text="m.t"></span></span></template>
+          </div>
+        </template>
+      </div>
+      <form class="send" @submit.prevent="send()">
+        <label for="msg" class="sr">Wiadomość</label>
+        <input id="msg" class="input" x-model="draft" placeholder="Napisz wiadomość" autocomplete="off">
+        <button class="btn" type="submit" aria-label="Wyślij"><i data-i="chevron"></i></button>
+      </form>
+      <p class="tiny dim">Spróbuj wpisać numer telefonu, aby zobaczyć ochronę w działaniu.</p>
+    </div>
+
+    <div class="pane" x-show="tab === 'files'" x-cloak role="tabpanel" aria-label="Materiały">
+      <a class="fitem" href="#"><span class="ft" style="background:var(--coral-50);color:#B4232B">PDF</span><span style="flex:1;min-width:0"><span class="strong ellipsis" style="display:block">Arkusz maturalny – funkcje</span><span class="tiny dim">Udostępniony teraz</span></span><i data-i="chevron" data-s="20"></i></a>
+      <a class="fitem" href="#"><span class="ft" style="background:var(--violet-50);color:var(--violet-d)">PNG</span><span style="flex:1;min-width:0"><span class="strong ellipsis" style="display:block">Wzory – funkcja kwadratowa</span><span class="tiny dim">Udostępniony 12 min temu</span></span><i data-i="chevron" data-s="20"></i></a>
+      <p class="tiny dim">Korepetytorka udostępnia pliki w trakcie lekcji. Zostają w Twoich materiałach.</p>
+    </div>
+
+    <div class="pane" x-show="tab === 'notes'" x-cloak role="tabpanel" aria-label="Notatki">
+      <label for="nt" class="sr">Moje notatki z lekcji</label>
+      <textarea id="nt" class="notes" x-model="notes"></textarea>
+      <p class="tiny dim">Notatki widzisz tylko Ty. Zapisują się same.</p>
+    </div>
+  </aside>
 </main>
-<aside style="flex: 1 1 360px; min-width: 0; background: #1C1640; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 12px" aria-label="Narzędzia lekcji">
-<div style="display: flex; gap: 4px; flex-wrap: wrap"><template x-for="t in v.tabs"><div style="display: contents"><button type="button" :class="t.cls" @click="t.pick()"><span x-text="t.name"></span></button></div></template></div>
-<template x-if="v.tBoard"><div style="display: contents"><div style="background: #FFFFFF; color: #1C1640; border-radius: 16px; padding: 14px; flex: 1"><div style="font-weight: 800; margin-bottom: 6px">Tablica wspólna</div><svg width="100%" viewBox="0 0 320 220" role="img" aria-label="Wykres paraboli z zaznaczonym wierzchołkiem"><line x1="20" y1="180" x2="300" y2="180" stroke="#8F89A6" stroke-width="1.5"></line><line x1="160" y1="20" x2="160" y2="210" stroke="#8F89A6" stroke-width="1.5"></line><path d="M60 40 Q160 300 260 40" fill="none" stroke="#5B3BE8" stroke-width="4"></path><circle cx="160" cy="170" r="6" fill="#E5484D"></circle><text x="172" y="166" font-size="15" font-weight="800" fill="#E5484D">W(p, q)</text><text x="24" y="34" font-size="15" font-weight="800" fill="#1C1640">f(x) = x² − 4x + 3</text><text x="24" y="58" font-size="14" fill="#4B4566">p = −b/2a = 2</text></svg></div></div></template>
-<template x-if="v.tChat"><div style="display: contents"><div style="display: flex; flex-direction: column; gap: 10px; flex: 1"><div style="align-self: flex-start; background: #2A2350; padding: 10px 14px; border-radius: 14px 14px 14px 4px; max-width: 85%">Spróbuj teraz zadanie 8 sama, a ja patrzę na tablicę.</div><div style="align-self: flex-end; background: #5B3BE8; padding: 10px 14px; border-radius: 14px 14px 4px 14px; max-width: 85%">Delta wychodzi mi 0, czyli jedno miejsce zerowe?</div><label for="msg" style="position: absolute; left: -9999px">Wiadomość</label><input id="msg" type="text" placeholder="Napisz wiadomość…" style="margin-top: auto; min-height: 48px; border-radius: 14px; border: 0; padding: 0 14px; font-family: inherit; font-size: 15px"></div></div></template>
-<template x-if="v.tFiles"><div style="display: contents"><div style="display: flex; flex-direction: column; gap: 8px; flex: 1"><div style="background: #2A2350; padding: 12px 14px; border-radius: 14px; font-weight: 800">Arkusz maturalny – funkcje.pdf</div><div style="background: #2A2350; padding: 12px 14px; border-radius: 14px; font-weight: 800">Wzory – funkcja kwadratowa.png</div><div style="color: #C9BCFF; font-size: 14px">Korepetytorka udostępnia pliki w trakcie lekcji. Zostają w Twoich materiałach.</div></div></div></template>
-<template x-if="v.tNotes"><div style="display: contents"><div style="flex: 1; display: flex; flex-direction: column; gap: 8px"><label for="ln" style="font-weight: 800">Moje notatki z lekcji</label><textarea id="ln" rows="9" style="border-radius: 14px; border: 0; padding: 12px; font-family: inherit; font-size: 15px; line-height: 1.5">Δ = 0 → jedno miejsce zerowe, x = p.</textarea></div></div></template>
-</aside>
+
+<nav class="ctrl" aria-label="Sterowanie lekcją">
+  <button type="button" class="cb" :class="!mic && 'off'" @click="mic = !mic; say(mic ? 'Mikrofon włączony' : 'Mikrofon wyciszony')" :aria-pressed="!mic" aria-label="Wycisz mikrofon"><span class="c"><i data-i="mic"></i></span><span x-text="mic ? 'Mikrofon' : 'Wyciszony'"></span></button>
+  <button type="button" class="cb" :class="!cam && 'off'" @click="toggleCam()" :aria-pressed="!cam" aria-label="Wyłącz kamerę"><span class="c"><i data-i="cam"></i></span><span>Kamera</span></button>
+  <button type="button" class="cb scr" :class="screen && 'on'" @click="screen = !screen; say(screen ? 'Udostępniasz ekran (symulacja)' : 'Udostępnianie zakończone')" :aria-pressed="screen"><span class="c"><i data-i="screen"></i></span><span>Ekran</span></button>
+  <button type="button" class="cb" :class="hand && 'on'" @click="hand = !hand; say(hand ? 'Ręka w górze. Marta to widzi' : 'Ręka opuszczona')" :aria-pressed="hand"><span class="c"><i data-i="hand"></i></span><span>Ręka</span></button>
+  <button type="button" class="cb" @click="sheet = 'settings'"><span class="c"><i data-i="gear"></i></span><span>Ustawienia</span></button>
+  <button type="button" class="cb end" @click="sheet = 'end'"><span class="c"><i data-i="phone"></i></span><span>Zakończ</span></button>
+</nav>
+
+<div class="toast" x-show="msg" x-cloak x-transition.opacity role="status" x-text="msg"></div>
+
+<div class="dlg" x-show="sheet" x-cloak x-transition.opacity>
+  <div class="scrim" @click="sheet = null"></div>
+
+  <div class="box stack" style="--gap:14px" x-show="sheet === 'report'" role="dialog" aria-modal="true" aria-labelledby="d-rep">
+    <template x-if="!sent">
+      <div class="stack" style="--gap:14px">
+        <div class="row between"><h2 class="h3" id="d-rep">Zgłoś problem</h2><button class="iconbtn" type="button" @click="sheet = null" aria-label="Zamknij"><i data-i="x"></i></button></div>
+        <p class="small muted">Zgłoszenie trafia do zespołu KiteTutor. Korepetytor go nie widzi.</p>
+        <div class="stack" style="--gap:8px" role="radiogroup" aria-label="Rodzaj problemu">
+          <label class="opt"><input type="radio" name="r" value="av" x-model="why">Nie słychać albo nie widać</label>
+          <label class="opt"><input type="radio" name="r" value="beh" x-model="why">Coś mnie niepokoi w zachowaniu</label>
+          <label class="opt"><input type="radio" name="r" value="mat" x-model="why">Problem z materiałami lub tablicą</label>
+          <label class="opt"><input type="radio" name="r" value="oth" x-model="why">Inny problem</label>
+        </div>
+        <div class="field"><label for="rd">Opisz krótko (nie musisz)</label><textarea id="rd" class="input" rows="3"></textarea></div>
+        <button type="button" class="btn block" :disabled="!why" :style="!why && 'opacity:.5;cursor:not-allowed'" @click="sent = true">Wyślij zgłoszenie</button>
+        <p class="tiny muted">Jeśli czujesz się niekomfortowo, możesz od razu zakończyć lekcję. Rodzic dostanie powiadomienie.</p>
+      </div>
+    </template>
+    <template x-if="sent">
+      <div class="stack" style="--gap:14px;text-align:center">
+        <span class="av lg" style="background:var(--mint);margin:0 auto"><i data-i="check" data-s="32"></i></span>
+        <h2 class="h3">Dziękujemy, zgłoszenie wysłane</h2>
+        <p class="small muted">Odpowiemy w ciągu kilku minut. W sprawach bezpieczeństwa powiadamiamy też rodzica.</p>
+        <button type="button" class="btn ghost block" @click="sheet = null">Wróć do lekcji</button>
+      </div>
+    </template>
+  </div>
+
+  <div class="box stack" style="--gap:14px" x-show="sheet === 'settings'" role="dialog" aria-modal="true" aria-labelledby="d-set">
+    <div class="row between"><h2 class="h3" id="d-set">Ustawienia</h2><button class="iconbtn" type="button" @click="sheet = null" aria-label="Zamknij"><i data-i="x"></i></button></div>
+    <div class="field"><label for="s1">Mikrofon</label><select id="s1" class="select"><option>Domyślny mikrofon</option><option>Słuchawki z mikrofonem</option></select></div>
+    <div class="field"><label for="s2">Kamera</label><select id="s2" class="select"><option>Kamera przednia</option><option>Kamera tylna</option></select></div>
+    <label class="opt"><input type="checkbox" checked>Napisy na żywo</label>
+    <label class="opt"><input type="checkbox">Rozmyj tło</label>
+    <button type="button" class="btn block" @click="sheet = null; say('Zapisano ustawienia')">Gotowe</button>
+  </div>
+
+  <div class="box stack" style="--gap:14px" x-show="sheet === 'end'" role="dialog" aria-modal="true" aria-labelledby="d-end">
+    <h2 class="h3" id="d-end">Zakończyć lekcję?</h2>
+    <p class="small muted">Do końca zostało jeszcze trochę czasu. Po lekcji Marta przygotuje podsumowanie, a w albumie pojawi się naklejka.</p>
+    <a class="btn danger block" href="uczen.html" @click="stopCam()">Zakończ lekcję</a>
+    <button type="button" class="btn ghost block" @click="sheet = null">Wracam do lekcji</button>
+  </div>
 </div>
-</div>
+
+<script>
+function room() {
+  var HIDE = /([\w.+-]+@[\w-]+\.[\w.-]+)|(\+?\d[\d\s().-]{7,}\d)|((https?:\/\/)?(wa\.me|t\.me|m\.me|discord\.gg|instagram\.com|snapchat\.com)\S*)/gi;
+  return {
+    tabs: [['board', 'Tablica'], ['chat', 'Czat'], ['files', 'Materiały'], ['notes', 'Notatki']],
+    tab: 'board', mic: true, cam: false, screen: false, hand: false, sheet: null, why: '', sent: false,
+    stream: null, camErr: '', sec: 32 * 60 + 14, msg: '', replied: false, draft: '',
+    colors: ['#5B3BE8', '#E8424A', '#1C1640'], names: { '#5B3BE8': 'fioletowy', '#E8424A': 'czerwony', '#1C1640': 'granatowy' }, pen: '#5B3BE8',
+    notes: 'Δ = 0, więc jedno miejsce zerowe: x = p.\nWierzchołek: p = −b/2a, q = −Δ/4a.\nNajpierw sprawdzam znak a.',
+    msgs: [
+      { w: 't', t: 'Cześć Ola! Dziś kończymy funkcję kwadratową.' },
+      { w: 't', t: 'Spróbuj teraz zadanie 8 sama, a ja patrzę na tablicę.' },
+      { w: 'me', t: 'Delta wychodzi mi 0, czyli jedno miejsce zerowe?' }
+    ],
+    init: function () {
+      var self = this;
+      setInterval(function () { self.sec++; }, 1000);
+      this.$nextTick(function () { self.setupBoard(); });
+    },
+    clock: function () { var m = Math.floor(this.sec / 60), s = this.sec % 60; return m + ':' + (s < 10 ? '0' : '') + s; },
+    say: function (t) { var self = this; this.msg = t; clearTimeout(this._t); this._t = setTimeout(function () { self.msg = ''; }, 2400); },
+    send: function () {
+      var raw = this.draft.trim(); if (!raw) return;
+      var clean = raw.replace(HIDE, '[ukryte]');
+      this.msgs.push({ w: 'me', t: clean });
+      if (clean !== raw) this.msgs.push({ w: 'sys', t: 'Ukryliśmy dane kontaktowe. Rozmawiacie tylko przez KiteTutor, a rodzic widzi historię czatu.' });
+      else if (!this.replied) { var self = this; this.replied = true; setTimeout(function () { self.msgs.push({ w: 't', t: 'Dokładnie! Δ = 0, więc parabola dotyka osi w jednym punkcie, x = p = 3.' }); self.scroll(); }, 1200); }
+      this.draft = ''; this.scroll();
+    },
+    scroll: function () { var self = this; this.$nextTick(function () { var m = self.$refs.msgs; m.scrollTop = m.scrollHeight; }); },
+    startCam: function () {
+      var self = this; this.camErr = '';
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { this.camErr = 'Ta przeglądarka nie udostępnia kamery. Lekcja działa też bez niej.'; return; }
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false }).then(function (s) {
+        self.stream = s; self.$refs.v.srcObject = s; self.cam = true; self.say('Kamera włączona');
+      }).catch(function (e) {
+        self.camErr = e && e.name === 'NotAllowedError' ? 'Nie ma zgody na kamerę. Możesz ją dać w ustawieniach przeglądarki.' : 'Nie udało się włączyć kamery. Sprawdź, czy nie używa jej inna aplikacja.';
+      });
+    },
+    toggleCam: function () {
+      if (!this.stream && !this.cam) { this.startCam(); return; }
+      this.cam = !this.cam;
+      if (this.stream) { var on = this.cam; this.stream.getVideoTracks().forEach(function (t) { t.enabled = on; }); }
+      this.say(this.cam ? 'Kamera włączona' : 'Kamera wyłączona');
+    },
+    stopCam: function () { if (this.stream) this.stream.getTracks().forEach(function (t) { t.stop(); }); },
+    setupBoard: function () {
+      var self = this, cv = this.$refs.cv, box = this.$refs.board, ctx = cv.getContext('2d'), drawing = false, last = null;
+      function size() {
+        var r = box.getBoundingClientRect(); if (!r.width) return;
+        var d = window.devicePixelRatio || 1, img = cv.width ? ctx.getImageData(0, 0, cv.width, cv.height) : null;
+        cv.width = r.width * d; cv.height = r.height * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+        if (img) ctx.putImageData(img, 0, 0);
+      }
+      if (window.ResizeObserver) new ResizeObserver(size).observe(box); else size();
+      function pos(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+      cv.addEventListener('pointerdown', function (e) { drawing = true; last = pos(e); cv.setPointerCapture(e.pointerId); });
+      cv.addEventListener('pointermove', function (e) {
+        if (!drawing) return; var p = pos(e);
+        ctx.strokeStyle = self.pen; ctx.lineWidth = 3.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke(); last = p;
+      });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (n) { cv.addEventListener(n, function () { drawing = false; }); });
+      this._clear = function () { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.restore(); };
+    },
+    clearBoard: function () { if (this._clear) this._clear(); this.say('Tablica wyczyszczona'); }
+  };
+}
+</script>
+<script src="assets/kt.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </body>
 </html>

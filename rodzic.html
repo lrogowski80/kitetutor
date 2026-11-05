@@ -2,136 +2,248 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KiteTutor – panel rodzica</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KiteTutor – panel rodzica (podgląd)</title>
+<meta name="theme-color" content="#5B3BE8">
+<link rel="icon" href="assets/kitka.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kt.css">
 <style>
-body{margin:0;background:#F4F6FB;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
-a{color:#175CD3}a:hover{color:#1C1640}
-*{box-sizing:border-box}
-h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
-.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
-.top{background:#FFFFFF;border-bottom:1px solid #E1E7F3}
-.topin{display:flex;align-items:center;gap:14px;min-height:68px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
-.roles{display:flex;gap:4px;padding:4px;background:#EEF2FA;border-radius:14px;margin-left:auto}
-.roles a{padding:8px 12px;border-radius:10px;text-decoration:none;color:#3F4A5E;font-weight:800;font-size:13px}
-.roles a.on{background:#FFFFFF;color:#175CD3}
-.tab{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:transparent;color:#1C1640;font-weight:800;font-family:inherit;font-size:15px;cursor:pointer}
-.tabOn{background:#E3EEFF;color:#175CD3}
-.kid{display:flex;gap:10px;align-items:center;min-height:52px;padding:6px 14px 6px 6px;border-radius:16px;border:2px solid #E1E7F3;background:#FFFFFF;font-family:inherit;font-weight:800;font-size:15px;color:#1C1640;cursor:pointer}
-.kidOn{border-color:#175CD3;background:#F2F7FF}
-.card{background:#FFFFFF;border-radius:20px;padding:20px;border:1px solid #E1E7F3}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:14px;background:#175CD3;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:15px;border:0;font-family:inherit;cursor:pointer}
-.btn:hover{background:#124BB0;color:#FFFFFF}
-.btn2{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:14px;background:#E3EEFF;color:#175CD3;font-weight:800;text-decoration:none;font-size:15px;border:0;font-family:inherit;cursor:pointer}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#E3EEFF;color:#175CD3;font-weight:800;font-size:13px}
-.muted{color:#4F5B6E}
-.kpi{font-family:Fredoka,sans-serif;font-size:30px;font-weight:700}
-.tog{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #EEF2FA;font-weight:700}
-.tog input{width:22px;height:22px;accent-color:#175CD3;flex:none}
-.tbl{width:100%;border-collapse:collapse;font-size:15px}
-.tbl th{text-align:left;padding:10px;color:#4F5B6E;font-size:13px;border-bottom:1px solid #E1E7F3}
-.tbl td{padding:10px;border-bottom:1px solid #EEF2FA}
+section[id] { scroll-margin-top: 76px; }
+.dash { display: grid; gap: 20px; }
+@media (min-width: 1100px) { .dash { grid-template-columns: 1.45fr 1fr; align-items: start; } }
+.panel.list { overflow: hidden; }
+
+.kids { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+.kid { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 16px 6px 6px; border-radius: 16px; border: 2px solid var(--line); background: #fff; cursor: pointer; text-align: left; }
+.kid[aria-pressed="true"] { border-color: var(--violet); background: var(--violet-50); }
+.kid .av { width: 42px; height: 42px; }
+.kid b { display: block; font-size: 16px; line-height: 1.2; }
+.kid span.s { font-size: 13px; color: var(--muted); font-weight: 700; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat { background: var(--paper); border-radius: var(--r-m); padding: 12px 14px; box-shadow: var(--shadow); min-width: 0; }
+.stat .v { font: 600 24px/1.1 var(--f-head); margin-top: 4px; }
+.stat .l { font-weight: 800; font-size: 13px; color: var(--muted); line-height: 1.25; }
+
+.up { display: flex; gap: 12px; align-items: center; padding: 14px 16px; flex-wrap: wrap; }
+.up .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--violet-50); color: var(--violet-d); display: grid; place-items: center; flex: none; }
+.up .ic svg { width: 22px; height: 22px; }
+.up.pend { background: var(--coral-50); }
+.up.pend .ic { background: #fff; color: var(--coral); }
+.up .acts { display: flex; gap: 8px; width: 100%; padding-left: 56px; }
+.up .acts .btn { flex: 1; }
+@media (min-width: 640px) { .up .acts { width: auto; padding-left: 0; } .up .acts .btn { flex: none; } }
+
+.chart { display: flex; align-items: flex-end; gap: 10px; height: 170px; padding: 0 4px; border-bottom: 1.5px solid var(--line); }
+.chart .c { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; height: 100%; }
+.chart .c span { font-weight: 800; font-size: 13px; }
+.chart .c i { display: block; width: 100%; max-width: 44px; border-radius: 10px 10px 4px 4px; background: var(--violet-100); }
+.chart .c:last-child i { background: var(--violet); }
+.xl { display: flex; gap: 10px; padding: 6px 4px 0; }
+.xl span { flex: 1; text-align: center; font-size: 13px; font-weight: 700; color: var(--muted); }
+.topic { display: grid; grid-template-columns: 116px 1fr 40px; gap: 10px; align-items: center; font-weight: 700; font-size: 15px; }
+
+.rep { padding: 14px 16px; }
+.rep dl { margin: 10px 0 0; display: grid; gap: 6px; font-size: 15px; }
+.rep dt { font-weight: 800; font-size: 13px; color: var(--muted); }
+.rep dd { margin: 0 0 4px; }
+
+.pkg .v { font: 600 32px/1 var(--f-head); }
+.ekipa { background: var(--sun-50); border: 2px solid #F1D27A; border-radius: var(--r-l); padding: 18px; }
+.ekipa .hd { display: flex; gap: 12px; align-items: center; }
+.ekipa img { width: 44px; height: 44px; flex: none; }
+.rw { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; }
+.rw + .rw { border-top: 1.5px solid #F1D27A; }
+.rw .n { width: 36px; height: 36px; border-radius: 10px; background: #fff; border: 2px solid var(--ink); display: grid; place-items: center; font: 700 16px var(--f-head); flex: none; }
+.rw.done .n { background: var(--sun); }
+
+.tog { display: flex; gap: 14px; align-items: center; padding: 14px 16px; min-height: 60px; cursor: pointer; }
+.tog .grow { flex: 1; min-width: 0; }
+.tog input { appearance: none; -webkit-appearance: none; margin: 0; width: 50px; height: 30px; border-radius: 99px; background: #CFC8E8; position: relative; flex: none; cursor: pointer; transition: background .15s; }
+.tog input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(28,22,64,.25); transition: transform .15s; }
+.tog input:checked { background: var(--mint); }
+.tog input:checked::after { transform: translateX(20px); }
+.tog input:focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; }
+.opt { display: flex; gap: 12px; align-items: center; min-height: 52px; padding: 10px 14px; border: 1.5px solid var(--line); border-radius: 14px; cursor: pointer; font-weight: 700; font-size: 15px; }
+.opt:has(input:checked) { border-color: var(--violet); background: var(--violet-50); }
+.opt input { width: 20px; height: 20px; accent-color: var(--violet); flex: none; margin: 0; }
+.amt { text-align: right; flex: none; }
+.amt b { display: block; }
 </style>
-<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
-<script>
-function page() { return {
- state: { tab: 'prog', kid: 'ola' },
- setState(o) { Object.assign(this.state, o); },
- get v() {
-const K = {
-ola: { name: 'Ola · liceum', ini: 'O', bg: '#5B3BE8', lessons: '7', hw: '9 / 10', goal: '64%', goalName: 'matura z matematyki', album: '15', pages: '1',
-bars: [['wrz', 2.6], ['wrz', 3.0], ['paź', 3.3], ['paź', 3.6], ['lis', 4.1], ['lis', 4.3]],
-reports: [
-{ date: '4.11', subject: 'Matematyka', tutor: 'Marta K.', eng: '5/5', done: 'postać kanoniczna, wierzchołek paraboli, zadania 4–7 z arkusza', todo: 'miejsca zerowe przy Δ = 0', next: 'zadania 8–10, potem ciągi' },
-{ date: '2.11', subject: 'Angielski', tutor: 'James P.', eng: '4/5', done: 'present perfect vs past simple, rozmowa o wakacjach', todo: 'nieregularne czasowniki', next: '10 zdań w present perfect' }
-] },
-jas: { name: 'Jaś · klasa 5', ini: 'J', bg: '#E8424A', lessons: '4', hw: '4 / 5', goal: '41%', goalName: 'ułamki i procenty', album: '6', pages: '0',
-bars: [['wrz', 2.2], ['wrz', 2.5], ['paź', 2.9], ['paź', 3.1], ['lis', 3.4], ['lis', 3.5]],
-reports: [
-{ date: '3.11', subject: 'Matematyka', tutor: 'Oleh L.', eng: '4/5', done: 'dodawanie ułamków o różnych mianownikach', todo: 'skracanie ułamków', next: 'procenty w zadaniach z treścią' }
-] }
-};
-const k0 = K[this.state.kid];
-const T = [['prog', 'Postępy'], ['rep', 'Raporty po lekcjach'], ['pay', 'Płatności i faktury'], ['set', 'Kontrola i zgody']];
-const k = Object.assign({}, k0, { bars: k0.bars.map((b) => ({ l: b[0], v: String(b[1]).replace('.', ','), h: Math.round(b[1] / 5 * 160) + 'px' })), chartLabel: 'Ocena zrozumienia po kolejnych lekcjach, od ' + String(k0.bars[0][1]).replace('.', ',') + ' do ' + String(k0.bars[5][1]).replace('.', ',') + ' na 5' });
-return {
-k: k,
-kids: ['ola', 'jas'].map((id) => ({ name: K[id].name, ini: K[id].ini, bg: K[id].bg, cls: id === this.state.kid ? 'kid kidOn' : 'kid', pick: () => this.setState({ kid: id }) })),
-tabs: T.map((x) => ({ name: x[1], cls: this.state.tab === x[0] ? 'tab tabOn' : 'tab', pick: () => this.setState({ tab: x[0] }) })),
-tProg: this.state.tab === 'prog', tRep: this.state.tab === 'rep', tPay: this.state.tab === 'pay', tSet: this.state.tab === 'set'
-};
-}
-}; }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </head>
-<body x-data="page()">
-<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
-<div style="min-height: 1800px">
-<header class="top"><div class="wrap topin">
-<a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a>
-<span class="chip">Panel rodzica</span>
-<nav class="roles" aria-label="Podgląd widoku"><a href="uczen.html">Uczeń</a><a href="korepetytor.html">Korepetytor</a><a class="on" href="rodzic.html">Rodzic</a></nav>
-</div></header>
-<div class="wrap" style="padding-top: 24px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 18px">
-<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center"><template x-for="k in v.kids"><div style="display: contents"><button type="button" :class="k.cls" @click="k.pick()"><span :style="'width: 40px; height: 40px; border-radius: 12px; background: ' + (k.bg) + '; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif'"><span x-text="k.ini"></span></span><span x-text="k.name"></span></button></div></template><a class="btn2" href="start.html">+ Dodaj dziecko</a><a class="btn" href="szukaj.html" style="margin-left: auto">Znajdź korepetytora</a></div>
-<div style="display: flex; gap: 6px; flex-wrap: wrap" aria-label="Sekcje panelu"><template x-for="t in v.tabs"><div style="display: contents"><button type="button" :class="t.cls" @click="t.pick()"><span x-text="t.name"></span></button></div></template></div>
+<body x-data="parent()">
+<div class="app" data-kt-app="rodzic">
+<main class="main" id="tresc">
+  <div class="pagehead"><div><p class="muted strong small">Czwartek, 5 listopada</p><h1 class="h2">Dzień dobry, Anna</h1></div></div>
 
-<template x-if="v.tProg"><div style="display: contents">
-<div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))">
-<div class="card"><div class="muted" style="font-weight: 800">Lekcje w tym miesiącu</div><div class="kpi"><span x-text="v.k.lessons"></span></div></div>
-<div class="card"><div class="muted" style="font-weight: 800">Oddane zadania</div><div class="kpi"><span x-text="v.k.hw"></span></div></div>
-<div class="card"><div class="muted" style="font-weight: 800">Postęp do celu</div><div class="kpi"><span x-text="v.k.goal"></span></div><div class="muted" style="font-size: 14px"><span x-text="v.k.goalName"></span></div></div>
-<div class="card"><div class="muted" style="font-weight: 800">Album</div><div class="kpi"><span x-text="v.k.album"></span></div><div class="muted" style="font-size: 14px">naklejek · <span x-text="v.k.pages"></span> pełna strona</div></div>
-</div>
-<section class="card">
-<h2 style="font-size: 22px; margin-bottom: 14px">Ocena zrozumienia tematu po lekcjach</h2>
-<div style="display: flex; align-items: flex-end; gap: 14px; height: 200px; padding: 0 6px; border-bottom: 1.5px solid #C9D4E8" role="img" :aria-label="v.k.chartLabel">
-<template x-for="b in v.k.bars"><div style="display: contents"><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; height: 100%"><span style="font-weight: 800; font-size: 13px"><span x-text="b.v"></span></span><div :style="'width: 100%; max-width: 56px; height: ' + (b.h) + '; background: #175CD3; border-radius: 10px 10px 4px 4px'"></div></div></div></template>
-</div>
-<div style="display: flex; gap: 14px; padding: 8px 6px 0"><template x-for="b in v.k.bars"><div style="display: contents"><div class="muted" style="flex: 1; text-align: center; font-size: 13px; font-weight: 700"><span x-text="b.l"></span></div></div></template></div>
-<p class="muted" style="margin: 10px 0 0; font-size: 13px">Skala 1–5 z raportu korepetytora po każdej lekcji. Dane w podglądzie są przykładowe.</p>
-</section>
-</div></template>
+  <div class="kids" role="group" aria-label="Wybierz dziecko">
+    <template x-for="id in ['ola', 'jas']" :key="id">
+      <button type="button" class="kid" :aria-pressed="kid === id" @click="kid = id">
+        <span class="av" :style="'background:' + K[id].color" x-text="K[id].name[0]"></span>
+        <span><b x-text="K[id].name"></b><span class="s" x-text="K[id].sub"></span></span>
+      </button>
+    </template>
+    <a class="btn ghost sm" href="start.html" style="min-height:44px">Dodaj dziecko</a>
+  </div>
 
-<template x-if="v.tRep"><div style="display: contents">
-<template x-for="r in v.k.reports"><div style="display: contents">
-<article class="card" style="display: flex; flex-direction: column; gap: 8px">
-<div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center"><span class="chip"><span x-text="r.date"></span></span><b><span x-text="r.subject"></span></b><span class="muted">· <span x-text="r.tutor"></span></span><span class="chip" style="margin-left: auto; background: #E6FBF3; color: #11775A">Zaangażowanie <span x-text="r.eng"></span></span></div>
-<div><b>Co przerobiono:</b> <span x-text="r.done"></span></div>
-<div><b>Do powtórki:</b> <span x-text="r.todo"></span></div>
-<div><b>Na następny raz:</b> <span x-text="r.next"></span></div>
-</article>
-</div></template>
-</div></template>
+  <div class="dash">
+    <div class="stack" style="--gap:20px">
+      <section class="card" aria-labelledby="h-lek">
+        <div class="sechead"><h2 class="h3" id="h-lek">Najbliższe lekcje</h2><a href="szukaj.html">Zarezerwuj</a></div>
+        <div class="panel list">
+          <template x-for="(u, i) in k().up" :key="kid + i">
+            <div class="up" :class="u.st === 'pend' && 'pend'">
+              <span class="ic"><i data-i="calendar"></i></span>
+              <div style="flex:1;min-width:0">
+                <p class="strong" x-text="u.subj"></p>
+                <p class="small muted" x-text="u.when + ', ' + u.tutor"></p>
+                <p class="tiny strong" style="color:#B4232B;margin-top:2px" x-show="u.st === 'pend'">Czeka na Twoją zgodę</p>
+              </div>
+              <span class="tag mint" x-show="u.st === 'ok'">Zatwierdzona</span>
+              <span class="tag" x-show="u.st === 'yes'">Zatwierdziłaś</span>
+              <span class="tag coral" x-show="u.st === 'no'">Odrzucona</span>
+              <div class="acts" x-show="u.st === 'pend'">
+                <button type="button" class="btn sm" @click="u.st = 'yes'">Zatwierdź</button>
+                <button type="button" class="btn ghost sm" @click="u.st = 'no'">Odrzuć</button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </section>
 
-<template x-if="v.tPay"><div style="display: contents">
-<div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))">
-<div class="card"><div class="muted" style="font-weight: 800">Pakiet: matematyka</div><div class="kpi">6 / 10</div><div class="muted" style="font-size: 14px">lekcji pozostało</div></div>
-<div class="card"><div class="muted" style="font-weight: 800">Zaoszczędzone z albumu</div><div class="kpi">57 zł</div></div>
-<div class="card"><div class="muted" style="font-weight: 800">Metoda płatności</div><div style="font-weight: 800; font-size: 18px; margin-top: 8px">BLIK · faktura imienna</div><button type="button" class="btn2" style="margin-top: 10px">Zmień</button></div>
-</div>
-<section class="card"><h2 style="font-size: 22px; margin-bottom: 8px">Płatności i faktury</h2><div style="overflow-x: auto"><table class="tbl"><thead><tr><th>Data</th><th>Opis</th><th>Kwota</th><th>Dokument</th></tr></thead><tbody>
-<tr><td>2.11</td><td>Pakiet 10 lekcji · matematyka · −10% z albumu</td><td style="font-weight: 800">972 zł</td><td><a href="#">Faktura PDF</a></td></tr>
-<tr><td>14.10</td><td>Pakiet 5 lekcji · angielski</td><td style="font-weight: 800">475 zł</td><td><a href="#">Faktura PDF</a></td></tr>
-<tr><td>1.10</td><td>Lekcja próbna · matematyka</td><td style="font-weight: 800">60 zł</td><td><a href="#">Faktura PDF</a></td></tr>
-</tbody></table></div><div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px"><a class="btn" href="platnosc.html">Dokup pakiet</a><button type="button" class="btn2">Zwrot niewykorzystanych lekcji</button></div></section>
-</div></template>
+      <div class="stats">
+        <div class="stat"><p class="l">Lekcje w listopadzie</p><p class="v" x-text="k().lessons"></p></div>
+        <div class="stat"><p class="l">Oddane zadania</p><p class="v" x-text="k().hw"></p></div>
+        <div class="stat"><p class="l">Do celu</p><p class="v" x-text="k().goal + '%'"></p></div>
+      </div>
 
-<template x-if="v.tSet"><div style="display: contents">
-<section class="card">
-<h2 style="font-size: 22px; margin-bottom: 4px">Kontrola i zgody</h2>
-<label class="tog"><span>Zatwierdzam każdą rezerwację dziecka</span><input type="checkbox" checked></label>
-<label class="tog"><span>Limit lekcji w miesiącu: 8</span><input type="checkbox" checked></label>
-<label class="tog"><span>Nagrywanie lekcji (domyślnie wyłączone)</span><input type="checkbox"></label>
-<label class="tog"><span>Album i naklejki dla dziecka</span><input type="checkbox" checked></label>
-<label class="tog"><span>Powiadomienia o nowych naklejkach</span><input type="checkbox"></label>
-<label class="tog" style="border-bottom: 0"><span>Raport po każdej lekcji na e-mail</span><input type="checkbox" checked></label>
-</section>
-<section class="card" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center"><div style="flex: 1 1 360px"><div style="font-weight: 800">Ogłoszenie dla dziecka</div><div class="muted" style="line-height: 1.5">Opisz potrzebę, a korepetytorzy odpowiedzą Tobie. Dane dziecka nigdy nie są publiczne.</div></div><button type="button" class="btn">Dodaj ogłoszenie</button></section>
-</div></template>
+      <section class="card" id="postepy" aria-labelledby="h-pos">
+        <div class="sechead"><h2 class="h3" id="h-pos">Postępy</h2><span class="small muted" x-text="'Cel: ' + k().goalName"></span></div>
+        <p class="strong small" style="margin-bottom:12px">Zrozumienie tematu po kolejnych lekcjach</p>
+        <div class="chart" role="img" :aria-label="'Ocena zrozumienia od ' + fmt(k().bars[0][1]) + ' do ' + fmt(k().bars[5][1]) + ' na 5'">
+          <template x-for="(b, i) in k().bars" :key="kid + i">
+            <div class="c"><span x-text="fmt(b[1])"></span><i :style="'height:' + Math.round(b[1] / 5 * 130) + 'px'"></i></div>
+          </template>
+        </div>
+        <div class="xl"><template x-for="(b, i) in k().bars" :key="kid + 'l' + i"><span x-text="b[0]"></span></template></div>
+        <p class="tiny muted" style="margin-top:8px">Skala 1–5 z raportu korepetytora po każdej lekcji.</p>
+        <div class="stack" style="--gap:14px;margin-top:20px">
+          <template x-for="t in k().topics" :key="kid + t[0]">
+            <div class="topic"><span x-text="t[0]"></span><div class="bar" :class="t[1] >= 70 && 'mint'"><i :style="'width:' + t[1] + '%'"></i></div><span class="small muted" x-text="t[1] + '%'"></span></div>
+          </template>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-rap">
+        <div class="sechead"><h2 class="h3" id="h-rap">Raporty po lekcjach</h2></div>
+        <div class="panel list">
+          <template x-for="(r, i) in k().reports" :key="kid + 'r' + i">
+            <article class="rep">
+              <div class="row between wrapit" style="gap:8px"><p class="strong" x-text="r.subj + ' z ' + r.tutor"></p><span class="tag mint" x-text="'Zaangażowanie ' + r.eng"></span></div>
+              <p class="tiny muted" x-text="r.date"></p>
+              <dl>
+                <dt>Co przerobili</dt><dd x-text="r.done"></dd>
+                <dt>Do powtórki</dt><dd x-text="r.todo"></dd>
+                <dt>Na następny raz</dt><dd x-text="r.next"></dd>
+              </dl>
+            </article>
+          </template>
+        </div>
+      </section>
+    </div>
+
+    <div class="stack" style="--gap:20px">
+      <section id="platnosci" class="stack" style="--gap:20px" aria-labelledby="h-pla">
+        <div class="card pkg">
+          <div class="sechead"><h2 class="h3" id="h-pla">Płatności</h2><span class="tag" x-text="k().pkgName"></span></div>
+          <p class="v" x-text="k().pkgLeft + ' z ' + k().pkgAll"></p>
+          <p class="small muted" style="margin-top:4px">lekcji zostało w pakiecie</p>
+          <div class="bar" style="margin-top:12px"><i :style="'width:' + Math.round(k().pkgLeft / k().pkgAll * 100) + '%'"></i></div>
+          <div class="row wrapit" style="gap:10px;margin-top:16px"><a class="btn" href="platnosc.html">Dokup pakiet</a><button type="button" class="btn ghost">Zwrot za niewykorzystane</button></div>
+          <div class="item" style="padding:14px 0 0;margin-top:14px;border-top:1.5px solid var(--line)"><span class="grow"><span class="strong">BLIK, faktura imienna</span><br><span class="tiny muted">Metoda płatności</span></span><button type="button" class="btn soft sm">Zmień</button></div>
+        </div>
+
+        <div class="ekipa">
+          <div class="hd"><img :src="k().mascot" alt=""><div><h2 class="h4" style="font-size:18px">Nagrody z albumu Ekipy</h2><p class="small strong" x-text="k().name + ': ' + k().album"></p></div></div>
+          <div style="margin-top:6px">
+            <template x-for="(r, i) in k().rewards" :key="kid + 'w' + i">
+              <div class="rw" :class="r.done && 'done'"><span class="n" x-text="r.n"></span><div style="flex:1"><p class="strong" x-text="r.t"></p><p class="small" style="color:#6B4A00" x-text="r.s"></p></div></div>
+            </template>
+          </div>
+          <p class="tiny" style="color:#6B4A00">Zniżki i nagrody pieniężne widzisz tylko Ty. Dziecko w albumie widzi wyłącznie naklejki i nagrody w aplikacji.</p>
+        </div>
+
+        <div class="card">
+          <div class="sechead"><h2 class="h3">Faktury</h2></div>
+          <div class="panel list">
+            <a class="item" href="#"><span class="grow"><span class="strong">Pakiet 10 lekcji, matematyka</span><br><span class="tiny muted">2 listopada, z rabatem z albumu</span></span><span class="amt"><b>972 zł</b><span class="tiny">PDF</span></span></a>
+            <a class="item" href="#"><span class="grow"><span class="strong">Pakiet 5 lekcji, angielski</span><br><span class="tiny muted">14 października</span></span><span class="amt"><b>475 zł</b><span class="tiny">PDF</span></span></a>
+            <a class="item" href="#"><span class="grow"><span class="strong">Lekcja próbna, matematyka</span><br><span class="tiny muted">1 października</span></span><span class="amt"><b>60 zł</b><span class="tiny">PDF</span></span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="zgody" aria-labelledby="h-zg">
+        <div class="sechead"><h2 class="h3" id="h-zg" x-text="'Zgody i kontrola: ' + k().name"></h2></div>
+        <div class="panel list">
+          <label class="tog"><span class="grow"><span class="strong">Zatwierdzam każdą rezerwację</span><br><span class="tiny muted">Lekcja odbędzie się dopiero po Twojej zgodzie.</span></span><input type="checkbox" role="switch" x-model="k().c.approve"></label>
+          <label class="tog"><span class="grow"><span class="strong">Album Ekipy</span><br><span class="tiny muted" x-text="k().c.album ? 'Dziecko zbiera naklejki za lekcje i zadania.' : 'Album jest ukryty. Postępy i raporty zostają.'"></span></span><input type="checkbox" role="switch" x-model="k().c.album"></label>
+          <label class="tog"><span class="grow"><span class="strong">Nagrywanie lekcji</span><br><span class="tiny muted" x-text="k().c.rec ? 'Włączone. Korepetytor też musi się zgodzić.' : 'Wyłączone. To ustawienie domyślne.'"></span></span><input type="checkbox" role="switch" x-model="k().c.rec"></label>
+          <label class="tog"><span class="grow"><span class="strong">Raport po lekcji na e-mail</span></span><input type="checkbox" role="switch" x-model="k().c.mail"></label>
+          <div class="item" style="flex-wrap:wrap"><span class="grow"><span class="strong">Limit lekcji w miesiącu</span></span><label class="sr" for="lim">Limit lekcji</label><select id="lim" class="select" style="width:auto;min-height:44px" x-model="k().c.limit"><option>4</option><option>8</option><option>12</option><option>Bez limitu</option></select></div>
+        </div>
+
+        <fieldset style="border:0;padding:0;margin:20px 0 0">
+          <legend class="strong" style="margin-bottom:4px">Kontakt korepetytora z dzieckiem</legend>
+          <p class="small muted" style="margin-bottom:10px">Zawsze przez KiteTutor. Numery telefonów i e-maile są ukrywane.</p>
+          <div class="stack" style="--gap:8px">
+            <label class="opt"><input type="radio" name="contact" value="lekcja" x-model="k().c.contact">Czat tylko w trakcie lekcji</label>
+            <label class="opt"><input type="radio" name="contact" value="kopia" x-model="k().c.contact">Czat także między lekcjami, z kopią dla mnie</label>
+            <label class="opt"><input type="radio" name="contact" value="rodzic" x-model="k().c.contact">Tylko przeze mnie</label>
+          </div>
+        </fieldset>
+
+        <div class="panel" style="padding:14px 16px;margin-top:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <div style="flex:1 1 200px"><p class="strong">Ogłoszenie dla dziecka</p><p class="small muted">Korepetytorzy odpowiadają Tobie. Dane dziecka nie są publiczne.</p></div>
+          <button type="button" class="btn soft">Dodaj ogłoszenie</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
 </div>
-</div>
+<script>
+function parent() {
+  return {
+    kid: 'ola',
+    K: {
+      ola: { name: 'Ola', sub: 'liceum, 16 lat', color: '#FF5A5F', mascot: 'assets/kapi.svg', lessons: 7, hw: '9/10', goal: 64, goalName: 'matura z matematyki',
+        up: [{ subj: 'Matematyka', when: 'Dziś, 17:00', tutor: 'Marta K.', st: 'ok' }, { subj: 'Angielski', when: 'Sobota, 10:00', tutor: 'James P.', st: 'ok' }],
+        bars: [['wrz', 2.6], ['wrz', 3.0], ['paź', 3.3], ['paź', 3.6], ['lis', 4.1], ['lis', 4.3]],
+        topics: [['Funkcje', 78], ['Ciągi', 52], ['Geometria', 34]],
+        reports: [
+          { date: '4 listopada', subj: 'Matematyka', tutor: 'Martą K.', eng: '5/5', done: 'Postać kanoniczna, wierzchołek paraboli, zadania 4–7 z arkusza.', todo: 'Miejsca zerowe przy Δ = 0.', next: 'Zadania 8–10, potem ciągi.' },
+          { date: '2 listopada', subj: 'Angielski', tutor: 'Jamesem P.', eng: '4/5', done: 'Present perfect i past simple, rozmowa o wakacjach.', todo: 'Czasowniki nieregularne.', next: '10 zdań w present perfect.' }],
+        pkgName: 'Matematyka', pkgLeft: 6, pkgAll: 10, album: '26 naklejek, 1 pełna strona',
+        rewards: [{ n: '1', done: true, t: 'Pełna strona: −10% na pakiet', s: 'Wykorzystane 2 listopada. Oszczędność 57 zł.' }, { n: '3', t: 'Trzy pełne strony: lekcja 30 min gratis', s: 'Ola ma 1 z 3 pełnych stron.' }],
+        c: { approve: true, album: true, rec: false, mail: true, limit: '8', contact: 'lekcja' } },
+      jas: { name: 'Jaś', sub: 'klasa 5, 11 lat', color: '#5B3BE8', mascot: 'assets/kitka.svg', lessons: 4, hw: '4/5', goal: 41, goalName: 'ułamki i procenty',
+        up: [{ subj: 'Matematyka', when: 'Jutro, 16:00', tutor: 'Oleh L.', st: 'ok' }, { subj: 'Angielski, lekcja próbna', when: 'Poniedziałek, 16:30', tutor: 'Anna W.', st: 'pend' }],
+        bars: [['wrz', 2.2], ['wrz', 2.5], ['paź', 2.9], ['paź', 3.1], ['lis', 3.4], ['lis', 3.5]],
+        topics: [['Ułamki', 58], ['Procenty', 30], ['Zadania z treścią', 41]],
+        reports: [{ date: '3 listopada', subj: 'Matematyka', tutor: 'Olehem L.', eng: '4/5', done: 'Dodawanie ułamków o różnych mianownikach.', todo: 'Skracanie ułamków.', next: 'Procenty w zadaniach z treścią.' }],
+        pkgName: 'Matematyka', pkgLeft: 2, pkgAll: 5, album: '6 naklejek',
+        rewards: [{ n: '1', t: 'Pełna strona: −10% na pakiet', s: 'Jaś ma 6 z 12 naklejek na pierwszej stronie.' }, { n: '3', t: 'Trzy pełne strony: lekcja 30 min gratis', s: 'Jaś nie ma jeszcze pełnej strony.' }],
+        c: { approve: true, album: true, rec: false, mail: false, limit: '4', contact: 'rodzic' } }
+    },
+    k: function () { return this.K[this.kid]; },
+    fmt: function (v) { return String(v).replace('.', ','); }
+  };
+}
+</script>
+<script src="assets/kt.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </body>
 </html>

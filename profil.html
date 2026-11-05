@@ -2,110 +2,300 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KiteTutor – profil korepetytora</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marta K., matematyka – KiteTutor (podgląd)</title>
+<meta name="description" content="Profil korepetytorki matematyki: opinie, poziomy, wolne terminy i rezerwacja lekcji online.">
+<meta name="theme-color" content="#5B3BE8">
+<link rel="icon" href="assets/kitka.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kt.css">
 <style>
-body{margin:0;background:#F6F3FF;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
-a{color:#4A2DD0}a:hover{color:#1C1640}
-*{box-sizing:border-box}
-h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
-.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
-.top{background:#FFFFFF;border-bottom:1px solid #E9E3FF}
-.topin{display:flex;align-items:center;gap:16px;min-height:68px;flex-wrap:wrap}
-.card{background:#FFFFFF;border-radius:20px;padding:22px;border:1px solid #ECE7FF}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:14px;background:#5B3BE8;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:16px}
-.btn:hover{background:#4A2DD0;color:#FFFFFF}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
-.ok{background:#E6FBF3;color:#11775A}
-.muted{color:#5E5878}
-.slot{min-height:44px;border-radius:12px;border:1.5px solid #DCD3FF;background:#FFFFFF;font-family:inherit;font-weight:800;font-size:15px;color:#1C1640;cursor:pointer}
-.slotOn{background:#5B3BE8;border-color:#5B3BE8;color:#FFFFFF}
-.slotX{background:#F3F1F7;border-color:#F3F1F7;color:#8F89A6;text-decoration:line-through;cursor:not-allowed}
-.pk{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:14px 16px;border-radius:14px;border:2px solid #ECE7FF;background:#FFFFFF;font-family:inherit;color:#1C1640;cursor:pointer;text-align:left;min-height:44px;width:100%}
-.pkOn{border-color:#5B3BE8;background:#F6F2FF}
-</style>
-<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
-<script>
-function page() { return {
- state: { slot: 'd0-1', pkg: 'p5' },
- setState(o) { Object.assign(this.state, o); },
- get v() {
-const raw = [
-{ label: 'Dziś', slots: ['16:00', '18:00', '19:30'], taken: [0] },
-{ label: 'Jutro', slots: ['15:00', '17:00', '18:30'], taken: [] },
-{ label: 'Pt', slots: ['16:30', '18:00', '20:00'], taken: [1] },
-{ label: 'Sob', slots: ['10:00', '11:30', '13:00'], taken: [] },
-{ label: 'Pon', slots: ['17:00', '18:30', '20:00'], taken: [2] }
-];
-let chosen = '';
-const days = raw.map((d, i) => ({ label: d.label, slots: d.slots.map((t, j) => {
-const id = 'd' + i + '-' + j; const on = this.state.slot === id; const x = d.taken.indexOf(j) >= 0;
-if (on) chosen = d.label + ', ' + t;
-return { time: t, on: on ? 'true' : 'false', cls: x ? 'slot slotX' : (on ? 'slot slotOn' : 'slot'), pick: () => { if (!x) this.setState({ slot: id }); } };
-}) }));
-const P = [
-{ id: 'trial', name: 'Lekcja próbna 30 min', note: 'Korepetytorka też dostaje wynagrodzenie', price: '60 zł', v: 60 },
-{ id: 'one', name: 'Pojedyncza lekcja 60 min', note: 'Elastycznie', price: '120 zł', v: 120 },
-{ id: 'p5', name: 'Pakiet 5 lekcji', note: 'Oszczędzasz 5%', price: '570 zł', v: 570 },
-{ id: 'p10', name: 'Pakiet 10 lekcji', note: 'Oszczędzasz 10% · +1 srebrna naklejka', price: '1 080 zł', v: 1080 }
-];
-const pk = P.find((p) => p.id === this.state.pkg);
-return { days: days, chosen: chosen || 'wybierz termin', total: pk.price,
-pkgs: P.map((p) => ({ name: p.name, note: p.note, price: p.price, cls: p.id === this.state.pkg ? 'pk pkOn' : 'pk', pick: () => this.setState({ pkg: p.id }) })) };
+.back { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; font-weight: 800; text-decoration: none; margin: 8px 0 4px -6px; padding: 0 8px 0 2px; border-radius: 10px; }
+.prof { display: grid; gap: 16px; padding-bottom: 40px; }
+.prof > * { min-width: 0; }
+
+/* Nagłówek profilu */
+.hero .who { display: flex; gap: 16px; align-items: flex-start; }
+.hero .av { width: 84px; height: 84px; border-radius: 26px; font-size: 30px; }
+.hero h1 { font-size: clamp(28px, 7vw, 40px); }
+.hero .hd { color: var(--ink-2); margin-top: 4px; }
+.vtags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 18px; border: 1.5px solid var(--line); border-radius: var(--r-m); }
+.stats > div { padding: 12px 6px; text-align: center; min-width: 0; }
+.stats > div + div { border-left: 1.5px solid var(--line); }
+.stats b { display: block; font: 600 20px/1.1 var(--f-head); white-space: nowrap; }
+.stats span { font-size: 12.5px; color: var(--muted); font-weight: 700; }
+.stats .st b svg { color: #E5A400; fill: #FFC93C; vertical-align: -2px; margin-right: 2px; }
+
+.sechd { margin-bottom: 14px; }
+.vid { position: relative; aspect-ratio: 16 / 9; width: 100%; border: 0; border-radius: var(--r-m); background: radial-gradient(120% 120% at 20% 10%, #3A2F7A, var(--night)); color: #fff; cursor: pointer; display: grid; place-items: center; overflow: hidden; margin-bottom: 16px; }
+.vid .play { width: 64px; height: 64px; border-radius: 50%; background: #fff; color: var(--violet); display: grid; place-items: center; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.vid .play svg { fill: currentColor; margin-left: 4px; }
+.vid .cap { position: absolute; left: 12px; bottom: 12px; background: rgba(23,18,58,.7); padding: 5px 10px; border-radius: 9px; font-weight: 800; font-size: 13px; }
+.how { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
+.how li { display: flex; gap: 10px; align-items: flex-start; }
+.how svg { color: var(--mint); flex: none; margin-top: 2px; }
+
+.lvl .item { align-items: flex-start; flex-wrap: wrap; }
+.lvl .item .grow { flex-basis: 150px; }
+
+/* Tydzień dostępności */
+.week { display: grid; grid-template-columns: 74px repeat(7, 1fr); gap: 4px; font-size: 12.5px; font-weight: 800; color: var(--muted); align-items: center; }
+.week .d { text-align: center; }
+.week i { height: 26px; border-radius: 7px; background: var(--surface); }
+.week i.on { background: var(--violet-100); }
+.week i.hot { background: var(--violet); }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 13px; color: var(--muted); font-weight: 700; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+
+/* Opinie */
+.rsum { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; margin-bottom: 18px; }
+.rsum .big { font: 600 48px/1 var(--f-head); }
+.stars { display: inline-flex; gap: 1px; color: #E5A400; }
+.stars svg { fill: #FFC93C; }
+.rbars { display: grid; gap: 4px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.rbars > div { display: grid; grid-template-columns: 12px 1fr 30px; gap: 8px; align-items: center; }
+.rbars .bar { height: 7px; }
+.rev { padding: 16px 0; }
+.rev + .rev { border-top: 1.5px solid var(--line); }
+.rev p.t { margin-top: 6px; }
+
+/* Rezerwacja */
+.book { scroll-margin-top: 76px; }
+.book h2 { margin-bottom: 2px; }
+.blk { margin-top: 18px; }
+.blk > .label { display: block; margin-bottom: 8px; }
+.opt { position: relative; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 10px 14px; border: 1.5px solid var(--line); border-radius: 14px; cursor: pointer; background: #fff; }
+.opt + .opt { margin-top: 8px; }
+.opt input { position: absolute; opacity: 0; pointer-events: none; }
+.opt .rd { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #CFC6F2; flex: none; display: grid; place-items: center; }
+.opt:has(input:checked) { border-color: var(--violet); background: var(--violet-50); }
+.opt:has(input:checked) .rd { border-color: var(--violet); }
+.opt:has(input:checked) .rd::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--violet); }
+.opt:has(input:focus-visible) { outline: 3px solid var(--violet); outline-offset: 2px; }
+.opt .grow { flex: 1; min-width: 0; line-height: 1.3; }
+.opt .grow small { display: block; color: var(--muted); font-weight: 600; font-size: 13px; }
+.opt .pr { font-weight: 800; white-space: nowrap; }
+.days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.days button { min-height: 60px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.15; padding: 4px 2px; }
+.days button b { font-size: 14px; }
+.days button span { font-size: 12.5px; color: var(--muted); font-weight: 700; }
+.days button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.days button[aria-pressed="true"] span { color: #CFC9EE; }
+.slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.slots button { min-height: 48px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-weight: 800; cursor: pointer; }
+.slots button:hover:not(:disabled) { border-color: var(--violet); }
+.slots button[aria-pressed="true"] { background: var(--violet); border-color: var(--violet); color: #fff; }
+.slots button:disabled { color: #B9B3CF; text-decoration: line-through; cursor: not-allowed; background: var(--surface); border-style: dashed; }
+.total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-top: 16px; margin-top: 18px; border-top: 1.5px solid var(--line); }
+.total b { font: 600 28px var(--f-head); }
+.assure { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 8px; font-size: 14px; color: var(--ink-2); }
+.assure li { display: flex; gap: 8px; align-items: flex-start; }
+.assure svg { color: var(--mint); flex: none; margin-top: 2px; }
+
+/* Dolny pasek rezerwacji na telefonie */
+.bbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -8px 24px rgba(23,18,58,.08); padding: 10px var(--gut) calc(10px + env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; transition: transform .2s; }
+.bbar.hide { transform: translateY(110%); }
+.bbar .p { line-height: 1.15; flex: 1; min-width: 0; }
+.bbar .p b { font: 600 22px var(--f-head); }
+.bbar .p span { display: block; font-size: 13px; color: var(--muted); font-weight: 700; }
+body { padding-bottom: 84px; }
+
+@media (min-width: 960px) {
+  body { padding-bottom: 0; }
+  .bbar { display: none; }
+  .back { margin-top: 20px; }
+  .prof { grid-template-columns: minmax(0, 1fr) 390px; gap: 24px; align-items: start; padding-bottom: 72px; }
+  .prof > :not(.book) { grid-column: 1; }
+  .book { grid-column: 2; grid-row: 1 / span 6; position: sticky; top: 80px; }
+  .hero .av { width: 112px; height: 112px; font-size: 40px; border-radius: 32px; }
+  .hero .who { gap: 24px; }
+  .stats b { font-size: 24px; }
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  .about .vid { margin: 0; }
 }
-}; }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+[tabindex="-1"]:focus { outline: none; }
+</style>
 </head>
-<body x-data="page()">
-<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
-<div style="min-height: 1500px">
-<header class="top"><div class="wrap topin"><a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a><a href="szukaj.html" style="font-weight: 800">← Wróć do wyników</a></div></header>
-<div class="wrap" style="padding-top: 28px; padding-bottom: 48px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
-<main style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
-<section class="card" style="display: flex; flex-wrap: wrap; gap: 22px">
-<div style="flex: 1 1 320px; aspect-ratio: 16 / 9; border-radius: 16px; background: #3B3268; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden">
-<svg width="60%" viewBox="0 0 200 160" aria-hidden="true"><circle cx="100" cy="62" r="34" fill="#F2C29B"></circle><path d="M66 50 Q100 10 134 50 Q130 30 100 26 Q70 30 66 50Z" fill="#3A2318"></path><path d="M30 160 Q30 104 100 104 Q170 104 170 160Z" fill="#5B3BE8"></path></svg>
-<button type="button" aria-label="Odtwórz wideo powitalne" style="position: absolute; width: 64px; height: 64px; border-radius: 50%; border: 0; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#5B3BE8"></path></svg></button>
-<span style="position: absolute; left: 12px; bottom: 12px; background: rgba(0,0,0,0.6); color: #FFFFFF; font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 8px">Wideo powitalne · 1:12</span>
-</div>
-<div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 10px">
-<div style="display: flex; gap: 8px; flex-wrap: wrap"><span class="chip ok">Zweryfikowana tożsamość</span><span class="chip ok">Może uczyć dzieci</span></div>
-<h1 style="font-size: 36px">Marta K.</h1>
-<div class="muted" style="font-weight: 700">Matematyka · liceum i matura · polski, angielski</div>
-<div style="font-weight: 800; font-size: 18px">★ 4,9 <span class="muted" style="font-weight: 600">· 186 opinii · 1 240 lekcji</span></div>
-<p style="margin: 0; line-height: 1.6">Uczę w liceum od 9 lat. Na zajęciach zaczynamy od zrozumienia, a dopiero potem przechodzimy do zadań z arkuszy. Po każdej lekcji dostajesz notatkę i zadania na kolejny raz.</p>
-</div>
-</section>
-<section class="card">
-<h2 style="font-size: 24px; margin-bottom: 14px">Wybierz termin <span class="muted" style="font-size: 16px; font-family: Nunito, sans-serif; font-weight: 700">· czas warszawski</span></h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px">
-<template x-for="d in v.days"><div style="display: contents">
-<div style="display: flex; flex-direction: column; gap: 8px"><div style="font-weight: 800; text-align: center"><span x-text="d.label"></span></div>
-<template x-for="s in d.slots"><div style="display: contents"><button type="button" :class="s.cls" @click="s.pick()" :aria-pressed="s.on"><span x-text="s.time"></span></button></div></template>
-</div>
-</div></template>
-</div>
-</section>
-<section class="card">
-<h2 style="font-size: 24px; margin-bottom: 12px">Opinie</h2>
-<div style="display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))">
-<blockquote style="margin: 0; padding: 16px; border-radius: 14px; background: #F6F3FF"><div style="font-weight: 800">★★★★★ · Rodzic ucznia klasy 3</div><p style="margin: 8px 0 0; line-height: 1.5">Syn pierwszy raz mówi, że rozumie funkcje. Raporty po lekcjach są konkretne.</p></blockquote>
-<blockquote style="margin: 0; padding: 16px; border-radius: 14px; background: #F6F3FF"><div style="font-weight: 800">★★★★★ · Uczennica, matura rozszerzona</div><p style="margin: 8px 0 0; line-height: 1.5">Plan powtórek był rozpisany co do tygodnia. Arkusze z próbnej matury dużo lepiej.</p></blockquote>
-</div>
-<p class="muted" style="font-size: 13px; margin: 12px 0 0">Opinie w podglądzie są przykładowe.</p>
-</section>
+<body x-data="booking()">
+<div data-kt="header"></div>
+
+<main id="tresc" class="wrap">
+  <a class="back" href="szukaj.html"><i data-i="left" data-s="20"></i>Wróć do wyników</a>
+
+  <div class="prof">
+    <section class="card hero" aria-labelledby="h-name">
+      <div class="who">
+        <span class="av" aria-hidden="true">MK</span>
+        <div style="min-width:0">
+          <h1 id="h-name">Marta K.</h1>
+          <p class="hd">Nauczycielka matematyki w liceum, 9 lat doświadczenia</p>
+        </div>
+      </div>
+      <div class="vtags">
+        <span class="tag mint"><i data-i="shield" data-s="15"></i>Zweryfikowana tożsamość</span>
+        <span class="tag mint"><i data-i="check" data-s="15"></i>Może uczyć dzieci</span>
+        <span class="tag" style="background:var(--ink);color:#fff">Superkorepetytorka</span>
+      </div>
+      <div class="stats">
+        <div class="st"><b><i data-i="star" data-s="17"></i>4,9</b><span>ocena</span></div>
+        <div><b>186</b><span>opinii</span></div>
+        <div><b>1&nbsp;240</b><span>lekcji</span></div>
+        <div><b>120 zł</b><span>za 60 min</span></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-o">
+      <h2 class="h3 sechd" id="h-o">O mnie</h2>
+      <div class="about">
+        <button class="vid" type="button" @click="vid=true" aria-label="Odtwórz wideo powitalne, 1 minuta 12 sekund">
+          <span class="play"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+          <span class="cap" x-text="vid ? 'Wideo zobaczysz po starcie usługi' : 'Wideo powitalne, 1:12'"></span>
+        </button>
+        <div>
+          <p>Uczę w liceum od 9 lat. Zaczynamy od zrozumienia, a dopiero potem przechodzimy do zadań z arkuszy. Spokojnie tłumaczę ten sam temat na kilka sposobów, aż zaskoczy.</p>
+          <ul class="how">
+            <li><i data-i="check" data-s="20"></i><span>Po każdej lekcji notatka i zadania na kolejny raz</span></li>
+            <li><i data-i="check" data-s="20"></i><span>Plan powtórek do matury rozpisany na tygodnie</span></li>
+            <li><i data-i="check" data-s="20"></i><span>Krótki raport dla rodzica, jeśli uczeń ma mniej niż 18 lat</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card book" id="terminy" aria-labelledby="h-rez" x-ref="book">
+      <h2 class="h3" id="h-rez">Zarezerwuj lekcję</h2>
+      <p class="small muted">Czas warszawski. Lekcja odbywa się w pokoju KiteTutor.</p>
+
+      <div class="blk" role="radiogroup" aria-labelledby="l-pk">
+        <span class="label" id="l-pk">Rodzaj lekcji</span>
+        <template x-for="p in pkgs" :key="p.id">
+          <label class="opt">
+            <input type="radio" name="pk" :value="p.id" x-model="pkg">
+            <span class="rd"></span>
+            <span class="grow"><span class="strong" x-text="p.name"></span><small x-text="p.note"></small></span>
+            <span class="pr" x-text="zl(p.v)"></span>
+          </label>
+        </template>
+      </div>
+
+      <div class="blk">
+        <span class="label" id="l-dz">Termin pierwszej lekcji</span>
+        <div class="days" role="group" aria-labelledby="l-dz">
+          <template x-for="(d,i) in days" :key="i">
+            <button type="button" :aria-pressed="(day===i).toString()" @click="day=i; slot=''"><b x-text="d.d"></b><span x-text="d.n"></span></button>
+          </template>
+        </div>
+        <div class="slots" role="group" :aria-label="'Godziny, ' + days[day].d">
+          <template x-for="s in days[day].s" :key="s[0]">
+            <button type="button" :disabled="s[1]" :aria-pressed="(slot===s[0]).toString()" @click="slot=s[0]" x-text="s[0]" :aria-label="s[0] + (s[1] ? ', zajęte' : '')"></button>
+          </template>
+        </div>
+      </div>
+
+      <div class="total">
+        <div><span class="small muted strong" x-text="slot ? days[day].d + ', ' + days[day].n + ', ' + slot : 'Wybierz godzinę'"></span><br><span class="small muted">Do zapłaty</span></div>
+        <b x-text="zl(current.v)"></b>
+      </div>
+      <a class="btn block" style="margin-top:14px" :href="slot ? 'platnosc.html' : '#terminy'" @click="if(!slot){ $event.preventDefault(); warn=true }">Przejdź do płatności</a>
+      <p class="small" style="color:#B4232B;margin-top:8px" x-show="warn && !slot" x-cloak role="alert">Najpierw wybierz godzinę lekcji.</p>
+      <ul class="assure">
+        <li><i data-i="clock" data-s="18"></i><span>Bezpłatne odwołanie do 24 h przed lekcją</span></li>
+        <li><i data-i="wallet" data-s="18"></i><span>Korepetytorka dostaje pieniądze dopiero po odbytej lekcji</span></li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="h-prz">
+      <h2 class="h3 sechd" id="h-prz">Przedmioty i poziomy</h2>
+      <div class="panel list lvl">
+        <div class="item"><span class="grow"><span class="strong">Matematyka</span><br><span class="small muted">Liceum, matura podstawowa i rozszerzona</span></span><span class="tag">Główny przedmiot</span></div>
+        <div class="item"><span class="grow"><span class="strong">Matematyka</span><br><span class="small muted">Szkoła podstawowa, klasy 7–8 i egzamin ósmoklasisty</span></span></div>
+        <div class="item"><span class="grow"><span class="strong">Języki zajęć</span><br><span class="small muted">Polski, angielski</span></span></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-dost">
+      <h2 class="h3 sechd" id="h-dost">Kiedy zwykle uczy</h2>
+      <div class="week" role="img" aria-label="Zwykle: popołudnia od poniedziałku do piątku, wieczory od poniedziałku do czwartku, soboty rano.">
+        <span></span><span class="d">pn</span><span class="d">wt</span><span class="d">śr</span><span class="d">cz</span><span class="d">pt</span><span class="d">sb</span><span class="d">nd</span>
+        <span>Rano</span><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i>
+        <span>Popołudnie</span><i class="on"></i><i class="hot"></i><i class="on"></i><i class="hot"></i><i class="on"></i><i></i><i></i>
+        <span>Wieczór</span><i class="hot"></i><i class="on"></i><i class="hot"></i><i class="on"></i><i></i><i></i><i></i>
+      </div>
+      <div class="legend"><span><i style="background:var(--violet)"></i>dużo wolnych terminów</span><span><i style="background:var(--violet-100)"></i>pojedyncze terminy</span></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-op">
+      <h2 class="h3 sechd" id="h-op">Opinie po lekcjach</h2>
+      <div class="rsum">
+        <div><div class="big">4,9</div><span class="stars" aria-label="5 na 5 gwiazdek"><i data-i="star" data-s="16"></i><i data-i="star" data-s="16"></i><i data-i="star" data-s="16"></i><i data-i="star" data-s="16"></i><i data-i="star" data-s="16"></i></span><p class="tiny muted">186 opinii</p></div>
+        <div class="rbars" aria-hidden="true">
+          <div><span>5</span><div class="bar"><i style="width:91%"></i></div><span>169</span></div>
+          <div><span>4</span><div class="bar"><i style="width:7%"></i></div><span>13</span></div>
+          <div><span>3</span><div class="bar"><i style="width:2%"></i></div><span>3</span></div>
+          <div><span>2</span><div class="bar"><i style="width:0"></i></div><span>0</span></div>
+          <div><span>1</span><div class="bar"><i style="width:1%"></i></div><span>1</span></div>
+        </div>
+      </div>
+      <template x-for="(r,i) in reviews" :key="i">
+        <div class="rev" x-show="i < 3 || more">
+          <div class="row between"><span class="stars" aria-label="5 na 5 gwiazdek"><i data-i="star" data-s="15"></i><i data-i="star" data-s="15"></i><i data-i="star" data-s="15"></i><i data-i="star" data-s="15"></i><i data-i="star" data-s="15"></i></span><span class="tiny muted" x-text="r[2]"></span></div>
+          <p class="t" x-text="r[1]"></p>
+          <p class="tiny muted strong" style="margin-top:6px" x-text="r[0]"></p>
+        </div>
+      </template>
+      <button class="btn ghost block" type="button" style="margin-top:8px" @click="more=!more" x-text="more ? 'Pokaż mniej' : 'Pokaż więcej opinii'"></button>
+      <p class="tiny muted" style="margin-top:12px">Opinię może dodać tylko ktoś, kto odbył lekcję. Opinie w podglądzie są przykładowe.</p>
+    </section>
+  </div>
 </main>
-<aside class="card" style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 12px" aria-label="Rezerwacja">
-<h2 style="font-size: 22px">Rezerwacja</h2>
-<div class="muted" style="font-weight: 700">Termin: <b style="color: #1C1640"><span x-text="v.chosen"></span></b></div>
-<template x-for="p in v.pkgs"><div style="display: contents"><button type="button" :class="p.cls" @click="p.pick()"><span><span style="display: block; font-weight: 800"><span x-text="p.name"></span></span><span class="muted" style="font-size: 14px"><span x-text="p.note"></span></span></span><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px"><span x-text="p.price"></span></span></button></div></template>
-<div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 18px; padding-top: 6px; border-top: 1px solid #ECE7FF"><span>Do zapłaty</span><span><span x-text="v.total"></span></span></div>
-<a class="btn" href="platnosc.html">Przejdź do płatności</a>
-<p class="muted" style="font-size: 14px; margin: 0; line-height: 1.5">Odwołanie bez kosztów do 24 h przed lekcją. Pieniądze trafiają do korepetytorki dopiero po odbytej lekcji.</p>
-</aside>
+
+<div class="bbar" :class="bookVisible && 'hide'" :aria-hidden="bookVisible.toString()">
+  <div class="p"><b>120 zł</b> <span x-text="slot ? 'Termin: ' + days[day].d.toLowerCase() + ', ' + slot : 'za 60 min, odwołanie do 24 h'"></span></div>
+  <button class="btn" type="button" @click="goBook()" :tabindex="bookVisible ? -1 : 0">Zarezerwuj lekcję</button>
 </div>
-</div>
+
+<div data-kt="footer"></div>
+<script>
+function booking() {
+  return {
+    pkg: 'p5', day: 1, slot: '17:00', warn: false, more: false, vid: false, bookVisible: false,
+    pkgs: [
+      { id: 'trial', name: 'Lekcja próbna, 30 min', note: 'Płatna – korepetytorka też pracuje', v: 60 },
+      { id: 'one', name: 'Jedna lekcja, 60 min', note: 'Bez zobowiązań', v: 120 },
+      { id: 'p5', name: 'Pakiet 5 lekcji', note: 'Oszczędzasz 5%', v: 570 },
+      { id: 'p10', name: 'Pakiet 10 lekcji', note: 'Oszczędzasz 10% i dostajesz srebrną naklejkę', v: 1080 }
+    ],
+    days: [
+      { d: 'Dziś', n: '5 lis', s: [['16:00', true], ['18:00', false], ['19:30', false]] },
+      { d: 'Jutro', n: '6 lis', s: [['15:00', false], ['16:30', true], ['17:00', false], ['18:30', false]] },
+      { d: 'Sob', n: '7 lis', s: [['9:00', false], ['10:30', false], ['12:00', true]] },
+      { d: 'Pon', n: '9 lis', s: [['16:00', false], ['17:30', false], ['19:00', true], ['20:00', false]] },
+      { d: 'Wt', n: '10 lis', s: [['15:30', false], ['17:00', false], ['18:30', false]] }
+    ],
+    reviews: [
+      ['Rodzic ucznia, 3 klasa liceum', 'Syn pierwszy raz mówi, że rozumie funkcje. Raporty po lekcjach są konkretne i krótkie.', 'październik 2026'],
+      ['Uczennica, matura rozszerzona', 'Plan powtórek był rozpisany co do tygodnia. Próbna matura poszła dużo lepiej niż wcześniej.', 'wrzesień 2026'],
+      ['Uczeń, 8 klasa', 'Tłumaczy spokojnie i nie przechodzi dalej, dopóki nie łapię. Zadania na następny raz są w sam raz.', 'wrzesień 2026'],
+      ['Rodzic uczennicy, 2 klasa liceum', 'Lekcje zawsze punktualnie, a po każdej dostajemy notatkę. Córka chętnie wraca na zajęcia.', 'sierpień 2026'],
+      ['Student, powtórka przed studiami', 'Szybko znalazła luki z liceum i ułożyła plan na wakacje. Polecam.', 'lipiec 2026']
+    ],
+    get current() { return this.pkgs.find((p) => p.id === this.pkg); },
+    zl(v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' zł'; },
+    init() {
+      const io = new IntersectionObserver((e) => { this.bookVisible = e[0].isIntersecting; }, { rootMargin: '0px 0px -30% 0px' });
+      io.observe(this.$refs.book);
+    },
+    goBook() {
+      this.$refs.book.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      this.$refs.book.querySelector('input:checked')?.focus({ preventScroll: true });
+    }
+  };
+}
+</script>
+<script src="assets/kt.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </body>
 </html>

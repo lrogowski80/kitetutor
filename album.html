@@ -2,105 +2,194 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KiteTutor – album Ekipy</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KiteTutor – album Ekipy (podgląd)</title>
+<meta name="theme-color" content="#5B3BE8">
+<link rel="icon" href="assets/kitka.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kt.css">
 <style>
-body{margin:0;background:#FFF8EC;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
-a{color:#4A2DD0}a:hover{color:#1C1640}
-*{box-sizing:border-box}
-h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
-.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
-.top{background:#FFFFFF;border-bottom:1px solid #F2E6CC}
-.topin{display:flex;align-items:center;gap:14px;min-height:68px;flex-wrap:wrap}
-.nav{display:flex;gap:2px;flex-wrap:wrap}
-.nav a{padding:10px 12px;border-radius:12px;text-decoration:none;color:#1C1640;font-weight:700;font-size:15px}
-.nav a.on{background:#FFF0CC;color:#7A5000}
-.card{background:#FFFFFF;border-radius:20px;padding:20px;border:1px solid #F2E6CC}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
-.muted{color:#5E5878}
-.pg{display:flex;gap:10px;align-items:center;min-height:56px;padding:8px 14px 8px 8px;border-radius:16px;border:2px solid #F2E6CC;background:#FFFFFF;font-family:inherit;font-weight:800;font-size:15px;color:#1C1640;cursor:pointer}
-.pgOn{border-color:#E08A00;background:#FFF3D1}
-.dot{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:Fredoka,sans-serif;font-weight:700;color:#1C1640}
-.st{aspect-ratio:1;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px;text-align:center;font-weight:800;font-size:13px}
-.lock{background:#F7F3EA;border:2px dashed #E5D7B8;color:#6B6380}
-.bar{height:12px;border-radius:99px;background:#FFE7B3;overflow:hidden}
-.bar span{display:block;height:100%;border-radius:99px;background:#E08A00}
+.dash { display: grid; gap: 20px; }
+@media (min-width: 1100px) { .dash { grid-template-columns: 1.6fr 1fr; align-items: start; } .dash .colR { position: sticky; top: 24px; } }
+
+.ahero { background: var(--sun); border: 2.5px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); border-radius: var(--r-l); padding: 18px; display: flex; gap: 16px; align-items: center; }
+.ahero .face { width: 76px; height: 76px; flex: none; background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; display: grid; place-items: center; transform: rotate(-4deg); }
+.ahero .face img { width: 70%; height: 70%; }
+.ahero h2 { font-size: clamp(22px, 5.6vw, 28px); }
+.ahero .who { font-weight: 800; font-size: 14px; color: #6B4A00; }
+.ahero .bar { background: rgba(28,22,64,.14); margin-top: 10px; }
+.ahero .bar > i { background: var(--ink); }
+
+.pagepick { margin-top: 16px; }
+.pagepick .pill { min-height: 48px; padding: 0 14px 0 6px; }
+.pagepick .pill img { width: 34px; height: 34px; padding: 5px; border-radius: 50%; background: var(--sun-50); }
+.pagepick .pill .n { font-weight: 700; opacity: .7; font-size: 13px; }
+
+.sgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 12px; }
+@media (min-width: 560px) { .sgrid { grid-template-columns: repeat(4, 1fr); gap: 20px 16px; } }
+.stk { background: none; border: 0; padding: 0; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: stretch; border-radius: 18px; min-width: 0; }
+.stk:focus-visible { outline: none; }
+.stk:focus-visible .sticker, .stk[aria-pressed="true"] .sticker { outline: 3px solid var(--violet); outline-offset: 3px; }
+.stk:nth-child(4n+1) .sticker.got { transform: rotate(-3deg); }
+.stk:nth-child(4n+3) .sticker.got { transform: rotate(2.5deg); }
+.sticker { transition: transform .15s; }
+.stk:hover .sticker.got { transform: rotate(0) scale(1.04); }
+.sticker.got.silver { background: linear-gradient(140deg, #FAFBFF 0%, #DDE1EE 55%, #F2F4FA 100%); }
+.sticker.got.tint { background: var(--tint, #fff); }
+.stk:nth-child(3n+2) .sticker.got img { transform: scaleX(-1) rotate(6deg); }
+.stk:nth-child(5n+3) .sticker.got img { transform: rotate(-8deg) scale(.92); }
+.sticker .bdg { position: absolute; right: -6px; bottom: -6px; width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 2px solid var(--ink); display: grid; place-items: center; color: var(--ink); }
+.sticker .bdg svg { width: 15px; height: 15px; }
+.sticker.empty .bdg { border: 2px dashed #E3C462; color: #B08A1F; background: var(--sun-50); }
+.sticker .q { position: absolute; font: 700 22px var(--f-head); color: #B08A1F; }
+.cap { display: block; margin-top: 10px; font: 800 13px/1.25 var(--f-body); color: var(--ink); }
+.cap.miss { color: var(--muted); font-weight: 700; }
+
+.detail { margin-top: 20px; display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: var(--r-m); background: var(--surface); }
+.detail .sticker { width: 64px; flex: none; border-radius: 14px; }
+.detail .sticker .bdg { display: none; }
+
+.how { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; }
+.how .ic { width: 40px; height: 40px; border-radius: 12px; background: var(--sun-50); color: #8A5A00; display: grid; place-items: center; flex: none; }
+.how .ic svg { width: 20px; height: 20px; }
+.rules { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.rules li { display: flex; gap: 10px; align-items: flex-start; font-weight: 700; font-size: 15px; }
+.rules li svg { width: 20px; height: 20px; flex: none; color: var(--mint); margin-top: 2px; }
+.reward { display: flex; gap: 12px; align-items: center; padding: 12px 0; }
+.reward + .reward { border-top: 1.5px solid var(--line); }
+.reward .num { width: 40px; height: 40px; border-radius: 12px; flex: none; display: grid; place-items: center; font: 700 18px var(--f-head); background: var(--sun-50); color: #8A5A00; }
+.reward.done .num { background: var(--sun); color: var(--ink); }
 </style>
-<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
-<script>
-function page() { return {
- state: { p: 'kapi' },
- setState(o) { Object.assign(this.state, o); },
- get v() {
-const P = {
-kapi: { name: 'Kapi', ini: 'Ka', bg: '#FFEBD6', sub: 'Matematyka · spokój pod presją', have: 8, ink: '#9A5F33', edge: '#F5C99A', poses: ['Kapi liczy', 'Kapi z cyrklem', 'Kapi i wykres', 'Kapi relaks', 'Kapi w birecie', 'Kapi i mandarynka', 'Kapi z kalkulatorem', 'Kapi na rowerze'], rar: ['zwykła', 'zwykła', 'srebrna', 'zwykła', 'złota', 'zwykła', 'zwykła', 'srebrna'] },
-kitka: { name: 'Kitka', ini: 'Ki', bg: '#EFE9FF', sub: 'Liderka ekipy · kamienie milowe', have: 5, ink: '#4A2DD0', edge: '#D3C6FF', poses: ['Kitka wita', 'Kitka startuje', 'Kitka w chmurach', 'Kitka i medal', 'Kitka z ogonkiem'], rar: ['zwykła', 'zwykła', 'srebrna', 'złota', 'zwykła'] },
-lotka: { name: 'Lotka', ini: 'Lo', bg: '#FFE3EF', sub: 'Biologia · odkrywczyni', have: 2, ink: '#B4236A', edge: '#F9BFD7', poses: ['Lotka i mikroskop', 'Lotka nurkuje'], rar: ['zwykła', 'zwykła'] }
-};
-const hints = ['Odbądź lekcję', 'Oddaj zadanie', '4 tygodnie z lekcją', 'Popraw ocenę'];
-const cur = P[this.state.p];
-const stickers = [];
-for (let i = 0; i < 12; i++) {
-if (i < cur.have) stickers.push({ got: true, miss: false, name: cur.poses[i], rar: cur.rar[i], bg: cur.bg, ink: cur.ink, edge: cur.edge, ini: cur.ini, hint: '' });
-else stickers.push({ got: false, miss: true, hint: hints[i % 4] });
-}
-const order = ['kapi', 'kitka', 'lotka'];
-return {
-pages: order.map((k) => ({ name: P[k].name, ini: P[k].ini, bg: P[k].bg, count: P[k].have + '/12', cls: k === this.state.p ? 'pg pgOn' : 'pg', pick: () => this.setState({ p: k }) })),
-title: 'Strona: ' + cur.name, sub: cur.sub, have: cur.have, pct: Math.round(cur.have / 12 * 100) + '%', stickers: stickers
-};
-}
-}; }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </head>
-<body x-data="page()">
-<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
-<div style="min-height: 1400px">
-<header class="top"><div class="wrap topin">
-<a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a>
-<nav class="nav" aria-label="Panel ucznia"><a href="uczen.html">Pulpit</a><a href="lekcja.html">Lekcje</a><a class="on" href="album.html">Album</a><a href="szukaj.html">Szukaj</a></nav>
-<span class="chip" style="margin-left: auto; background: #FFF3D1; color: #7A5000">Punkty Kitki: 14</span>
-</div></header>
-<div class="wrap" style="padding-top: 28px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 20px">
-<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between"><h1 style="font-size: 38px">Album Ekipy KiteTutor</h1><span class="muted" style="font-weight: 700">15 naklejek · 1 pełna strona · naklejek nie można kupić</span></div>
-<div style="display: flex; gap: 10px; flex-wrap: wrap"><template x-for="p in v.pages"><div style="display: contents"><button type="button" :class="p.cls" @click="p.pick()"><span class="dot" :style="'background: ' + (p.bg)"><span x-text="p.ini"></span></span><span><span x-text="p.name"></span></span><span class="muted" style="font-weight: 700"><span x-text="p.count"></span></span></button></div></template></div>
-<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
-<main class="card" style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center"><div><h2 style="font-size: 26px"><span x-text="v.title"></span></h2><div class="muted" style="font-weight: 700"><span x-text="v.sub"></span></div></div><span class="chip" style="background: #FFF3D1; color: #7A5000"><span x-text="v.have"></span> / 12</span></div>
-<div class="bar"><span :style="'width: ' + (v.pct)"></span></div>
-<div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr))">
-<template x-for="s in v.stickers"><div style="display: contents">
-<template x-if="s.got"><div style="display: contents"><div class="st" :style="'background: ' + (s.bg) + '; border: 2px solid ' + (s.edge)"><span :style="'width: 56px; height: 56px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-size: 22px; font-weight: 700; color: ' + (s.ink)"><span x-text="s.ini"></span></span><span><span x-text="s.name"></span></span><span :style="'font-size: 12px; color: ' + (s.ink)"><span x-text="s.rar"></span></span></div></div></template>
-<template x-if="s.miss"><div style="display: contents"><div class="st lock"><span style="font-family: Fredoka, sans-serif; font-size: 30px">?</span><span><span x-text="s.hint"></span></span></div></div></template>
-</div></template>
-</div>
-<p class="muted" style="margin: 0; font-size: 14px">Duplikaty zamieniają się na punkty Kitki. Za 5 punktów wybierasz brakującą zwykłą naklejkę.</p>
+<body x-data="album()">
+<div class="app" data-kt-app="uczen">
+<main class="main" id="tresc">
+  <div class="pagehead">
+    <div><p class="muted strong small">Twoja Ekipa</p><h1 class="h2">Album naklejek</h1></div>
+    <span class="tag sun" x-text="total() + ' naklejek, ' + fullPages() + ' pełna strona'"></span>
+  </div>
+
+  <div class="dash">
+    <div class="stack" style="--gap:20px">
+      <section class="ahero" aria-live="polite">
+        <span class="face"><img :src="cur().img" alt=""></span>
+        <div style="flex:1;min-width:0">
+          <p class="who" x-text="cur().role"></p>
+          <h2 x-text="'Strona ' + cur().gen + ': ' + got(cur()) + ' z 12'"></h2>
+          <div class="bar" role="progressbar" aria-label="Postęp strony" aria-valuemin="0" aria-valuemax="12" :aria-valuenow="got(cur())"><i :style="'width:' + Math.round(got(cur()) / 12 * 100) + '%'"></i></div>
+          <p class="small strong" style="margin-top:8px" x-text="got(cur()) === 12 ? 'Pełna strona. Gratulacje!' : 'Jeszcze ' + (12 - got(cur())) + ' do pełnej strony'"></p>
+        </div>
+      </section>
+
+      <div class="pills pagepick" role="group" aria-label="Strony albumu">
+        <template x-for="k in order" :key="k">
+          <button type="button" class="pill" :aria-pressed="p === k" @click="p = k; sel = null">
+            <img :src="P[k].img" alt=""><span x-text="P[k].name"></span><span class="n" x-text="got(P[k]) + '/12'"></span>
+          </button>
+        </template>
+      </div>
+
+      <section class="card" aria-labelledby="h-str">
+        <div class="sechead"><h2 class="h3" id="h-str" x-text="'Naklejki ' + cur().gen"></h2><span class="tiny muted">Dotknij, aby zobaczyć</span></div>
+        <div class="sgrid">
+          <template x-for="(s, i) in cur().s" :key="p + i">
+            <button type="button" class="stk" :aria-pressed="sel === i" @click="sel = (sel === i ? null : i)" :aria-label="s.got ? s.n + ', naklejka ' + R[s.r] : 'Brakująca naklejka. ' + H[s.h]">
+              <span class="sticker" :class="s.got ? ('got ' + (s.r === 'g' ? 'gold' : s.r === 's' ? 'silver' : (i % 2 ? 'tint' : ''))) : 'empty'" :style="'--tint:' + cur().tint">
+                <img :src="cur().img" alt="">
+                <span class="q" x-show="!s.got">?</span>
+                <span class="bdg" x-html="KT.icon(s.got ? s.i : I[s.h])"></span>
+              </span>
+              <span class="cap" :class="!s.got && 'miss'" x-text="s.got ? s.n : H[s.h]"></span>
+            </button>
+          </template>
+        </div>
+
+        <div class="detail" x-show="sel !== null" x-cloak x-transition.opacity>
+          <template x-if="sel !== null">
+            <div class="row" style="gap:14px;align-items:center;width:100%">
+              <span class="sticker" :class="cur().s[sel].got ? ('got ' + (cur().s[sel].r === 'g' ? 'gold' : cur().s[sel].r === 's' ? 'silver' : '')) : 'empty'"><img :src="cur().img" alt=""></span>
+              <div style="flex:1;min-width:0">
+                <p class="strong" x-text="cur().s[sel].got ? cur().s[sel].n : 'Ta naklejka jeszcze czeka'"></p>
+                <p class="small muted" x-text="cur().s[sel].got ? 'Naklejka ' + R[cur().s[sel].r] + '. Zdobyta: ' + H[cur().s[sel].h].toLowerCase() + '.' : 'Jak ją zdobyć: ' + H[cur().s[sel].h].toLowerCase() + '.'"></p>
+              </div>
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-nag">
+        <div class="sechead"><h2 class="h3" id="h-nag">Za pełne strony</h2></div>
+        <div class="reward done"><span class="num">1</span><div style="flex:1"><p class="strong">Tło profilu i tytuł do wyboru</p><p class="small muted">Odebrane za stronę Kitki</p></div><span class="tag mint">Masz</span></div>
+        <div class="reward"><span class="num">3</span><div style="flex:1"><p class="strong">Strój dla Kitki</p><p class="small muted">Brakuje jeszcze 2 pełnych stron</p></div></div>
+        <div class="reward"><span class="num"><i data-i="sparkle" data-s="20"></i></span><div style="flex:1"><p class="strong">Edycja zimowa: sesja</p><p class="small muted">Wraca co roku, więc nic nie przepada</p></div></div>
+      </section>
+    </div>
+
+    <div class="colR stack" style="--gap:20px">
+      <section class="card" aria-labelledby="h-jak">
+        <div class="sechead"><h2 class="h3" id="h-jak">Jak zdobywać naklejki</h2></div>
+        <div class="panel list">
+          <div class="how"><span class="ic"><i data-i="video"></i></span><div><p class="strong">Odbądź lekcję</p><p class="small muted">Jedna naklejka za każdą lekcję.</p></div></div>
+          <div class="how"><span class="ic"><i data-i="pen"></i></span><div><p class="strong">Oddaj zadanie domowe</p><p class="small muted">Liczy się oddanie, nie ocena.</p></div></div>
+          <div class="how"><span class="ic"><i data-i="calendar"></i></span><div><p class="strong">Ucz się regularnie</p><p class="small muted">4 tygodnie z lekcją to srebrna naklejka. Przerwa niczego nie zabiera.</p></div></div>
+          <div class="how"><span class="ic"><i data-i="flag"></i></span><div><p class="strong">Osiągnij cel tematu</p><p class="small muted">Złota naklejka, gdy korepetytor zaznaczy, że temat opanowany.</p></div></div>
+        </div>
+        <p class="tiny muted" style="margin-top:10px">Wiesz z góry, za co dostaniesz każdą naklejkę. Nie ma losowania i każda naklejka jest inna.</p>
+      </section>
+
+      <section class="card" aria-labelledby="h-zas">
+        <div class="sechead"><h2 class="h3" id="h-zas">Uczciwe zasady</h2></div>
+        <ul class="rules">
+          <li><i data-i="check"></i>Naklejek nie da się kupić ani wylosować</li>
+          <li><i data-i="check"></i>Nie ma powtórek ani wymiany z innymi</li>
+          <li><i data-i="check"></i>Nie ma rankingów i porównywania z innymi</li>
+          <li><i data-i="check"></i>Przerwa w nauce niczego nie zabiera</li>
+          <li><i data-i="check"></i>Rodzic widzi album i może go wyłączyć</li>
+        </ul>
+      </section>
+
+      <section class="card flat row" style="gap:14px;align-items:flex-start">
+        <img src="assets/rudi.svg" alt="" width="48" height="48" style="flex:none">
+        <div><p class="strong">Nowe postacie przy nowych językach</p><p class="small muted">Rudi dołącza do Ekipy po pierwszej lekcji angielskiego. Kolejne postacie pojawią się przy innych językach.</p></div>
+      </section>
+    </div>
+  </div>
 </main>
-<aside style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 20px">
-<section class="card" style="display: flex; flex-direction: column; gap: 12px">
-<h2 style="font-size: 22px">Nagrody</h2>
-<div style="display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: #E6FBF3"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #11775A; width: 40px; text-align: center">1</span><div><div style="font-weight: 800">Pełna strona</div><div class="muted" style="font-size: 14px">Tło profilu i tytuł · rodzic: −10% na pakiet</div></div><span class="chip" style="margin-left: auto; background: #FFFFFF; color: #11775A">Odebrane</span></div>
-<div style="display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: #F7F3EA"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #7A5000; width: 40px; text-align: center">3</span><div><div style="font-weight: 800">Trzy pełne strony</div><div class="muted" style="font-size: 14px">Strój Kitki do wyboru · rodzic: darmowa lekcja 30 min</div></div></div>
-<div style="display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: #F7F3EA"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #7A5000; width: 40px; text-align: center">★</span><div><div style="font-weight: 800">Edycja sezonowa: Sesja zimowa</div><div class="muted" style="font-size: 14px">Wraca co roku – bez presji „teraz albo nigdy”</div></div></div>
-</section>
-<section class="card" style="display: flex; flex-direction: column; gap: 12px">
-<h2 style="font-size: 22px">Postacie językowe</h2>
-<p class="muted" style="margin: 0; font-size: 14px">Odblokowujesz je pierwszą lekcją danego języka. Każda pochodzi z kultury regionu.</p>
-<div style="display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr))">
-<div class="st" style="background: #EAF7FF; border: 2px solid #BFE3FA"><span style="font-family: Fredoka, sans-serif; font-size: 20px; color: #175CD3">Ru</span><span>Rudzik</span><span style="font-size: 12px; color: #175CD3">angielski UK</span></div>
-<div class="st lock"><span style="font-family: Fredoka, sans-serif; font-size: 26px">?</span><span>Szop</span><span style="font-size: 12px">angielski USA</span></div>
-<div class="st lock"><span style="font-family: Fredoka, sans-serif; font-size: 26px">?</span><span>Ryś</span><span style="font-size: 12px">hiszpański</span></div>
 </div>
-</section>
-<section class="card" style="display: flex; flex-direction: column; gap: 8px; background: #F6F3FF; border-color: #E2D9FF">
-<div style="font-weight: 800">Bezpiecznie</div>
-<div class="muted" style="font-size: 14px; line-height: 1.5">Bez płatnych losowań, bez rankingów z imionami i bez wymiany z innymi uczniami. Rodzic widzi album i może go wyłączyć.</div>
-</section>
-</aside>
-</div>
-</div>
-</div>
+<script>
+function album() {
+  // h: L lekcja, Z zadanie, R regularność, C cel tematu, M kamień milowy
+  var H = { L: 'Za odbytą lekcję', Z: 'Za oddane zadanie', R: 'Za 4 tygodnie z lekcją', C: 'Za osiągnięty cel tematu', M: 'Za kamień milowy' };
+  var I = { L: 'video', Z: 'pen', R: 'calendar', C: 'flag', M: 'star' };
+  function page(name, gen, role, img, tint, have, list) {
+    return { name: name, gen: gen, role: role, img: img, tint: tint, s: list.map(function (x, i) { return { n: x[0], h: x[1], r: x[2] || 'z', i: x[3] || I[x[1]], got: i < have }; }) };
+  }
+  var P = {
+    kapi: page('Kapi', 'Kapi', 'Matematyka, spokój pod presją', 'assets/kapi.svg', '#FFEBD6', 8, [
+      ['Kapi liczy', 'L'], ['Kapi z cyrklem', 'Z'], ['Kapi i wykres', 'R', 's', 'chart'], ['Kapi odpoczywa', 'L'], ['Kapi w birecie', 'C', 'g', 'star'], ['Kapi i mandarynka', 'Z'],
+      ['Kapi z kalkulatorem', 'L'], ['Kapi na rowerze', 'R', 's'], ['Kapi i trójkąt', 'Z'], ['Kapi w kąpieli', 'L'], ['Kapi i ułamki', 'Z'], ['Kapi na mecie', 'C', 'g']]),
+    kitka: page('Kitka', 'Kitki', 'Liderka Ekipy, kamienie milowe', 'assets/kitka.svg', '#EFEAFF', 12, [
+      ['Kitka wita', 'M', 'z', 'sparkle'], ['Pierwsza lekcja', 'L'], ['Pierwsze zadanie', 'Z'], ['Kitka startuje', 'M', 'z', 'flag'], ['Miesiąc nauki', 'R', 's'], ['Kitka w chmurach', 'L'],
+      ['Dziesiąta lekcja', 'M', 's', 'star'], ['Kitka i medal', 'C', 'g'], ['Kitka z ogonkiem', 'Z'], ['Kitka nad morzem', 'L'], ['Kitka w górach', 'Z'], ['Pełna Ekipa', 'M', 'g', 'users']]),
+    lotka: page('Lotka', 'Lotki', 'Biologia, odkrywczyni', 'assets/lotka.svg', '#FFE3EF', 2, [
+      ['Lotka i mikroskop', 'L'], ['Lotka nurkuje', 'Z'], ['Lotka i komórka', 'L'], ['Lotka w lesie', 'Z'], ['Lotka i DNA', 'R', 's'], ['Lotka w laboratorium', 'L'],
+      ['Lotka i motyl', 'Z'], ['Lotka i zielnik', 'L'], ['Lotka bada staw', 'R', 's'], ['Lotka i szkielet', 'Z'], ['Lotka w muzeum', 'L'], ['Lotka odkrywczyni', 'C', 'g']]),
+    rudi: page('Rudi', 'Rudiego', 'Angielski, ciekawy świata', 'assets/rudi.svg', '#FFE6D6', 4, [
+      ['Rudi mówi hello', 'L'], ['Rudi i słówka', 'Z'], ['Rudi w Londynie', 'L'], ['Rudi przy herbacie', 'R', 's', 'globe'], ['Rudi czyta', 'Z'], ['Rudi w autobusie', 'L'],
+      ['Rudi i piosenka', 'Z'], ['Rudi rozmawia', 'L'], ['Rudi na mapie', 'R', 's', 'globe'], ['Rudi pisze list', 'Z'], ['Rudi na scenie', 'L'], ['Rudi poliglota', 'C', 'g']])
+  };
+  return {
+    P: P, H: H, I: I, R: { z: 'zwykła', s: 'srebrna', g: 'złota' },
+    order: ['kapi', 'kitka', 'lotka', 'rudi'], p: 'kapi', sel: null,
+    cur: function () { return this.P[this.p]; },
+    got: function (pg) { return pg.s.filter(function (s) { return s.got; }).length; },
+    total: function () { var t = 0, self = this; this.order.forEach(function (k) { t += self.got(self.P[k]); }); return t; },
+    fullPages: function () { var self = this; return this.order.filter(function (k) { return self.got(self.P[k]) === 12; }).length; }
+  };
+}
+</script>
+<script src="assets/kt.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </body>
 </html>
