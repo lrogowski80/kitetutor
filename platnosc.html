@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KiteTutor – płatność</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F3FF;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
+a{color:#4A2DD0}a:hover{color:#1C1640}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.card{background:#FFFFFF;border-radius:20px;padding:22px;border:1px solid #ECE7FF}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border-radius:14px;background:#5B3BE8;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:17px}
+.btn:hover{background:#4A2DD0;color:#FFFFFF}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
+.muted{color:#5E5878}
+.pm{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:14px 16px;border-radius:14px;border:2px solid #ECE7FF;background:#FFFFFF;font-family:inherit;color:#1C1640;cursor:pointer;text-align:left;min-height:44px}
+.pmOn{border-color:#5B3BE8;background:#F6F2FF}
+.in{min-height:48px;border-radius:12px;border:1.5px solid #DCD3FF;padding:0 14px;font-family:inherit;font-size:16px;width:100%}
+.row{display:flex;justify-content:space-between;gap:12px}
+.tog{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#F6F3FF;font-weight:700;cursor:pointer}
+.tog input{width:22px;height:22px;accent-color:#5B3BE8}
+</style>
+<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
+<script>
+function page() { return {
+ state: { m: 'blik', coupon: true, invoice: false },
+ setState(o) { Object.assign(this.state, o); },
+ get v() {
+const M = [
+{ id: 'blik', name: 'BLIK', note: 'Kod z aplikacji banku' },
+{ id: 'card', name: 'Karta', note: 'Visa, Mastercard' },
+{ id: 'wallet', name: 'Apple Pay / Google Pay', note: 'Jednym dotknięciem' },
+{ id: 'transfer', name: 'Szybki przelew', note: 'Twój bank' }
+];
+return {
+methods: M.map((x) => ({ name: x.name, note: x.note, cls: x.id === this.state.m ? 'pm pmOn' : 'pm', pick: () => this.setState({ m: x.id }) })),
+isBlik: this.state.m === 'blik', isCard: this.state.m === 'card' || this.state.m === 'wallet',
+coupon: this.state.coupon, invoice: this.state.invoice,
+toggleCoupon: () => this.setState({ coupon: !this.state.coupon }),
+toggleInvoice: () => this.setState({ invoice: !this.state.invoice }),
+total: this.state.coupon ? '513 zł' : '570 zł'
+};
+}
+}; }
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body x-data="page()">
+<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
+<div style="min-height: 1100px; padding-top: 28px; padding-bottom: 48px">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap"><a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a><span class="chip" style="background: #E6FBF3; color: #11775A">Bezpieczna płatność</span></div>
+<h1 style="font-size: 38px">Płatność</h1>
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<section class="card" style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="font-size: 22px">Kto płaci</h2>
+<div style="display: flex; gap: 12px; align-items: center"><span style="width: 44px; height: 44px; border-radius: 50%; background: #11775A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800">AN</span><div><div style="font-weight: 800">Agnieszka N. (rodzic)</div><div class="muted" style="font-size: 14px">Lekcje dla: konto ucznia pod Twoją opieką</div></div></div>
+<label class="tog"><input type="checkbox" :checked="v.invoice" @change="v.toggleInvoice()"><span>Chcę fakturę (np. na firmę)</span></label>
+<template x-if="v.invoice"><div style="display: contents"><div style="display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))"><label class="muted" style="font-weight: 800; font-size: 13px">NIP<input class="in" type="text" placeholder="[NIP]"></label><label class="muted" style="font-weight: 800; font-size: 13px">Nazwa firmy<input class="in" type="text" placeholder="[NAZWA FIRMY]"></label></div></div></template>
+</section>
+<section class="card" style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="font-size: 22px">Metoda płatności</h2>
+<div style="display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr))">
+<template x-for="m in v.methods"><div style="display: contents"><button type="button" :class="m.cls" @click="m.pick()"><span style="font-weight: 800"><span x-text="m.name"></span></span><span class="muted" style="font-size: 13px"><span x-text="m.note"></span></span></button></div></template>
+</div>
+<template x-if="v.isBlik"><div style="display: contents"><label style="font-weight: 800; font-size: 14px; display: flex; flex-direction: column; gap: 6px; max-width: 260px">Kod BLIK z aplikacji banku<input class="in" type="text" inputmode="numeric" placeholder="000 000" style="font-size: 24px; letter-spacing: 6px; text-align: center"></label></div></template>
+<template x-if="v.isCard"><div style="display: contents"><div class="muted" style="padding: 14px; border-radius: 14px; background: #F6F3FF; line-height: 1.5">Dane karty wpisujesz w bezpiecznym oknie operatora płatności. KiteTutor nie przechowuje numeru karty.</div></div></template>
+</section>
+<section class="card" style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="font-size: 22px">Jak działają rozliczenia</h2>
+<ol class="muted" style="margin: 0; padding-left: 22px; line-height: 1.8"><li>Płacisz teraz za pakiet – środki są bezpiecznie zablokowane u operatora płatności.</li><li>Po każdej odbytej lekcji jej część trafia do korepetytorki (minus prowizja KiteTutor).</li><li>Odwołanie do 24 h przed lekcją wraca na saldo pakietu. Niewykorzystane lekcje możesz zwrócić.</li><li>Faktury i historia płatności są w panelu rodzica.</li></ol>
+</section>
+</main>
+<aside class="card" style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 12px" aria-label="Podsumowanie">
+<h2 style="font-size: 22px">Podsumowanie</h2>
+<div style="display: flex; gap: 12px; align-items: center"><span style="width: 44px; height: 44px; border-radius: 14px; background: #5B3BE8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800">MK</span><div><div style="font-weight: 800">Marta K. · matematyka</div><div class="muted" style="font-size: 14px">Pierwsza lekcja: jutro, 17:00</div></div></div>
+<div class="row"><span>Pakiet 5 lekcji × 60 min</span><b>570 zł</b></div>
+<label class="tog" style="background: #FFF3D1"><input type="checkbox" :checked="v.coupon" @change="v.toggleCoupon()"><span>Nagroda z albumu: pełna strona Kapi, −10%</span></label>
+<template x-if="v.coupon"><div style="display: contents"><div class="row" style="color: #11775A; font-weight: 800"><span>Zniżka z albumu</span><span>−57 zł</span></div></div></template>
+<div class="row" style="font-size: 22px; font-weight: 800; border-top: 1px solid #ECE7FF; padding-top: 10px"><span>Razem</span><span><span x-text="v.total"></span></span></div>
+<a class="btn" href="uczen.html">Zapłać <span x-text="v.total"></span></a>
+<p class="muted" style="font-size: 13px; margin: 0">Kwoty brutto. Ceny, prowizja i zniżki w podglądzie są przykładowe do ustalenia przez dział finansów.</p>
+</aside>
+</div>
+</div>
+</div>
+</body>
+</html>

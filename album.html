@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KiteTutor – album Ekipy</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF8EC;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
+a{color:#4A2DD0}a:hover{color:#1C1640}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.top{background:#FFFFFF;border-bottom:1px solid #F2E6CC}
+.topin{display:flex;align-items:center;gap:14px;min-height:68px;flex-wrap:wrap}
+.nav{display:flex;gap:2px;flex-wrap:wrap}
+.nav a{padding:10px 12px;border-radius:12px;text-decoration:none;color:#1C1640;font-weight:700;font-size:15px}
+.nav a.on{background:#FFF0CC;color:#7A5000}
+.card{background:#FFFFFF;border-radius:20px;padding:20px;border:1px solid #F2E6CC}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
+.muted{color:#5E5878}
+.pg{display:flex;gap:10px;align-items:center;min-height:56px;padding:8px 14px 8px 8px;border-radius:16px;border:2px solid #F2E6CC;background:#FFFFFF;font-family:inherit;font-weight:800;font-size:15px;color:#1C1640;cursor:pointer}
+.pgOn{border-color:#E08A00;background:#FFF3D1}
+.dot{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:Fredoka,sans-serif;font-weight:700;color:#1C1640}
+.st{aspect-ratio:1;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px;text-align:center;font-weight:800;font-size:13px}
+.lock{background:#F7F3EA;border:2px dashed #E5D7B8;color:#6B6380}
+.bar{height:12px;border-radius:99px;background:#FFE7B3;overflow:hidden}
+.bar span{display:block;height:100%;border-radius:99px;background:#E08A00}
+</style>
+<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
+<script>
+function page() { return {
+ state: { p: 'kapi' },
+ setState(o) { Object.assign(this.state, o); },
+ get v() {
+const P = {
+kapi: { name: 'Kapi', ini: 'Ka', bg: '#FFEBD6', sub: 'Matematyka · spokój pod presją', have: 8, ink: '#9A5F33', edge: '#F5C99A', poses: ['Kapi liczy', 'Kapi z cyrklem', 'Kapi i wykres', 'Kapi relaks', 'Kapi w birecie', 'Kapi i mandarynka', 'Kapi z kalkulatorem', 'Kapi na rowerze'], rar: ['zwykła', 'zwykła', 'srebrna', 'zwykła', 'złota', 'zwykła', 'zwykła', 'srebrna'] },
+kitka: { name: 'Kitka', ini: 'Ki', bg: '#EFE9FF', sub: 'Liderka ekipy · kamienie milowe', have: 5, ink: '#4A2DD0', edge: '#D3C6FF', poses: ['Kitka wita', 'Kitka startuje', 'Kitka w chmurach', 'Kitka i medal', 'Kitka z ogonkiem'], rar: ['zwykła', 'zwykła', 'srebrna', 'złota', 'zwykła'] },
+lotka: { name: 'Lotka', ini: 'Lo', bg: '#FFE3EF', sub: 'Biologia · odkrywczyni', have: 2, ink: '#B4236A', edge: '#F9BFD7', poses: ['Lotka i mikroskop', 'Lotka nurkuje'], rar: ['zwykła', 'zwykła'] }
+};
+const hints = ['Odbądź lekcję', 'Oddaj zadanie', '4 tygodnie z lekcją', 'Popraw ocenę'];
+const cur = P[this.state.p];
+const stickers = [];
+for (let i = 0; i < 12; i++) {
+if (i < cur.have) stickers.push({ got: true, miss: false, name: cur.poses[i], rar: cur.rar[i], bg: cur.bg, ink: cur.ink, edge: cur.edge, ini: cur.ini, hint: '' });
+else stickers.push({ got: false, miss: true, hint: hints[i % 4] });
+}
+const order = ['kapi', 'kitka', 'lotka'];
+return {
+pages: order.map((k) => ({ name: P[k].name, ini: P[k].ini, bg: P[k].bg, count: P[k].have + '/12', cls: k === this.state.p ? 'pg pgOn' : 'pg', pick: () => this.setState({ p: k }) })),
+title: 'Strona: ' + cur.name, sub: cur.sub, have: cur.have, pct: Math.round(cur.have / 12 * 100) + '%', stickers: stickers
+};
+}
+}; }
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body x-data="page()">
+<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
+<div style="min-height: 1400px">
+<header class="top"><div class="wrap topin">
+<a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a>
+<nav class="nav" aria-label="Panel ucznia"><a href="uczen.html">Pulpit</a><a href="lekcja.html">Lekcje</a><a class="on" href="album.html">Album</a><a href="szukaj.html">Szukaj</a></nav>
+<span class="chip" style="margin-left: auto; background: #FFF3D1; color: #7A5000">Punkty Kitki: 14</span>
+</div></header>
+<div class="wrap" style="padding-top: 28px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between"><h1 style="font-size: 38px">Album Ekipy KiteTutor</h1><span class="muted" style="font-weight: 700">15 naklejek · 1 pełna strona · naklejek nie można kupić</span></div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><template x-for="p in v.pages"><div style="display: contents"><button type="button" :class="p.cls" @click="p.pick()"><span class="dot" :style="'background: ' + (p.bg)"><span x-text="p.ini"></span></span><span><span x-text="p.name"></span></span><span class="muted" style="font-weight: 700"><span x-text="p.count"></span></span></button></div></template></div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+<main class="card" style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center"><div><h2 style="font-size: 26px"><span x-text="v.title"></span></h2><div class="muted" style="font-weight: 700"><span x-text="v.sub"></span></div></div><span class="chip" style="background: #FFF3D1; color: #7A5000"><span x-text="v.have"></span> / 12</span></div>
+<div class="bar"><span :style="'width: ' + (v.pct)"></span></div>
+<div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr))">
+<template x-for="s in v.stickers"><div style="display: contents">
+<template x-if="s.got"><div style="display: contents"><div class="st" :style="'background: ' + (s.bg) + '; border: 2px solid ' + (s.edge)"><span :style="'width: 56px; height: 56px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-size: 22px; font-weight: 700; color: ' + (s.ink)"><span x-text="s.ini"></span></span><span><span x-text="s.name"></span></span><span :style="'font-size: 12px; color: ' + (s.ink)"><span x-text="s.rar"></span></span></div></div></template>
+<template x-if="s.miss"><div style="display: contents"><div class="st lock"><span style="font-family: Fredoka, sans-serif; font-size: 30px">?</span><span><span x-text="s.hint"></span></span></div></div></template>
+</div></template>
+</div>
+<p class="muted" style="margin: 0; font-size: 14px">Duplikaty zamieniają się na punkty Kitki. Za 5 punktów wybierasz brakującą zwykłą naklejkę.</p>
+</main>
+<aside style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 20px">
+<section class="card" style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="font-size: 22px">Nagrody</h2>
+<div style="display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: #E6FBF3"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #11775A; width: 40px; text-align: center">1</span><div><div style="font-weight: 800">Pełna strona</div><div class="muted" style="font-size: 14px">Tło profilu i tytuł · rodzic: −10% na pakiet</div></div><span class="chip" style="margin-left: auto; background: #FFFFFF; color: #11775A">Odebrane</span></div>
+<div style="display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: #F7F3EA"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #7A5000; width: 40px; text-align: center">3</span><div><div style="font-weight: 800">Trzy pełne strony</div><div class="muted" style="font-size: 14px">Strój Kitki do wyboru · rodzic: darmowa lekcja 30 min</div></div></div>
+<div style="display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 14px; background: #F7F3EA"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #7A5000; width: 40px; text-align: center">★</span><div><div style="font-weight: 800">Edycja sezonowa: Sesja zimowa</div><div class="muted" style="font-size: 14px">Wraca co roku – bez presji „teraz albo nigdy”</div></div></div>
+</section>
+<section class="card" style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="font-size: 22px">Postacie językowe</h2>
+<p class="muted" style="margin: 0; font-size: 14px">Odblokowujesz je pierwszą lekcją danego języka. Każda pochodzi z kultury regionu.</p>
+<div style="display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0, 1fr))">
+<div class="st" style="background: #EAF7FF; border: 2px solid #BFE3FA"><span style="font-family: Fredoka, sans-serif; font-size: 20px; color: #175CD3">Ru</span><span>Rudzik</span><span style="font-size: 12px; color: #175CD3">angielski UK</span></div>
+<div class="st lock"><span style="font-family: Fredoka, sans-serif; font-size: 26px">?</span><span>Szop</span><span style="font-size: 12px">angielski USA</span></div>
+<div class="st lock"><span style="font-family: Fredoka, sans-serif; font-size: 26px">?</span><span>Ryś</span><span style="font-size: 12px">hiszpański</span></div>
+</div>
+</section>
+<section class="card" style="display: flex; flex-direction: column; gap: 8px; background: #F6F3FF; border-color: #E2D9FF">
+<div style="font-weight: 800">Bezpiecznie</div>
+<div class="muted" style="font-size: 14px; line-height: 1.5">Bez płatnych losowań, bez rankingów z imionami i bez wymiany z innymi uczniami. Rodzic widzi album i może go wyłączyć.</div>
+</section>
+</aside>
+</div>
+</div>
+</div>
+</body>
+</html>

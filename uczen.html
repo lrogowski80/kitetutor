@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KiteTutor – panel ucznia</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F3FF;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
+a{color:#4A2DD0}a:hover{color:#1C1640}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.top{background:#FFFFFF;border-bottom:1px solid #E9E3FF}
+.topin{display:flex;align-items:center;gap:14px;min-height:68px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.nav{display:flex;gap:2px;flex-wrap:wrap}
+.nav a{padding:10px 12px;border-radius:12px;text-decoration:none;color:#1C1640;font-weight:700;font-size:15px}
+.nav a.on{background:#EFE9FF;color:#4A2DD0}
+.roles{display:flex;gap:4px;padding:4px;background:#F3EFFF;border-radius:14px;margin-left:auto}
+.roles a{padding:8px 12px;border-radius:10px;text-decoration:none;color:#4B4566;font-weight:800;font-size:13px}
+.roles a.on{background:#FFFFFF;color:#4A2DD0}
+.card{background:#FFFFFF;border-radius:20px;padding:20px;border:1px solid #ECE7FF}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:14px;background:#5B3BE8;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:16px}
+.btn:hover{background:#4A2DD0;color:#FFFFFF}
+.btnW{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:14px;background:#FFFFFF;color:#4A2DD0;font-weight:800;text-decoration:none;font-size:16px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
+.muted{color:#5E5878}
+.bar{height:10px;border-radius:99px;background:#EFE9FF;overflow:hidden}
+.bar span{display:block;height:100%;border-radius:99px;background:#5B3BE8}
+.hw{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:#F6F3FF;font-weight:700;cursor:pointer}
+.hw input{width:22px;height:22px;accent-color:#5B3BE8;flex:none}
+.done{text-decoration:line-through;color:#8F89A6}
+.file{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #F0ECFF}
+.ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex:none}
+</style>
+<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
+<script>
+function page() { return {
+ state: { done: [true, false, false], tab: 'mine' },
+ setState(o) { Object.assign(this.state, o); },
+ get v() {
+const T = [['Zadania 4–7 z arkusza (funkcje)', 'oddane'], ['Zadania 8–10 z arkusza', 'jutro'], ['Angielski: 10 zdań w present perfect', 'pt']];
+const d = this.state.done;
+const on = 'background: #5B3BE8; color: #FFFFFF; border: 0; min-height: 44px; padding: 0 16px; cursor: pointer; font-family: inherit';
+const off = 'border: 0; min-height: 44px; padding: 0 16px; cursor: pointer; font-family: inherit';
+return {
+hw: T.map((t, i) => ({ title: t[0], due: d[i] ? '+1 naklejka' : t[1], done: d[i], cls: d[i] ? 'done' : '', toggle: () => { const n = d.slice(); n[i] = !n[i]; this.setState({ done: n }); } })),
+doneCount: d.filter(Boolean).length,
+showMine: this.state.tab === 'mine', showAuto: this.state.tab === 'auto',
+tabMine: () => this.setState({ tab: 'mine' }), tabAuto: () => this.setState({ tab: 'auto' }),
+tabMineStyle: this.state.tab === 'mine' ? on : off, tabAutoStyle: this.state.tab === 'auto' ? on : off
+};
+}
+}; }
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body x-data="page()">
+<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
+<div style="min-height: 1700px">
+<header class="top"><div class="wrap topin">
+<a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a>
+<nav class="nav" aria-label="Panel ucznia"><a class="on" href="uczen.html">Pulpit</a><a href="lekcja.html">Lekcje</a><a href="#materialy">Materiały</a><a href="#notatki">Notatki</a><a href="album.html">Album</a><a href="szukaj.html">Szukaj</a></nav>
+<nav class="roles" aria-label="Podgląd widoku"><a class="on" href="uczen.html">Uczeń</a><a href="korepetytor.html">Korepetytor</a><a href="rodzic.html">Rodzic</a></nav>
+</div></header>
+<div class="wrap" style="padding-top: 28px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 20px">
+<section style="background: #5B3BE8; color: #FFFFFF; border-radius: 24px; padding: 26px; display: flex; flex-wrap: wrap; gap: 22px; align-items: center">
+<svg width="84" height="96" viewBox="36 14 128 162" aria-hidden="true" style="flex: none"><polygon points="100,20 160,95 100,170 40,95" fill="#FFC93C"></polygon><polygon points="100,20 40,95 100,95" fill="#FF5A5F"></polygon><polygon points="100,95 160,95 100,170" fill="#FF5A5F"></polygon><polygon points="100,20 160,95 100,170 40,95" fill="none" stroke="#1C1640" stroke-width="7" stroke-linejoin="round"></polygon><circle cx="83" cy="92" r="11" fill="#FFFFFF"></circle><circle cx="117" cy="92" r="11" fill="#FFFFFF"></circle><circle cx="85" cy="93" r="5.5" fill="#1C1640"></circle><circle cx="119" cy="93" r="5.5" fill="#1C1640"></circle><path d="M88 114 Q100 124 112 114" fill="none" stroke="#1C1640" stroke-width="5" stroke-linecap="round"></path></svg>
+<div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 6px">
+<div style="font-weight: 800; color: #E2D9FF">Cześć, Ola!</div>
+<h1 style="font-size: 32px">Następna lekcja zaczyna się za 12 minut</h1>
+<div style="color: #E9E3FF; font-weight: 700">Matematyka z Martą K. · Funkcja kwadratowa – zadania maturalne · 17:00–18:00</div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><a class="btnW" href="lekcja.html">Dołącz do lekcji</a><span class="chip" style="background: #4A2DD0; color: #FFFFFF">Kamera i mikrofon: OK</span></div>
+</section>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+<main style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<section class="card" style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap"><h2 style="font-size: 22px">Zadania</h2><span class="muted" style="font-weight: 700"><span x-text="v.doneCount"></span> z 3 · za każde naklejka</span></div>
+<template x-for="h in v.hw"><div style="display: contents"><label class="hw"><input type="checkbox" :checked="h.done" @change="h.toggle()"><span :class="h.cls" style="flex: 1"><span x-text="h.title"></span></span><span class="chip"><span x-text="h.due"></span></span></label></div></template>
+</section>
+<section id="materialy" class="card">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 4px"><h2 style="font-size: 22px">Materiały od korepetytorów</h2><a href="#materialy" style="font-weight: 800">Wszystkie (24)</a></div>
+<div class="file"><span class="ic" style="background: #FFE3E3; color: #B42318">PDF</span><div style="flex: 1"><div style="font-weight: 800">Arkusz maturalny – funkcje, maj</div><div class="muted" style="font-size: 14px">Marta K. · dodano dziś</div></div><a href="#materialy" style="font-weight: 800">Otwórz</a></div>
+<div class="file"><span class="ic" style="background: #E3F2FF; color: #175CD3">PPT</span><div style="flex: 1"><div style="font-weight: 800">Wierzchołek paraboli krok po kroku</div><div class="muted" style="font-size: 14px">Marta K. · 2 dni temu</div></div><a href="#materialy" style="font-weight: 800">Otwórz</a></div>
+<div class="file" style="border-bottom: 0"><span class="ic" style="background: #E6FBF3; color: #11775A">MP4</span><div style="flex: 1"><div style="font-weight: 800">Present perfect – nagranie wyjaśnienia (8 min)</div><div class="muted" style="font-size: 14px">James P. · angielski · tydzień temu</div></div><a href="#materialy" style="font-weight: 800">Odtwórz</a></div>
+</section>
+<section id="notatki" class="card" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><button type="button" @click="v.tabMine()" class="chip" :style="v.tabMineStyle">Moje notatki</button><button type="button" @click="v.tabAuto()" class="chip" :style="v.tabAutoStyle">Podsumowania lekcji</button></div>
+<template x-if="v.showMine"><div style="display: contents"><div><label for="note" style="font-weight: 800; font-size: 14px">Notatka: funkcja kwadratowa</label><textarea id="note" rows="5" style="width: 100%; margin-top: 6px; border-radius: 14px; border: 1.5px solid #DCD3FF; padding: 14px; font-family: inherit; font-size: 16px; line-height: 1.5">Wierzchołek: p = −b/2a, q = −Δ/4a. Najpierw sprawdzam znak a – ramiona w górę czy w dół.</textarea></div></div></template>
+<template x-if="v.showAuto"><div style="display: contents"><div style="padding: 14px; border-radius: 14px; background: #F6F3FF; line-height: 1.6"><div style="font-weight: 800">Lekcja z 3 listopada · matematyka</div><div class="muted">Co przerobiliśmy: postać kanoniczna, wierzchołek, zadania 4–7 z arkusza. Do powtórki: miejsca zerowe przy Δ = 0. Na następny raz: zadania 8–10.</div><div class="muted" style="font-size: 13px; margin-top: 6px">Podsumowanie przygotowane automatycznie i zatwierdzone przez korepetytorkę.</div></div></div></template>
+</section>
+</main>
+<aside style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 20px">
+<section class="card" style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="font-size: 22px">Cel: matura z matematyki</h2>
+<div><div style="display: flex; justify-content: space-between; font-weight: 800"><span>Funkcje</span><span>78%</span></div><div class="bar"><span style="width: 78%"></span></div></div>
+<div><div style="display: flex; justify-content: space-between; font-weight: 800"><span>Ciągi</span><span>52%</span></div><div class="bar"><span style="width: 52%"></span></div></div>
+<div><div style="display: flex; justify-content: space-between; font-weight: 800"><span>Geometria</span><span>34%</span></div><div class="bar"><span style="width: 34%"></span></div></div>
+<div class="muted" style="font-size: 14px">Do matury: 186 dni · plan powtórek od korepetytorki</div>
+</section>
+<a class="card" href="album.html" style="text-decoration: none; color: #1C1640; display: flex; gap: 14px; align-items: center; background: #FFF8EC; border-color: #FFE7B3">
+<svg width="64" height="60" viewBox="34 36 112 104" aria-hidden="true" style="flex: none"><circle cx="54" cy="66" r="9" fill="#6E4A2F" stroke="#1C1640" stroke-width="3"></circle><circle cx="122" cy="66" r="9" fill="#6E4A2F" stroke="#1C1640" stroke-width="3"></circle><rect x="38" y="62" width="100" height="76" rx="34" fill="#B07A4F" stroke="#1C1640" stroke-width="4"></rect><rect x="68" y="98" width="62" height="34" rx="16" fill="#C99167" stroke="#1C1640" stroke-width="3"></rect><path d="M58 90 Q65 85 72 90" fill="none" stroke="#1C1640" stroke-width="4" stroke-linecap="round"></path><path d="M104 88 Q111 83 118 88" fill="none" stroke="#1C1640" stroke-width="4" stroke-linecap="round"></path><circle cx="88" cy="52" r="12" fill="#FF9F1C" stroke="#1C1640" stroke-width="3"></circle></svg>
+<div style="flex: 1"><div style="font-weight: 800">Album: strona Kapi 8/12</div><div class="bar" style="margin: 8px 0; background: #FFE7B3"><span style="width: 67%; background: #E08A00"></span></div><div class="muted" style="font-size: 14px">Jeszcze 4 naklejki do zniżki 10% na pakiet</div></div>
+</a>
+<section class="card" style="display: flex; gap: 14px; align-items: center">
+<span style="width: 52px; height: 52px; border-radius: 16px; background: #E6FBF3; color: #11775A; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px; flex: none">3</span>
+<div><div style="font-weight: 800">Tygodnie z rzędu z lekcją</div><div class="muted" style="font-size: 14px">Jeszcze 1 tydzień do srebrnej naklejki. Przerwa nic nie zabiera.</div></div>
+</section>
+<section class="card" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; gap: 8px; align-items: baseline"><h2 style="font-size: 20px">Na czasie w Twoim temacie</h2><span class="chip" style="background: #F3F1F7; color: #4B4566">dodatkowe</span></div>
+<a href="#notatki" style="text-decoration: none; color: #1C1640; padding: 12px; border-radius: 14px; background: #F6F3FF"><div style="font-weight: 800">Jak wyznaczyć tor rzutu piłki funkcją kwadratową</div><div class="muted" style="font-size: 14px">Artykuł popularnonaukowy · 6 min czytania</div></a>
+<a href="#notatki" style="text-decoration: none; color: #1C1640; padding: 12px; border-radius: 14px; background: #F6F3FF"><div style="font-weight: 800">Zmiany w informatorze maturalnym na kolejny rok</div><div class="muted" style="font-size: 14px">Aktualności egzaminacyjne · 4 min</div></a>
+<div class="muted" style="font-size: 13px">Dobierane do tematów z Twoich lekcji. Tytuły w podglądzie są przykładowe.</div>
+</section>
+</aside>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KiteTutor – profil korepetytora</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F3FF;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
+a{color:#4A2DD0}a:hover{color:#1C1640}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.top{background:#FFFFFF;border-bottom:1px solid #E9E3FF}
+.topin{display:flex;align-items:center;gap:16px;min-height:68px;flex-wrap:wrap}
+.card{background:#FFFFFF;border-radius:20px;padding:22px;border:1px solid #ECE7FF}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:14px;background:#5B3BE8;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:16px}
+.btn:hover{background:#4A2DD0;color:#FFFFFF}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
+.ok{background:#E6FBF3;color:#11775A}
+.muted{color:#5E5878}
+.slot{min-height:44px;border-radius:12px;border:1.5px solid #DCD3FF;background:#FFFFFF;font-family:inherit;font-weight:800;font-size:15px;color:#1C1640;cursor:pointer}
+.slotOn{background:#5B3BE8;border-color:#5B3BE8;color:#FFFFFF}
+.slotX{background:#F3F1F7;border-color:#F3F1F7;color:#8F89A6;text-decoration:line-through;cursor:not-allowed}
+.pk{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:14px 16px;border-radius:14px;border:2px solid #ECE7FF;background:#FFFFFF;font-family:inherit;color:#1C1640;cursor:pointer;text-align:left;min-height:44px;width:100%}
+.pkOn{border-color:#5B3BE8;background:#F6F2FF}
+</style>
+<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
+<script>
+function page() { return {
+ state: { slot: 'd0-1', pkg: 'p5' },
+ setState(o) { Object.assign(this.state, o); },
+ get v() {
+const raw = [
+{ label: 'Dziś', slots: ['16:00', '18:00', '19:30'], taken: [0] },
+{ label: 'Jutro', slots: ['15:00', '17:00', '18:30'], taken: [] },
+{ label: 'Pt', slots: ['16:30', '18:00', '20:00'], taken: [1] },
+{ label: 'Sob', slots: ['10:00', '11:30', '13:00'], taken: [] },
+{ label: 'Pon', slots: ['17:00', '18:30', '20:00'], taken: [2] }
+];
+let chosen = '';
+const days = raw.map((d, i) => ({ label: d.label, slots: d.slots.map((t, j) => {
+const id = 'd' + i + '-' + j; const on = this.state.slot === id; const x = d.taken.indexOf(j) >= 0;
+if (on) chosen = d.label + ', ' + t;
+return { time: t, on: on ? 'true' : 'false', cls: x ? 'slot slotX' : (on ? 'slot slotOn' : 'slot'), pick: () => { if (!x) this.setState({ slot: id }); } };
+}) }));
+const P = [
+{ id: 'trial', name: 'Lekcja próbna 30 min', note: 'Korepetytorka też dostaje wynagrodzenie', price: '60 zł', v: 60 },
+{ id: 'one', name: 'Pojedyncza lekcja 60 min', note: 'Elastycznie', price: '120 zł', v: 120 },
+{ id: 'p5', name: 'Pakiet 5 lekcji', note: 'Oszczędzasz 5%', price: '570 zł', v: 570 },
+{ id: 'p10', name: 'Pakiet 10 lekcji', note: 'Oszczędzasz 10% · +1 srebrna naklejka', price: '1 080 zł', v: 1080 }
+];
+const pk = P.find((p) => p.id === this.state.pkg);
+return { days: days, chosen: chosen || 'wybierz termin', total: pk.price,
+pkgs: P.map((p) => ({ name: p.name, note: p.note, price: p.price, cls: p.id === this.state.pkg ? 'pk pkOn' : 'pk', pick: () => this.setState({ pkg: p.id }) })) };
+}
+}; }
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body x-data="page()">
+<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
+<div style="min-height: 1500px">
+<header class="top"><div class="wrap topin"><a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a><a href="szukaj.html" style="font-weight: 800">← Wróć do wyników</a></div></header>
+<div class="wrap" style="padding-top: 28px; padding-bottom: 48px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<main style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<section class="card" style="display: flex; flex-wrap: wrap; gap: 22px">
+<div style="flex: 1 1 320px; aspect-ratio: 16 / 9; border-radius: 16px; background: #3B3268; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden">
+<svg width="60%" viewBox="0 0 200 160" aria-hidden="true"><circle cx="100" cy="62" r="34" fill="#F2C29B"></circle><path d="M66 50 Q100 10 134 50 Q130 30 100 26 Q70 30 66 50Z" fill="#3A2318"></path><path d="M30 160 Q30 104 100 104 Q170 104 170 160Z" fill="#5B3BE8"></path></svg>
+<button type="button" aria-label="Odtwórz wideo powitalne" style="position: absolute; width: 64px; height: 64px; border-radius: 50%; border: 0; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#5B3BE8"></path></svg></button>
+<span style="position: absolute; left: 12px; bottom: 12px; background: rgba(0,0,0,0.6); color: #FFFFFF; font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 8px">Wideo powitalne · 1:12</span>
+</div>
+<div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span class="chip ok">Zweryfikowana tożsamość</span><span class="chip ok">Może uczyć dzieci</span></div>
+<h1 style="font-size: 36px">Marta K.</h1>
+<div class="muted" style="font-weight: 700">Matematyka · liceum i matura · polski, angielski</div>
+<div style="font-weight: 800; font-size: 18px">★ 4,9 <span class="muted" style="font-weight: 600">· 186 opinii · 1 240 lekcji</span></div>
+<p style="margin: 0; line-height: 1.6">Uczę w liceum od 9 lat. Na zajęciach zaczynamy od zrozumienia, a dopiero potem przechodzimy do zadań z arkuszy. Po każdej lekcji dostajesz notatkę i zadania na kolejny raz.</p>
+</div>
+</section>
+<section class="card">
+<h2 style="font-size: 24px; margin-bottom: 14px">Wybierz termin <span class="muted" style="font-size: 16px; font-family: Nunito, sans-serif; font-weight: 700">· czas warszawski</span></h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px">
+<template x-for="d in v.days"><div style="display: contents">
+<div style="display: flex; flex-direction: column; gap: 8px"><div style="font-weight: 800; text-align: center"><span x-text="d.label"></span></div>
+<template x-for="s in d.slots"><div style="display: contents"><button type="button" :class="s.cls" @click="s.pick()" :aria-pressed="s.on"><span x-text="s.time"></span></button></div></template>
+</div>
+</div></template>
+</div>
+</section>
+<section class="card">
+<h2 style="font-size: 24px; margin-bottom: 12px">Opinie</h2>
+<div style="display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))">
+<blockquote style="margin: 0; padding: 16px; border-radius: 14px; background: #F6F3FF"><div style="font-weight: 800">★★★★★ · Rodzic ucznia klasy 3</div><p style="margin: 8px 0 0; line-height: 1.5">Syn pierwszy raz mówi, że rozumie funkcje. Raporty po lekcjach są konkretne.</p></blockquote>
+<blockquote style="margin: 0; padding: 16px; border-radius: 14px; background: #F6F3FF"><div style="font-weight: 800">★★★★★ · Uczennica, matura rozszerzona</div><p style="margin: 8px 0 0; line-height: 1.5">Plan powtórek był rozpisany co do tygodnia. Arkusze z próbnej matury dużo lepiej.</p></blockquote>
+</div>
+<p class="muted" style="font-size: 13px; margin: 12px 0 0">Opinie w podglądzie są przykładowe.</p>
+</section>
+</main>
+<aside class="card" style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 12px" aria-label="Rezerwacja">
+<h2 style="font-size: 22px">Rezerwacja</h2>
+<div class="muted" style="font-weight: 700">Termin: <b style="color: #1C1640"><span x-text="v.chosen"></span></b></div>
+<template x-for="p in v.pkgs"><div style="display: contents"><button type="button" :class="p.cls" @click="p.pick()"><span><span style="display: block; font-weight: 800"><span x-text="p.name"></span></span><span class="muted" style="font-size: 14px"><span x-text="p.note"></span></span></span><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px"><span x-text="p.price"></span></span></button></div></template>
+<div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 18px; padding-top: 6px; border-top: 1px solid #ECE7FF"><span>Do zapłaty</span><span><span x-text="v.total"></span></span></div>
+<a class="btn" href="platnosc.html">Przejdź do płatności</a>
+<p class="muted" style="font-size: 14px; margin: 0; line-height: 1.5">Odwołanie bez kosztów do 24 h przed lekcją. Pieniądze trafiają do korepetytorki dopiero po odbytej lekcji.</p>
+</aside>
+</div>
+</div>
+</body>
+</html>

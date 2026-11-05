@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KiteTutor – wyszukiwarka korepetytorów</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F3FF;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
+a{color:#4A2DD0}a:hover{color:#1C1640}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.top{background:#FFFFFF;border-bottom:1px solid #E9E3FF}
+.topin{display:flex;align-items:center;gap:16px;min-height:68px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.logo{text-decoration:none;font-family:Fredoka,sans-serif;font-weight:700;font-size:24px}
+.card{background:#FFFFFF;border-radius:20px;padding:20px;border:1px solid #ECE7FF}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:14px;background:#5B3BE8;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:15px}
+.btn:hover{background:#4A2DD0;color:#FFFFFF}
+.btn2{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:14px;background:#EFE9FF;color:#4A2DD0;font-weight:800;text-decoration:none;font-size:15px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#EFE9FF;color:#4A2DD0;font-weight:800;font-size:13px}
+.ok{background:#E6FBF3;color:#11775A}
+.gold{background:#FFF3D1;color:#7A5000}
+.muted{color:#5E5878}
+.f{display:flex;flex-direction:column;gap:6px}
+.f label,.lab{font-weight:800;font-size:13px;color:#4B4566}
+.f select,.f input[type=text]{min-height:44px;border-radius:12px;border:1.5px solid #DCD3FF;padding:0 12px;font-family:inherit;font-size:15px;color:#1C1640;background:#FFFFFF}
+.ck{display:flex;gap:10px;align-items:center;min-height:36px;font-weight:700}
+.ck input{width:20px;height:20px;accent-color:#5B3BE8}
+.ava{width:72px;height:72px;border-radius:22px;display:flex;align-items:center;justify-content:center;font-family:Fredoka,sans-serif;font-weight:700;font-size:26px;color:#FFFFFF;flex:none}
+</style>
+<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
+<script>
+function page() { return {
+ state: {},
+ setState(o) { Object.assign(this.state, o); },
+ get v() {
+return { tutors: [
+{ ini: 'MK', color: '#5B3BE8', name: 'Marta K.', head: 'Nauczycielka matematyki w liceum · 9 lat doświadczenia', about: 'Przygotowuję do matury podstawowej i rozszerzonej. Najpierw rozumienie, potem zadania z arkuszy.', lang: 'polski, angielski', kids: 'Uczy małoletnich', badge: 'Wiatr w żagle', price: '120 zł', rating: '4,9', lessons: '1 240', next: 'dziś 18:00', super: true },
+{ ini: 'TW', color: '#E8424A', name: 'Tomasz W.', head: 'Doktorant matematyki stosowanej', about: 'Rozszerzenie, olimpiady i matematyka na studiach. Lubię trudne zadania i spokojne tłumaczenie.', lang: 'polski', kids: 'Uczy małoletnich', badge: 'Nowy na KiteTutor', price: '95 zł', rating: '4,8', lessons: '310', next: 'jutro 17:00', super: false },
+{ ini: 'AN', color: '#11775A', name: 'Anna N.', head: 'Egzaminatorka maturalna · 12 lat w szkole', about: 'Wiem, za co egzaminator daje punkty. Plan powtórek na 8 tygodni przed maturą.', lang: 'polski', kids: 'Uczy małoletnich', badge: 'Wiatr w żagle', price: '140 zł', rating: '5,0', lessons: '2 080', next: 'pt 16:30', super: true },
+{ ini: 'OL', color: '#B45309', name: 'Oleh L.', head: 'Inżynier, korepetytor matematyki i fizyki', about: 'Zajęcia po polsku i ukraińsku. Pomagam uczniom, którzy zmienili szkołę i system nauczania.', lang: 'polski, ukraiński', kids: 'Uczy małoletnich', badge: 'Dwujęzyczny', price: '85 zł', rating: '4,9', lessons: '540', next: 'dziś 20:00', super: false }
+] };
+}
+}; }
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body x-data="page()">
+<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
+<div style="min-height: 1500px">
+<header class="top"><div class="wrap topin">
+<a class="logo" href="index.html"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a>
+<form action="szukaj.html" style="flex: 1 1 360px; display: flex; gap: 8px"><label for="q" style="position: absolute; left: -9999px">Szukaj</label><input id="q" type="text" value="Matematyka · matura" style="flex: 1; min-height: 44px; border-radius: 12px; border: 1.5px solid #DCD3FF; padding: 0 14px; font-family: inherit; font-size: 15px"><a class="btn" href="szukaj.html">Szukaj</a></form>
+<a class="btn2" href="uczen.html">Mój panel</a>
+</div></header>
+<div class="wrap" style="padding-top: 28px; padding-bottom: 48px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<aside class="card" style="flex: 1 1 260px; max-width: 100%; display: flex; flex-direction: column; gap: 16px" aria-label="Filtry">
+<h2 style="font-size: 20px">Filtry</h2>
+<div class="f"><label for="s1">Przedmiot</label><select id="s1"><option>Matematyka</option><option>Fizyka</option><option>Angielski</option></select></div>
+<div class="f"><label for="s2">Poziom</label><select id="s2"><option>Liceum i matura</option><option>Klasy 7–8</option><option>Studia</option></select></div>
+<div class="f"><label for="s3">Język zajęć</label><select id="s3"><option>Polski</option><option>Angielski</option><option>Ukraiński</option></select></div>
+<div class="f"><span class="lab">Cena za 60 min</span><input type="range" min="40" max="250" value="140" aria-label="Maksymalna cena" style="accent-color: #5B3BE8"><span class="muted" style="font-size: 14px">do 140 zł</span></div>
+<div class="f"><span class="lab">Dostępność</span><label class="ck"><input type="checkbox" checked>Wieczory w tygodniu</label><label class="ck"><input type="checkbox">Weekendy</label></div>
+<div class="f"><span class="lab">Zaufanie</span><label class="ck"><input type="checkbox" checked>Zweryfikowana tożsamość</label><label class="ck"><input type="checkbox" checked>Może uczyć dzieci (weryfikacja)</label><label class="ck"><input type="checkbox">Superkorepetytor (ocena 4,9+)</label></div>
+</aside>
+<main style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between"><h1 style="font-size: 30px">Korepetytorzy matematyki – matura</h1><span class="muted" style="font-weight: 700">Sortuj: najlepsze dopasowanie</span></div>
+<template x-for="t in v.tutors"><div style="display: contents">
+<article class="card" style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<div class="ava" :style="'background: ' + (t.color)"><span x-text="t.ini"></span></div>
+<div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center"><h3 style="font-size: 22px"><span x-text="t.name"></span></h3><span class="chip ok">Zweryfikowany</span><template x-if="t.super"><div style="display: contents"><span class="chip gold">Superkorepetytor</span></div></template></div>
+<div class="muted" style="font-weight: 700"><span x-text="t.head"></span></div>
+<p style="margin: 0; line-height: 1.5"><span x-text="t.about"></span></p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span class="chip"><span x-text="t.lang"></span></span><span class="chip"><span x-text="t.kids"></span></span><span class="chip"><span x-text="t.badge"></span></span></div>
+</div>
+<div style="flex: 0 1 220px; display: flex; flex-direction: column; gap: 10px; align-items: stretch">
+<div><span style="font-family: Fredoka, sans-serif; font-size: 28px; font-weight: 700"><span x-text="t.price"></span></span><span class="muted"> / 60 min</span></div>
+<div style="font-weight: 800">★ <span x-text="t.rating"></span> <span class="muted" style="font-weight: 600">· <span x-text="t.lessons"></span> lekcji</span></div>
+<div class="muted" style="font-size: 14px">Najbliższy termin: <b style="color: #1C1640"><span x-text="t.next"></span></b></div>
+<a class="btn" href="profil.html">Zobacz profil i terminy</a>
+</div>
+</article>
+</div></template>
+<p class="muted" style="font-size: 13px; margin: 0">Profile w podglądzie są przykładowe.</p>
+</main>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KiteTutor – panel korepetytora</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F3F7F6;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
+a{color:#0F6B52}a:hover{color:#1C1640}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.top{background:#FFFFFF;border-bottom:1px solid #DDEBE6}
+.topin{display:flex;align-items:center;gap:14px;min-height:68px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.roles{display:flex;gap:4px;padding:4px;background:#EAF4F1;border-radius:14px;margin-left:auto}
+.roles a{padding:8px 12px;border-radius:10px;text-decoration:none;color:#3F4E49;font-weight:800;font-size:13px}
+.roles a.on{background:#FFFFFF;color:#0F6B52}
+.tab{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:transparent;color:#1C1640;font-weight:800;font-family:inherit;font-size:15px;cursor:pointer}
+.tabOn{background:#DDF5EC;color:#0F6B52}
+.card{background:#FFFFFF;border-radius:20px;padding:20px;border:1px solid #DDEBE6}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:14px;background:#11775A;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:15px;border:0;font-family:inherit;cursor:pointer}
+.btn:hover{background:#0F6B52;color:#FFFFFF}
+.btn2{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:14px;background:#DDF5EC;color:#0F6B52;font-weight:800;text-decoration:none;font-size:15px;border:0;font-family:inherit;cursor:pointer}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#DDF5EC;color:#0F6B52;font-weight:800;font-size:13px}
+.muted{color:#4F5B67}
+.row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #EEF4F2;flex-wrap:wrap}
+.kpi{font-family:Fredoka,sans-serif;font-size:30px;font-weight:700}
+.tbl{width:100%;border-collapse:collapse;font-size:15px}
+.tbl th{text-align:left;padding:10px;color:#4F5B67;font-size:13px;border-bottom:1px solid #DDEBE6}
+.tbl td{padding:10px;border-bottom:1px solid #EEF4F2}
+</style>
+<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
+<script>
+function page() { return {
+ state: { tab: 'home' },
+ setState(o) { Object.assign(this.state, o); },
+ get v() {
+const T = [['home', 'Pulpit'], ['files', 'Materiały'], ['money', 'Zarobki'], ['ads', 'Ogłoszenia uczniów']];
+const t = this.state.tab;
+return {
+tabs: T.map((x) => ({ name: x[1], cls: t === x[0] ? 'tab tabOn' : 'tab', pick: () => this.setState({ tab: x[0] }) })),
+tHome: t === 'home', tFiles: t === 'files', tMoney: t === 'money', tAds: t === 'ads',
+ads: [
+{ who: 'Rodzic · uczeń klasy 7', when: '2× w tygodniu, popołudnia', title: 'Matematyka – nadrobienie zaległości po zmianie szkoły', text: 'Dziecko potrzebuje spokojnego tłumaczenia od podstaw. Szukamy kogoś na dłużej.', cta: 'Napisz do rodzica' },
+{ who: 'Rodzic · liceum, klasa 3', when: '1× w tygodniu, weekendy', title: 'Matura rozszerzona z matematyki – plan do maja', text: 'Próbna matura 58%. Cel: powyżej 80%.', cta: 'Napisz do rodzica' },
+{ who: 'Dorosły uczeń · Kasia', when: 'Wieczory', title: 'Statystyka na studiach zaocznych', text: 'Egzamin w styczniu, potrzebuję 6–8 lekcji.', cta: 'Odpowiedz' }
+]
+};
+}
+}; }
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body x-data="page()">
+<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
+<div style="min-height: 1900px">
+<header class="top"><div class="wrap topin">
+<a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a>
+<span class="chip">Panel korepetytora</span>
+<nav class="roles" aria-label="Podgląd widoku"><a href="uczen.html">Uczeń</a><a class="on" href="korepetytor.html">Korepetytor</a><a href="rodzic.html">Rodzic</a></nav>
+</div></header>
+<div class="wrap" style="padding-top: 24px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between"><h1 style="font-size: 34px">Dzień dobry, Marta</h1><div style="display: flex; gap: 6px; flex-wrap: wrap" role="tablist" aria-label="Sekcje panelu"><template x-for="t in v.tabs"><div style="display: contents"><button type="button" :class="t.cls" @click="t.pick()"><span x-text="t.name"></span></button></div></template></div></div>
+
+<template x-if="v.tHome"><div style="display: contents">
+<div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))">
+<div class="card"><div class="muted" style="font-weight: 800">Dziś lekcji</div><div class="kpi">4</div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Do wypłaty</div><div class="kpi">1 386 zł</div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Ocena</div><div class="kpi">4,9 ★</div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Twoja prowizja</div><div class="kpi">15%</div><div class="muted" style="font-size: 13px">Poziom „Wiatr w żagle”</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<section class="card" style="flex: 999 1 560px; min-width: 0">
+<h2 style="font-size: 22px; margin-bottom: 4px">Dzisiejsze lekcje</h2>
+<div class="row"><b style="width: 110px">17:00–18:00</b><div style="flex: 1"><div style="font-weight: 800">Ola · matura rozszerzona</div><div class="muted" style="font-size: 14px">Konto pod opieką rodzica · funkcja kwadratowa</div></div><a class="btn" href="lekcja.html">Rozpocznij</a></div>
+<div class="row"><b style="width: 110px">18:30–19:30</b><div style="flex: 1"><div style="font-weight: 800">Piotr · studia, analiza</div><div class="muted" style="font-size: 14px">Dorosły uczeń · całki</div></div><a class="btn2" href="#materialy">Przygotuj materiały</a></div>
+<div class="row" style="border-bottom: 0"><b style="width: 110px">20:00–20:30</b><div style="flex: 1"><div style="font-weight: 800">Nowy uczeń · lekcja próbna</div><div class="muted" style="font-size: 14px">Klasa 8 · rezerwacja zatwierdzona przez rodzica · płatna</div></div><span class="chip">za 3 h</span></div>
+</section>
+<section class="card" style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="font-size: 22px">Po lekcji</h2>
+<p class="muted" style="margin: 0; line-height: 1.5">Podsumowanie lekcji z Olą jest gotowe do zatwierdzenia. Rodzic dostanie raport, a uczennica naklejkę za lekcję.</p>
+<button type="button" class="btn" style="align-self: flex-start">Zatwierdź raport</button>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px"><span class="chip">Odznaka: Wiatr w żagle</span><span class="chip" style="background: #FFF3D1; color: #7A5000">Superkorepetytor</span></div>
+</section>
+</div>
+</div></template>
+
+<template x-if="v.tFiles"><div style="display: contents">
+<section id="materialy" class="card" style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="font-size: 22px">Materiały</h2>
+<label for="up" style="border: 2px dashed #9AD9C2; border-radius: 18px; padding: 28px; text-align: center; background: #F2FBF7; cursor: pointer; display: flex; flex-direction: column; gap: 8px; align-items: center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#11775A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"></path></svg><span style="font-weight: 800; font-size: 18px">Przeciągnij pliki albo kliknij, aby wgrać</span><span class="muted">PDF, DOCX, PPTX, obrazy, nagrania wideo i audio · do 500 MB</span><input id="up" type="file" multiple style="position: absolute; left: -9999px"></label>
+<div style="overflow-x: auto"><table class="tbl"><thead><tr><th>Plik</th><th>Przedmiot</th><th>Udostępniony</th><th>Akcja</th></tr></thead><tbody>
+<tr><td style="font-weight: 800">Arkusz maturalny – funkcje.pdf</td><td>Matematyka</td><td>Ola, 3 inne osoby</td><td><button type="button" class="btn2">Przypisz</button></td></tr>
+<tr><td style="font-weight: 800">Wierzchołek paraboli.pptx</td><td>Matematyka</td><td>Ola</td><td><button type="button" class="btn2">Przypisz</button></td></tr>
+<tr><td style="font-weight: 800">Całki – karta wzorów.png</td><td>Analiza</td><td>Piotr</td><td><button type="button" class="btn2">Przypisz</button></td></tr>
+</tbody></table></div>
+<p class="muted" style="margin: 0; font-size: 14px">Materiał przypisany do ucznia pojawia się w jego panelu i w pokoju lekcyjnym. Prawa do materiałów zostają przy Tobie.</p>
+</section>
+</div></template>
+
+<template x-if="v.tMoney"><div style="display: contents">
+<div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))">
+<div class="card"><div class="muted" style="font-weight: 800">Saldo do wypłaty</div><div class="kpi">1 386 zł</div><div class="muted" style="font-size: 14px">Najbliższa wypłata: poniedziałek, na konto bankowe</div></div>
+<div class="card"><div class="muted" style="font-weight: 800">W tym miesiącu</div><div class="kpi">4 620 zł</div><div class="muted" style="font-size: 14px">38 lekcji · po prowizji</div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Prowizja</div><div class="kpi">15%</div><div class="muted" style="font-size: 14px">Lekcje próbne też płatne dla Ciebie</div></div>
+</div>
+<section class="card"><h2 style="font-size: 22px; margin-bottom: 8px">Historia rozliczeń</h2><div style="overflow-x: auto"><table class="tbl"><thead><tr><th>Data</th><th>Lekcja</th><th>Kwota</th><th>Prowizja</th><th>Dla Ciebie</th></tr></thead><tbody>
+<tr><td>4.11</td><td>Ola · 60 min</td><td>114 zł</td><td>17,10 zł</td><td style="font-weight: 800">96,90 zł</td></tr>
+<tr><td>4.11</td><td>Lekcja próbna · 30 min</td><td>60 zł</td><td>9,00 zł</td><td style="font-weight: 800">51,00 zł</td></tr>
+<tr><td>3.11</td><td>Piotr · 60 min</td><td>120 zł</td><td>18,00 zł</td><td style="font-weight: 800">102,00 zł</td></tr>
+</tbody></table></div><div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px"><button type="button" class="btn">Wypłać teraz</button><button type="button" class="btn2">Pobierz zestawienie roczne</button></div><p class="muted" style="margin: 10px 0 0; font-size: 13px">Kwoty i prowizja w podglądzie są przykładowe. Dane do rozliczeń podatkowych raportujemy zgodnie z przepisami dla platform.</p></section>
+</div></template>
+
+<template x-if="v.tAds"><div style="display: contents">
+<section class="card" style="display: flex; gap: 14px; align-items: flex-start; background: #E6FBF3; border-color: #9AD9C2"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#11775A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path><path d="M9 12l2 2 4-4"></path></svg><div><div style="font-weight: 800">Ochrona małoletnich</div><div style="line-height: 1.5">Ogłoszenia dla dzieci publikuje rodzic. Nie widzisz imienia, zdjęcia, szkoły ani miasta dziecka. Odpowiadasz rodzicowi przez czat KiteTutor, a rodzic decyduje o lekcji.</div></div></section>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><label for="ads-q" style="position: absolute; left: -9999px">Szukaj ogłoszeń</label><input id="ads-q" type="text" value="Matematyka" style="flex: 1 1 260px; min-height: 44px; border-radius: 12px; border: 1.5px solid #9AD9C2; padding: 0 14px; font-family: inherit; font-size: 15px"><button type="button" class="btn2">Poziom: wszystkie</button><button type="button" class="btn2">Termin: wieczory</button></div>
+<template x-for="a in v.ads"><div style="display: contents">
+<article class="card" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 6px"><div style="display: flex; gap: 8px; flex-wrap: wrap"><span class="chip"><span x-text="a.who"></span></span><span class="chip" style="background: #F3F1F7; color: #3F4E49"><span x-text="a.when"></span></span></div><div style="font-weight: 800; font-size: 18px"><span x-text="a.title"></span></div><div class="muted"><span x-text="a.text"></span></div></div>
+<button type="button" class="btn"><span x-text="a.cta"></span></button>
+</article>
+</div></template>
+</div></template>
+</div>
+</div>
+</body>
+</html>

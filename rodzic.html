@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KiteTutor – panel rodzica</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6FB;color:#1C1640;font-family:Nunito,system-ui,sans-serif}
+a{color:#175CD3}a:hover{color:#1C1640}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.top{background:#FFFFFF;border-bottom:1px solid #E1E7F3}
+.topin{display:flex;align-items:center;gap:14px;min-height:68px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.roles{display:flex;gap:4px;padding:4px;background:#EEF2FA;border-radius:14px;margin-left:auto}
+.roles a{padding:8px 12px;border-radius:10px;text-decoration:none;color:#3F4A5E;font-weight:800;font-size:13px}
+.roles a.on{background:#FFFFFF;color:#175CD3}
+.tab{min-height:44px;padding:0 16px;border-radius:12px;border:0;background:transparent;color:#1C1640;font-weight:800;font-family:inherit;font-size:15px;cursor:pointer}
+.tabOn{background:#E3EEFF;color:#175CD3}
+.kid{display:flex;gap:10px;align-items:center;min-height:52px;padding:6px 14px 6px 6px;border-radius:16px;border:2px solid #E1E7F3;background:#FFFFFF;font-family:inherit;font-weight:800;font-size:15px;color:#1C1640;cursor:pointer}
+.kidOn{border-color:#175CD3;background:#F2F7FF}
+.card{background:#FFFFFF;border-radius:20px;padding:20px;border:1px solid #E1E7F3}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:14px;background:#175CD3;color:#FFFFFF;font-weight:800;text-decoration:none;font-size:15px;border:0;font-family:inherit;cursor:pointer}
+.btn:hover{background:#124BB0;color:#FFFFFF}
+.btn2{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:14px;background:#E3EEFF;color:#175CD3;font-weight:800;text-decoration:none;font-size:15px;border:0;font-family:inherit;cursor:pointer}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#E3EEFF;color:#175CD3;font-weight:800;font-size:13px}
+.muted{color:#4F5B6E}
+.kpi{font-family:Fredoka,sans-serif;font-size:30px;font-weight:700}
+.tog{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #EEF2FA;font-weight:700}
+.tog input{width:22px;height:22px;accent-color:#175CD3;flex:none}
+.tbl{width:100%;border-collapse:collapse;font-size:15px}
+.tbl th{text-align:left;padding:10px;color:#4F5B6E;font-size:13px;border-bottom:1px solid #E1E7F3}
+.tbl td{padding:10px;border-bottom:1px solid #EEF2FA}
+</style>
+<style>.preview-bar{background:#1C1640;color:#FFFFFF;text-align:center;font:700 14px/1.4 Nunito,system-ui,sans-serif;padding:8px 16px}.preview-bar a{color:#FFC93C}</style>
+<script>
+function page() { return {
+ state: { tab: 'prog', kid: 'ola' },
+ setState(o) { Object.assign(this.state, o); },
+ get v() {
+const K = {
+ola: { name: 'Ola · liceum', ini: 'O', bg: '#5B3BE8', lessons: '7', hw: '9 / 10', goal: '64%', goalName: 'matura z matematyki', album: '15', pages: '1',
+bars: [['wrz', 2.6], ['wrz', 3.0], ['paź', 3.3], ['paź', 3.6], ['lis', 4.1], ['lis', 4.3]],
+reports: [
+{ date: '4.11', subject: 'Matematyka', tutor: 'Marta K.', eng: '5/5', done: 'postać kanoniczna, wierzchołek paraboli, zadania 4–7 z arkusza', todo: 'miejsca zerowe przy Δ = 0', next: 'zadania 8–10, potem ciągi' },
+{ date: '2.11', subject: 'Angielski', tutor: 'James P.', eng: '4/5', done: 'present perfect vs past simple, rozmowa o wakacjach', todo: 'nieregularne czasowniki', next: '10 zdań w present perfect' }
+] },
+jas: { name: 'Jaś · klasa 5', ini: 'J', bg: '#E8424A', lessons: '4', hw: '4 / 5', goal: '41%', goalName: 'ułamki i procenty', album: '6', pages: '0',
+bars: [['wrz', 2.2], ['wrz', 2.5], ['paź', 2.9], ['paź', 3.1], ['lis', 3.4], ['lis', 3.5]],
+reports: [
+{ date: '3.11', subject: 'Matematyka', tutor: 'Oleh L.', eng: '4/5', done: 'dodawanie ułamków o różnych mianownikach', todo: 'skracanie ułamków', next: 'procenty w zadaniach z treścią' }
+] }
+};
+const k0 = K[this.state.kid];
+const T = [['prog', 'Postępy'], ['rep', 'Raporty po lekcjach'], ['pay', 'Płatności i faktury'], ['set', 'Kontrola i zgody']];
+const k = Object.assign({}, k0, { bars: k0.bars.map((b) => ({ l: b[0], v: String(b[1]).replace('.', ','), h: Math.round(b[1] / 5 * 160) + 'px' })), chartLabel: 'Ocena zrozumienia po kolejnych lekcjach, od ' + String(k0.bars[0][1]).replace('.', ',') + ' do ' + String(k0.bars[5][1]).replace('.', ',') + ' na 5' });
+return {
+k: k,
+kids: ['ola', 'jas'].map((id) => ({ name: K[id].name, ini: K[id].ini, bg: K[id].bg, cls: id === this.state.kid ? 'kid kidOn' : 'kid', pick: () => this.setState({ kid: id }) })),
+tabs: T.map((x) => ({ name: x[1], cls: this.state.tab === x[0] ? 'tab tabOn' : 'tab', pick: () => this.setState({ tab: x[0] }) })),
+tProg: this.state.tab === 'prog', tRep: this.state.tab === 'rep', tPay: this.state.tab === 'pay', tSet: this.state.tab === 'set'
+};
+}
+}; }
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+</head>
+<body x-data="page()">
+<div class="preview-bar">Podgląd portalu KiteTutor – wersja demonstracyjna. Dane, ceny i profile są przykładowe. <a href="index.html">Start</a></div>
+<div style="min-height: 1800px">
+<header class="top"><div class="wrap topin">
+<a href="index.html" style="text-decoration: none; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px"><span style="color: #5B3BE8">kite</span><span style="color: #E8424A">tutor</span></a>
+<span class="chip">Panel rodzica</span>
+<nav class="roles" aria-label="Podgląd widoku"><a href="uczen.html">Uczeń</a><a href="korepetytor.html">Korepetytor</a><a class="on" href="rodzic.html">Rodzic</a></nav>
+</div></header>
+<div class="wrap" style="padding-top: 24px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center"><template x-for="k in v.kids"><div style="display: contents"><button type="button" :class="k.cls" @click="k.pick()"><span :style="'width: 40px; height: 40px; border-radius: 12px; background: ' + (k.bg) + '; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif'"><span x-text="k.ini"></span></span><span x-text="k.name"></span></button></div></template><a class="btn2" href="start.html">+ Dodaj dziecko</a><a class="btn" href="szukaj.html" style="margin-left: auto">Znajdź korepetytora</a></div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap" aria-label="Sekcje panelu"><template x-for="t in v.tabs"><div style="display: contents"><button type="button" :class="t.cls" @click="t.pick()"><span x-text="t.name"></span></button></div></template></div>
+
+<template x-if="v.tProg"><div style="display: contents">
+<div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))">
+<div class="card"><div class="muted" style="font-weight: 800">Lekcje w tym miesiącu</div><div class="kpi"><span x-text="v.k.lessons"></span></div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Oddane zadania</div><div class="kpi"><span x-text="v.k.hw"></span></div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Postęp do celu</div><div class="kpi"><span x-text="v.k.goal"></span></div><div class="muted" style="font-size: 14px"><span x-text="v.k.goalName"></span></div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Album</div><div class="kpi"><span x-text="v.k.album"></span></div><div class="muted" style="font-size: 14px">naklejek · <span x-text="v.k.pages"></span> pełna strona</div></div>
+</div>
+<section class="card">
+<h2 style="font-size: 22px; margin-bottom: 14px">Ocena zrozumienia tematu po lekcjach</h2>
+<div style="display: flex; align-items: flex-end; gap: 14px; height: 200px; padding: 0 6px; border-bottom: 1.5px solid #C9D4E8" role="img" :aria-label="v.k.chartLabel">
+<template x-for="b in v.k.bars"><div style="display: contents"><div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; height: 100%"><span style="font-weight: 800; font-size: 13px"><span x-text="b.v"></span></span><div :style="'width: 100%; max-width: 56px; height: ' + (b.h) + '; background: #175CD3; border-radius: 10px 10px 4px 4px'"></div></div></div></template>
+</div>
+<div style="display: flex; gap: 14px; padding: 8px 6px 0"><template x-for="b in v.k.bars"><div style="display: contents"><div class="muted" style="flex: 1; text-align: center; font-size: 13px; font-weight: 700"><span x-text="b.l"></span></div></div></template></div>
+<p class="muted" style="margin: 10px 0 0; font-size: 13px">Skala 1–5 z raportu korepetytora po każdej lekcji. Dane w podglądzie są przykładowe.</p>
+</section>
+</div></template>
+
+<template x-if="v.tRep"><div style="display: contents">
+<template x-for="r in v.k.reports"><div style="display: contents">
+<article class="card" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center"><span class="chip"><span x-text="r.date"></span></span><b><span x-text="r.subject"></span></b><span class="muted">· <span x-text="r.tutor"></span></span><span class="chip" style="margin-left: auto; background: #E6FBF3; color: #11775A">Zaangażowanie <span x-text="r.eng"></span></span></div>
+<div><b>Co przerobiono:</b> <span x-text="r.done"></span></div>
+<div><b>Do powtórki:</b> <span x-text="r.todo"></span></div>
+<div><b>Na następny raz:</b> <span x-text="r.next"></span></div>
+</article>
+</div></template>
+</div></template>
+
+<template x-if="v.tPay"><div style="display: contents">
+<div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))">
+<div class="card"><div class="muted" style="font-weight: 800">Pakiet: matematyka</div><div class="kpi">6 / 10</div><div class="muted" style="font-size: 14px">lekcji pozostało</div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Zaoszczędzone z albumu</div><div class="kpi">57 zł</div></div>
+<div class="card"><div class="muted" style="font-weight: 800">Metoda płatności</div><div style="font-weight: 800; font-size: 18px; margin-top: 8px">BLIK · faktura imienna</div><button type="button" class="btn2" style="margin-top: 10px">Zmień</button></div>
+</div>
+<section class="card"><h2 style="font-size: 22px; margin-bottom: 8px">Płatności i faktury</h2><div style="overflow-x: auto"><table class="tbl"><thead><tr><th>Data</th><th>Opis</th><th>Kwota</th><th>Dokument</th></tr></thead><tbody>
+<tr><td>2.11</td><td>Pakiet 10 lekcji · matematyka · −10% z albumu</td><td style="font-weight: 800">972 zł</td><td><a href="#">Faktura PDF</a></td></tr>
+<tr><td>14.10</td><td>Pakiet 5 lekcji · angielski</td><td style="font-weight: 800">475 zł</td><td><a href="#">Faktura PDF</a></td></tr>
+<tr><td>1.10</td><td>Lekcja próbna · matematyka</td><td style="font-weight: 800">60 zł</td><td><a href="#">Faktura PDF</a></td></tr>
+</tbody></table></div><div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px"><a class="btn" href="platnosc.html">Dokup pakiet</a><button type="button" class="btn2">Zwrot niewykorzystanych lekcji</button></div></section>
+</div></template>
+
+<template x-if="v.tSet"><div style="display: contents">
+<section class="card">
+<h2 style="font-size: 22px; margin-bottom: 4px">Kontrola i zgody</h2>
+<label class="tog"><span>Zatwierdzam każdą rezerwację dziecka</span><input type="checkbox" checked></label>
+<label class="tog"><span>Limit lekcji w miesiącu: 8</span><input type="checkbox" checked></label>
+<label class="tog"><span>Nagrywanie lekcji (domyślnie wyłączone)</span><input type="checkbox"></label>
+<label class="tog"><span>Album i naklejki dla dziecka</span><input type="checkbox" checked></label>
+<label class="tog"><span>Powiadomienia o nowych naklejkach</span><input type="checkbox"></label>
+<label class="tog" style="border-bottom: 0"><span>Raport po każdej lekcji na e-mail</span><input type="checkbox" checked></label>
+</section>
+<section class="card" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center"><div style="flex: 1 1 360px"><div style="font-weight: 800">Ogłoszenie dla dziecka</div><div class="muted" style="line-height: 1.5">Opisz potrzebę, a korepetytorzy odpowiedzą Tobie. Dane dziecka nigdy nie są publiczne.</div></div><button type="button" class="btn">Dodaj ogłoszenie</button></section>
+</div></template>
+</div>
+</div>
+</body>
+</html>
